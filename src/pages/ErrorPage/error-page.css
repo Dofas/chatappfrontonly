@@ -1,0 +1,9 @@
+.error-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    font-size: 50px;
+    color: var(--color-red);
+    background-color: var(--color-black);
+}
