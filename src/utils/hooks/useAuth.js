@@ -19,6 +19,7 @@ export function useAuth(userId) {
         if (cancelRequest.current) return;
         setIsLoading(false);
         setUser(fetchedUser);
+        setIsError(false);
       } catch (e) {
         if (cancelRequest.current) return;
         setIsError(true);

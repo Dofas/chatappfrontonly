@@ -8,4 +8,12 @@ export class UserService {
     );
     return user;
   }
+
+  static async fetchNotifications(userId) {
+    const allNotifications = await fetchDataBase("userNotification");
+    const userNotifications = allNotifications.find(
+      (fetchedUserId) => fetchedUserId.id === userId
+    );
+    return userNotifications;
+  }
 }

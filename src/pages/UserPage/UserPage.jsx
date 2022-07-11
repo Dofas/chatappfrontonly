@@ -5,9 +5,9 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../utils/hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import { useSetRecoilState } from "recoil";
-import { activeUser } from "../../state/ActiveUserState/atomActiveUser";
+import { activeUser } from "../../state/activeUserState/atomActiveUser";
 
-const UserPage = () => {
+const UserPage = ({ activeLink }) => {
   const { id } = useParams();
 
   const setActiveUser = useSetRecoilState(activeUser);
@@ -24,7 +24,7 @@ const UserPage = () => {
 
   const userContent = user ? (
     <>
-      <Header />
+      <Header activeLink={activeLink} />
       <div data-testid={"user-page-content-data-id"}>UserPage</div>
     </>
   ) : (

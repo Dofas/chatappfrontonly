@@ -26,7 +26,10 @@ const AppRoutes = () => {
             index
             element={<Navigate to={"/chatapp/messages/user1_id"} />}
           />
-          <Route path={"/chatapp/messages/:id"} element={<UserPage />} />
+          <Route
+            path={"/chatapp/messages/:id"}
+            element={<UserPage activeLink={"messages"} />}
+          />
         </Route>
         <Route path={"*"} element={<ErrorPage />} />
       </Routes>

@@ -5,6 +5,10 @@ export const activeUserInfo = selector({
   key: "activeUserInfo",
   get: ({ get }) => {
     const userInfo = get(activeUser);
-    return userInfo;
+    return {
+      id: userInfo.id,
+      name: `${userInfo.firstName} ${userInfo.lastName}`,
+      avatar: userInfo.avatar,
+    };
   },
 });
