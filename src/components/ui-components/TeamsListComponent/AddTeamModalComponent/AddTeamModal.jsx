@@ -1,12 +1,18 @@
 import "./add-team-modal.css";
 import Modal from "../../ModalComponent/Modal";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const AddTeamModal = ({ isModal, closeModal }) => {
   const teamNameInputRef = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   const saveTeam = () => {
+    if (teamNameInputRef.current.value === "") {
+      setIsError(true);
+      return;
+    }
     console.log("Added team with name", teamNameInputRef.current.value);
+    setIsError(false);
     closeModal();
   };
 
@@ -18,6 +24,11 @@ const AddTeamModal = ({ isModal, closeModal }) => {
         className={"modal-close-btn"}
       />
       <div className={"team-modal-content"}>
+        {isError && (
+          <div className={"team-modal-error-text"}>
+            You can not create team with empty name
+          </div>
+        )}
         <div>Type team name</div>
         <input ref={teamNameInputRef} className={"modal-input"} />
         <div className={"modal-save-btn"} onClick={saveTeam}>

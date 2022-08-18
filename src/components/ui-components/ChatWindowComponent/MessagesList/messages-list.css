@@ -6,10 +6,10 @@
 
 .messages-list-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     max-width: 80%;
-    margin-bottom: 24px;
+    margin-bottom: 48px;
 }
 
 .messages-list-item-selected-user {
@@ -20,10 +20,9 @@
     align-self: flex-start;
 }
 
-.messages-list-item-selected-user > .messages-list-message-content {
+.messages-list-message-content {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .messages-list-item-text {
@@ -36,19 +35,41 @@
     color: var(--color-white);
 }
 
+.triangle {
+    border-color: transparent transparent transparent var(--color-dark-blue) ;
+    border-style: solid;
+    border-width: 4px 4px 4px 8px;
+    height: 0;
+    width: 0;
+}
+
+.backup-triangle {
+    border-color: transparent var(--color-white) transparent transparent;
+    border-style: solid;
+    border-width: 4px 8px 4px 4px;
+    height: 0;
+    width: 0;
+    order: -1;
+}
+
 .messages-list-item-active-user > .messages-list-message-content > .messages-list-item-text {
     background-color: var(--color-white);
 }
 
-.messages-list-message-content > .messages-list-message-time {
-    padding-top: 8px;
+.messages-list-message-time {
+    position: absolute;
+    bottom: -24px;
     font-size: 12px;
     line-height: 1.29;
     color: var(--time-text-color-grey);
 }
 
-.messages-list-image-container {
-    margin-bottom: 12px;
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text > .messages-list-message-time {
+    right: 0;
+}
+
+.messages-list-item-active-user > .messages-list-message-content > .messages-list-item-text > .messages-list-message-time {
+    left: 0;
 }
 
 .messages-list-user-avatar {
@@ -57,13 +78,17 @@
     border-radius: 50%;
 }
 
+.messages-list-image-container {
+    display: flex;
+}
+
 .messages-list-item-selected-user > .messages-list-image-container {
-    margin-left: 16px;
+    margin-left: 10px;
     margin-right: 30px;
 }
 
 .messages-list-item-active-user > .messages-list-image-container {
-    margin-right: 16px;
+    margin-right: 10px;
     margin-left: 30px;
 }
 

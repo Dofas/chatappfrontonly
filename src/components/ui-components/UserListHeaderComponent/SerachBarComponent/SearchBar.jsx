@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userSearchValue } from "../../../../state/activeUserListState/atomActiveUserListState";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
@@ -6,7 +6,9 @@ import { activeChannel } from "../../../../state/activeChannelState/atomActiveCh
 import SearchIcon from "../../../../assets/images/searchBtn.svg";
 
 const SearchBar = () => {
-  const [ref, isSearching, setIsSearching] = useClickOutside(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const closeSearching = () => setIsSearching(false);
+  const ref = useClickOutside(closeSearching);
   const teamName = useRecoilValue(activeChannel);
   const [searchValue, setSearchValue] = useRecoilState(userSearchValue);
 
@@ -14,32 +16,31 @@ const SearchBar = () => {
     setSearchValue(event.target.value);
   };
 
-  const startEditing = () => {
-    setIsSearching(true);
+  const triggerSearching = () => {
+    setIsSearching(!isSearching);
   };
 
-  const onPressEnter = (e) => {
-    if (e.charCode === 13) setIsSearching(false);
+  const onKeyUp = (e) => {
+    if (e.key === "Enter") closeSearching();
   };
 
   return (
-    <div className={"user-list-search-container"}>
+    <div className={"user-list-search-container"} ref={ref}>
       {isSearching ? (
         <input
           className={"user-list-search-input"}
           data-testid={"user-list-search-input"}
-          ref={ref}
           autoFocus={true}
           value={searchValue}
           onChange={handleChangeInputValue}
-          onKeyPress={onPressEnter}
+          onKeyUp={onKeyUp}
         />
       ) : (
-        <span className={"title"} onClick={startEditing}>
+        <span className={"title"} onClick={triggerSearching}>
           {searchValue.length ? searchValue : `List of ${teamName}`}
         </span>
       )}
-      <span className={"user-list-search-btn"} onClick={startEditing}>
+      <span className={"user-list-search-btn"} onClick={triggerSearching}>
         <img
           className={"user-list-search-img"}
           data-testid={"user-list-search-icon"}

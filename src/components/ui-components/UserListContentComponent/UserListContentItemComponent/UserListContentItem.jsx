@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
 
 const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
-  const [ref, isClickOutsideSettings, setIsClickOutsideSettings] =
-    useClickOutside(false);
+  const [isSettings, setIsSettings] = useState(false);
+  const closeSettingsModal = () => setIsSettings(false);
+  const triggerSettingsModal = () => setIsSettings(!isSettings);
+
+  const ref = useClickOutside(closeSettingsModal);
 
   const onSettingClick = (e) => {
     e.stopPropagation();
-    setIsClickOutsideSettings(true);
+    triggerSettingsModal();
   };
 
   const onDeleteUserClick = (e) => {
     e.stopPropagation();
     console.log(`deleted user with id ${user.id}`);
-    setIsClickOutsideSettings(false);
+    closeSettingsModal();
   };
+
   return (
     <div
       className={
@@ -43,15 +47,18 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
       <div className={"user-list-team-user-info"}>
         <div className={"user-list-team-user-name"}>
           <div>{user.senderName}</div>
-          <div onClick={onSettingClick} className={"position-relative"}>
+          <div
+            onClick={onSettingClick}
+            className={"position-relative"}
+            ref={ref}
+          >
             <div className={"dot delete-action"} />
             <div className={"dot delete-action"} />
             <div className={"dot delete-action"} />
-            {isClickOutsideSettings && (
+            {isSettings && (
               <div
                 className={"user-list-item-setting"}
                 onClick={onDeleteUserClick}
-                ref={ref}
               >
                 delete user
               </div>

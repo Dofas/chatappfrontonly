@@ -34,7 +34,9 @@ const UserList = () => {
           <UserListContent />
         </>
       ) : (
-        <div>You need some team to see members there</div>
+        <div className={"empty-user-list-text"}>
+          You need some team to see members there
+        </div>
       )}
     </div>
   );

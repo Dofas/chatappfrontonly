@@ -3,3 +3,8 @@
     align-items: center;
     flex-direction: column;
 }
+
+.group-modal-error-text {
+    color: var(--color-red);
+    margin-bottom: 20px;
+}

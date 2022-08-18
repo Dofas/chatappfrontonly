@@ -22,10 +22,17 @@ const MessagesList = ({ messages }) => {
           <div className={"messages-list-message-content"}>
             <div className={"messages-list-item-text"}>
               {message.messageText}
+              <div className={"messages-list-message-time"}>
+                {message.messageTime}
+              </div>
             </div>
-            <div className={"messages-list-message-time"}>
-              {message.messageTime}
-            </div>
+            <div
+              className={
+                message.sender === selectedUser.id
+                  ? "triangle"
+                  : "backup-triangle"
+              }
+            />
           </div>
           <div className={"messages-list-image-container"}>
             <img
