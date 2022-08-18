@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import Header from "./Header";
 import { UserService } from "../../../utils/UserService/UserService";
 import { RecoilRoot, useSetRecoilState } from "recoil";
@@ -8,7 +8,7 @@ import { activeUser } from "../../../state/activeUserState/atomActiveUser";
 
 jest.mock("../../../utils/UserService/UserService");
 
-const PageWithRecoilState = () => {
+export const WithActiveUser = ({ children }) => {
   const setActiveUser = useSetRecoilState(activeUser);
 
   useEffect(() => {
@@ -18,11 +18,11 @@ const PageWithRecoilState = () => {
       lastName: "lastName",
     });
   }, []);
-  return <Header activeLink={"statistics"} />;
+  return <>{children}</>;
 };
 
 describe("Header test", () => {
-  test("should render navbar with active statistics link and user info without notifications", async () => {
+  beforeEach(async () => {
     const mockedUserService = jest.mocked(UserService);
     const mockNotifications = {
       importantNotification: undefined,
@@ -30,21 +30,24 @@ describe("Header test", () => {
     };
     mockedUserService.fetchNotifications.mockResolvedValue(mockNotifications);
 
-    await waitFor(() => {
+    await act(async () => {
       render(
         <BrowserRouter>
-          <PageWithRecoilState />
+          <WithActiveUser>
+            <Header activeLink={"statistics"} />
+          </WithActiveUser>
         </BrowserRouter>,
         { wrapper: RecoilRoot }
       );
     });
+  });
+  test("should render navbar with active statistics link and user info without notifications", async () => {
     expect(screen.getByText("All Projects")).toBeInTheDocument();
     expect(screen.getByText("Teams")).toBeInTheDocument();
     expect(screen.getByText("Messages")).toBeInTheDocument();
-    expect(screen.getByText("Statistics")).toHaveClass(
-      "active-header-nav-bar-link"
-    );
     expect(screen.getByText("Search")).toBeInTheDocument();
+    const activeLink = screen.getByText("Statistics").parentNode;
+    expect(activeLink).toHaveClass("active-header-nav-bar-link");
     expect(screen.getByAltText("star")).toBeInTheDocument();
     expect(screen.getByAltText("bell")).toBeInTheDocument();
     expect(screen.getByAltText("question")).toBeInTheDocument();

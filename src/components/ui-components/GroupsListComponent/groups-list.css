@@ -1,0 +1,11 @@
+.group-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 16px 22px 31px;
+}
+
+.groups-add-btn-icon {
+    width: 12px;
+    height: 12px;
+}

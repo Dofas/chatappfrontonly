@@ -1,8 +1,8 @@
 import "./header.css";
 import { useRecoilValue } from "recoil";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
-import NavBar from "../../NavBarComponent/NavBar";
-import ActiveUser from "../../ActiveUserComponent/ActiveUser";
+import NavBar from "../../ui-components/NavBarComponent/NavBar";
+import ActiveUser from "../../ui-components/ActiveUserComponent/ActiveUser";
 import { useEffect, useState } from "react";
 import { UserService } from "../../../utils/UserService/UserService";
 
@@ -14,17 +14,20 @@ const Header = ({ activeLink }) => {
   });
 
   useEffect(() => {
-    if (activeUser.id) {
+    if (!activeUser.id) return;
+
+    try {
       (async () => {
         const notificationsResponse = await UserService.fetchNotifications(
           activeUser.id
         );
-
         setNotifications({
-          notificationsCount: notificationsResponse.importantNotification,
-          messagesCount: notificationsResponse.simpleNotification,
+          notificationsCount: notificationsResponse?.importantNotification,
+          messagesCount: notificationsResponse?.simpleNotification,
         });
       })();
+    } catch (e) {
+      console.log(`Error while loading notifications ${e.message}`);
     }
   }, [activeUser.id]);
 

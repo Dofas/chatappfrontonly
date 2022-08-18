@@ -22,6 +22,8 @@ export function useAuth(userId) {
         setIsError(false);
       } catch (e) {
         if (cancelRequest.current) return;
+        console.log(`Error while load user from database ${e.message}`);
+        setIsLoading(false);
         setIsError(true);
       }
     })();

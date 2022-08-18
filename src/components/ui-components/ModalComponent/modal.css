@@ -1,0 +1,64 @@
+.modal-container {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background-color: rgba(31, 32, 41, .75);
+}
+
+.modal {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 60vw;
+    height: 60%;
+    min-height: 400px;
+    min-width: 400px;
+    margin: 20px auto;
+    border-radius: 4px;
+    padding-bottom: 20px;
+    background-color: var(--color-black);
+    color: var(--color-green);
+    align-self: center;
+    font-size: 22px;
+    box-shadow: 0 12px 25px 0 rgba(199, 175, 189, .25);
+}
+
+.modal-close-btn {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.modal-close-btn:before {
+    content: "X";
+    font-family: Avenir-Roman, serif;
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--color-red);
+    cursor: pointer;
+}
+
+.modal-input {
+    border: none;
+    background: transparent;
+    color: var(--color-green);
+    border-bottom: 2px solid var(--color-green);
+    outline: none;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 45px;
+}
+
+.modal-save-btn {
+    padding: 15px;
+    border: 1px solid var(--color-green);
+    cursor: pointer;
+}

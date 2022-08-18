@@ -7,3 +7,9 @@
     color: var(--color-green);
     background-color: var(--color-black);
 }
+
+.user-page-content {
+    display: flex;
+    justify-content: space-between;
+    min-height: calc(100vh - 65px);
+}

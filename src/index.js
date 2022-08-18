@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./components/AppComponent/App";
+import App from "./components/page-components/AppComponent/App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 

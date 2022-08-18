@@ -1,0 +1,79 @@
+.messages-list-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+}
+
+.messages-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 80%;
+    margin-bottom: 24px;
+}
+
+.messages-list-item-selected-user {
+    align-self: flex-end;
+}
+
+.messages-list-item-active-user {
+    align-self: flex-start;
+}
+
+.messages-list-item-selected-user > .messages-list-message-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.messages-list-item-text {
+    position: relative;
+    padding: 16px;
+}
+
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text {
+    background-color: var(--color-dark-blue);
+    color: var(--color-white);
+}
+
+.messages-list-item-active-user > .messages-list-message-content > .messages-list-item-text {
+    background-color: var(--color-white);
+}
+
+.messages-list-message-content > .messages-list-message-time {
+    padding-top: 8px;
+    font-size: 12px;
+    line-height: 1.29;
+    color: var(--time-text-color-grey);
+}
+
+.messages-list-image-container {
+    margin-bottom: 12px;
+}
+
+.messages-list-user-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.messages-list-item-selected-user > .messages-list-image-container {
+    margin-left: 16px;
+    margin-right: 30px;
+}
+
+.messages-list-item-active-user > .messages-list-image-container {
+    margin-right: 16px;
+    margin-left: 30px;
+}
+
+.messages-list-item-active-user > .messages-list-image-container {
+    order: -1;
+}
+
+.position-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}

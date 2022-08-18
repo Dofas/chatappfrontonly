@@ -314,18 +314,18 @@
       "messageId": "message_6"
     },
     {
-      "sender": "user2_id",
-      "getter": "user1_id",
+      "sender": "user1_id",
+      "getter": "user2_id",
       "messageId": "message_7"
     },
     {
-      "sender": "user2_id",
-      "getter": "user1_id",
+      "sender": "user1_id",
+      "getter": "user2_id",
       "messageId": "message_8"
     },
     {
-      "sender": "user2_id",
-      "getter": "user1_id",
+      "sender": "user1_id",
+      "getter": "user2_id",
       "messageId": "message_9"
     }
   ]

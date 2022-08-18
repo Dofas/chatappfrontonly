@@ -1,0 +1,14 @@
+.groups-list-items-container > li {
+    font-family: Avenir, serif;
+    line-height: 1.29;
+    color: var(--color-text-grey);
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0 0 24px 32px;
+}
+
+.empty-groups-list {
+    color: var(--color-green);
+}
