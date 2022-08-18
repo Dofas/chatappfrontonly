@@ -28,6 +28,7 @@
 .messages-list-item-text {
     position: relative;
     padding: 16px;
+    border-radius: 3px;
 }
 
 .messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text {
@@ -94,6 +95,96 @@
 
 .messages-list-item-active-user > .messages-list-image-container {
     order: -1;
+}
+
+.messages-list-message-image-container {
+    display: flex;
+}
+
+.message-list-image-link-container {
+    display: flex;
+    position: relative;
+}
+
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-message-image-container > .message-list-image-link-container {
+    order: 1;
+}
+
+.message-list-image-link-container:after {
+    content: '⌄';
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border-radius: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin: 0;
+}
+
+.messages-list-item-selected-user .message-list-image-link-container:after {
+    left: calc(50% - 6px);
+}
+
+.messages-list-item-active-user .message-list-image-link-container:after {
+    left: calc(50% + 6px);
+}
+
+.message-list-image-link-container:before {
+    content: '';
+    position: absolute;
+    width: calc(100% - 12px);
+    height: 100%;
+    opacity: 0.6;
+    background-color: var(--color-background-blur);
+}
+
+.messages-list-item-active-user .message-list-image-link-container:before {
+    right: 0;
+}
+
+.messages-list-item-active-user > .messages-list-message-content > .messages-list-message-image-container .messages-list-message-time {
+    right: 0;
+}
+
+.messages-list-message-image-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+}
+
+.messages-list-item-active-user .messages-list-message-image-info {
+    margin-left: 16px;
+}
+
+.messages-list-item-selected-user .messages-list-message-image-info {
+    margin-right: 16px;
+}
+
+.message-list-image-link {
+    width: 114px;
+    height: 84px;
+    border-radius: 4px;
+}
+
+.messages-list-item-selected-user .message-list-image-link {
+    margin-right: 12px;
+}
+
+.messages-list-item-active-user .message-list-image-link {
+    margin-left: 12px;
+}
+
+.messages-list-message-image-info > div {
+    margin-bottom: 4px;
+    margin-top: 14px;
+}
+
+.messages-list-message-image-info > a {
+    color: var(--color-dark-blue);
 }
 
 .position-center {

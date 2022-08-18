@@ -30,6 +30,7 @@
     --color-text-light-grey: #797f86;
     --color-text-white-grey: #80878f;
     --color-bg-white-grey: #f3f4f7;
+    --color-background-blur: #232323;
 }
 
 ::-webkit-scrollbar {
