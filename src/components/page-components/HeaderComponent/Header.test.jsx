@@ -41,6 +41,7 @@ describe("Header test", () => {
       );
     });
   });
+
   test("should render navbar with active statistics link and user info without notifications", async () => {
     expect(screen.getByText("All Projects")).toBeInTheDocument();
     expect(screen.getByText("Teams")).toBeInTheDocument();

@@ -11,10 +11,12 @@ describe("Group List tests", () => {
         render(<GroupsList groups={groups} />);
       });
     });
+
     test("should render groups list", async () => {
       expect(await screen.findByText("#someGroup")).toBeInTheDocument();
       expect(await screen.findByText("#someGroup2")).toBeInTheDocument();
     });
+
     test("should open and close modal", async () => {
       const addTBtn = await screen.findByTestId("add-group-button");
       await act(async () => userEvent.click(addTBtn));
@@ -23,6 +25,17 @@ describe("Group List tests", () => {
         userEvent.click(await screen.findByTestId("close-add-group-modal-btn"))
       );
       expect(screen.queryByText("Type group name")).not.toBeInTheDocument();
+    });
+
+    test("should prevent saving group with empty name and show error message", async () => {
+      const addTBtn = await screen.findByTestId("add-group-button");
+      await act(async () => userEvent.click(addTBtn));
+      await act(async () =>
+        userEvent.click(await screen.findByTestId("group-save-btn"))
+      );
+      expect(
+        await screen.findByText("You can not create group with empty name")
+      ).toBeInTheDocument();
     });
   });
 

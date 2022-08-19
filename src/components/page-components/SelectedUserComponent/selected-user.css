@@ -30,11 +30,19 @@
 .selected-user-name {
     color: var(--color-white);
     margin-bottom: 6px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 176px;
 }
 
 .selected-user-location {
     color: var(--color-text-white-grey);
     opacity: 0.9;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 176px;
 }
 
 .selected-user-info-container {
@@ -60,6 +68,10 @@
     color: var(--color-white);
     margin-top: 4px;
     margin-bottom: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 176px;
 }
 
 .selected-user-info-container > div > div:last-child {

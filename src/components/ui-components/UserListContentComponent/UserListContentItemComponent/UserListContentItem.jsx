@@ -46,7 +46,7 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
       </div>
       <div className={"user-list-team-user-info"}>
         <div className={"user-list-team-user-name"}>
-          <div>{user.senderName}</div>
+          <div title={user.senderName}>{user.senderName}</div>
           <div
             onClick={onSettingClick}
             className={"position-relative"}

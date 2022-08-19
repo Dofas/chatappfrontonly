@@ -31,7 +31,11 @@ const AddTeamModal = ({ isModal, closeModal }) => {
         )}
         <div>Type team name</div>
         <input ref={teamNameInputRef} className={"modal-input"} />
-        <div className={"modal-save-btn"} onClick={saveTeam}>
+        <div
+          className={"modal-save-btn"}
+          onClick={saveTeam}
+          data-testid={"team-save-btn"}
+        >
           Create team
         </div>
       </div>

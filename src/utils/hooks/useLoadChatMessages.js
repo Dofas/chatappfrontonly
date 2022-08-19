@@ -46,7 +46,7 @@ export function useLoadChatMessages(senderId, userId) {
         setIsError(false);
       } catch (e) {
         if (cancelRequest.current) return;
-        console.log(`Error while load channels ${e.message}`);
+        console.log(`Error while load messages ${e.message}`);
         setIsLoading(false);
         setIsError(true);
       }

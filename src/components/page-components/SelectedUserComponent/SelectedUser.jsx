@@ -11,10 +11,16 @@ const SelectedUser = () => {
         <>
           <div className={"selected-user-avatar"}>
             <img alt={"avatar"} src={selectedUser?.senderAvatar} />
-            <div className={"selected-user-name"}>
+            <div
+              className={"selected-user-name"}
+              title={selectedUser?.senderName}
+            >
               {selectedUser?.senderName}
             </div>
-            <div className={"selected-user-location"}>
+            <div
+              className={"selected-user-location"}
+              title={selectedUser?.location}
+            >
               {selectedUser?.location}
             </div>
           </div>
@@ -22,29 +28,39 @@ const SelectedUser = () => {
             <div>
               <div className={"selected-user-info-block"}>
                 <span>Nickname</span>
-                <div>{selectedUser?.nickName}</div>
+                <div title={selectedUser?.nickName}>
+                  {selectedUser?.nickName}
+                </div>
               </div>
               <div className={"selected-user-info-block"}>
                 <span>Email</span>
-                <div>{selectedUser?.email}</div>
+                <div title={selectedUser?.email}>{selectedUser?.email}</div>
               </div>
               <div className={"selected-user-info-block"}>
                 <span>Phone Number</span>
-                <div>{selectedUser?.number}</div>
+                <div title={selectedUser?.number}>{selectedUser?.number}</div>
               </div>
             </div>
             <div>
               <div className={"selected-user-info-block"}>
                 <span>Date of birthday</span>
-                <div>{selectedUser?.dateOfBirth}</div>
+                <div title={selectedUser?.dateOfBirth}>
+                  {selectedUser?.dateOfBirth}
+                </div>
               </div>
               <div className={"selected-user-info-block"}>
                 <span>Gender</span>
-                <div>{selectedUser?.gender}</div>
+                <div title={selectedUser?.gender}>{selectedUser?.gender}</div>
               </div>
               <div className={"selected-user-info-block"}>
                 <span>Languages</span>
-                <div>
+                <div
+                  title={
+                    selectedUser?.languages?.length <= 1
+                      ? selectedUser?.languages
+                      : selectedUser?.languages.join(", ")
+                  }
+                >
                   {selectedUser?.languages?.length <= 1
                     ? selectedUser?.languages
                     : selectedUser?.languages.join(", ")}

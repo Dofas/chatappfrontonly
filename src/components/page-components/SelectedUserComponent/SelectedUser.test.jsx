@@ -53,6 +53,7 @@ describe("Selected user tests", () => {
     expect(await screen.findByText("English")).toBeInTheDocument();
     expect(await screen.findByText("Show full profile")).toBeInTheDocument();
   });
+
   test("should render correct text if user while user dont select user", async () => {
     await act(() => {
       render(<SelectedUserWithState user={undefined} />, {

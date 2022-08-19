@@ -137,6 +137,7 @@
     content: '';
     position: absolute;
     width: calc(100% - 12px);
+    border-radius: 4px;
     height: 100%;
     opacity: 0.6;
     background-color: var(--color-background-blur);

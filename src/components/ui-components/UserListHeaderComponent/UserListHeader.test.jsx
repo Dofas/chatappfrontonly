@@ -41,6 +41,7 @@ describe("User list header tests", () => {
       );
     });
   });
+
   test("should render search bar with correct text and be able to set searching value", async () => {
     const searchText = await screen.findByText("List of someTeamName");
     expect(searchText).toBeInTheDocument();
@@ -54,6 +55,7 @@ describe("User list header tests", () => {
     await act(async () => userEvent.click(searchBtn));
     expect(searchText).toHaveTextContent("som");
   });
+
   test("should render correct menu and change menu option on click", async () => {
     const allOption = await screen.findByText("All messages");
     const unreadOption = await screen.findByText("Unread");

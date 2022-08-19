@@ -31,7 +31,11 @@ const AddGroupModal = ({ isModal, closeModal }) => {
         )}
         <div>Type group name</div>
         <input ref={groupNameInputRef} className={"modal-input"} />
-        <div onClick={saveGroupName} className={"modal-save-btn"}>
+        <div
+          onClick={saveGroupName}
+          className={"modal-save-btn"}
+          data-testid={"group-save-btn"}
+        >
           Save group
         </div>
       </div>

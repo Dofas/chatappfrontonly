@@ -17,7 +17,7 @@ const MessagesList = ({ messages }) => {
   const selectedUser = useRecoilValue(selectedUserState);
   const activeUser = useRecoilValue(activeUserInfo);
 
-  return messages.length ? (
+  return messages?.length ? (
     <div className={"messages-list-container"}>
       {messages.map((message) => (
         <div
@@ -43,7 +43,7 @@ const MessagesList = ({ messages }) => {
                     src={"/images/".concat(
                       removeWhiteSpaces(message.messageText)
                     )}
-                    alt="image"
+                    alt="loadedImage"
                   />
                   <div className={"messages-list-message-time"}>
                     {message.messageTime}
@@ -94,9 +94,7 @@ const MessagesList = ({ messages }) => {
       ))}
     </div>
   ) : (
-    <div className={"position-center"}>
-      You have no messages with this users
-    </div>
+    <div className={"position-center"}>You have no messages with this user</div>
   );
 };
 

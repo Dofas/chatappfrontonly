@@ -40,6 +40,7 @@ const TypeMessageContainer = () => {
     <div className={"type-message-container"}>
       <div
         className={"paper-clip-container"}
+        data-testid={"paper-clip-btn"}
         onClick={onSettingClick}
         ref={ref}
       >
@@ -50,7 +51,12 @@ const TypeMessageContainer = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div>Select image</div>
-            <input type={"file"} name={"myImage"} onChange={onUploadImage} />
+            <input
+              type={"file"}
+              name={"myImage"}
+              onChange={onUploadImage}
+              data-testid={"upload-image-input"}
+            />
           </div>
         )}
       </div>

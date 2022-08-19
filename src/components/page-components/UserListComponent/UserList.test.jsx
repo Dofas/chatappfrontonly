@@ -57,6 +57,7 @@ describe("User list tests", () => {
         );
       });
     });
+
     test("should search users when typed searching value", async () => {
       const searchPlaceholder = await screen.findByText("List of someTeam");
       expect(await screen.findByText("Some User")).toBeInTheDocument();
@@ -69,9 +70,10 @@ describe("User list tests", () => {
       expect(await screen.queryByText("Aaron Walker")).not.toBeInTheDocument();
       expect(await screen.findByText("Rachel Curtis")).toBeInTheDocument();
     });
+
     test("should set all options by default and be able to change menu option and render correct users", async () => {
       const allOption = await screen.findByText("All messages");
-      const unreadOption = await screen.findByText("Unread messages");
+      const unreadOption = await screen.findByText("Unread");
       const importantOption = await screen.findByText("Important");
 
       expect(allOption).toHaveClass("user-list-menu-selected-option");
@@ -98,6 +100,7 @@ describe("User list tests", () => {
       expect(importantOption).toHaveClass("user-list-menu-selected-option");
     });
   });
+
   describe("With empty mock response", () => {
     test("should show correct text if members doesnt exists in team", async () => {
       const mockedUserService = jest.mocked(UserService);
@@ -113,6 +116,25 @@ describe("User list tests", () => {
       });
       expect(
         await screen.findByText("You need some team to see members there")
+      ).toBeInTheDocument();
+    });
+  });
+
+  describe("With error response", () => {
+    test("should show correct text if back-end return an error", async () => {
+      const mockedUserService = jest.mocked(UserService);
+      mockedUserService.fetchTeamMembers.mockRejectedValue(new Error());
+      mockedUserService.getLastMessages.mockRejectedValue(new Error());
+      await act(() => {
+        render(
+          <UserListWithState user={activeUserState} channel={"someTeam"} />,
+          {
+            wrapper: RecoilRoot,
+          }
+        );
+      });
+      expect(
+        await screen.findByText("Problems with load members")
       ).toBeInTheDocument();
     });
   });

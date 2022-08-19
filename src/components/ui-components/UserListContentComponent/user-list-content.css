@@ -85,6 +85,13 @@
     justify-content: space-between;
 }
 
+.user-list-team-user-name > div:first-child {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 176px;
+}
+
 .user-list-team-user-messages {
     display: flex;
     font-family: Avenir, sans-serif;

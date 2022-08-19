@@ -43,7 +43,7 @@ const ActiveUser = ({
         </li>
       </ul>
       <div className={"active-user-info-block"}>
-        <div>{userName}</div>
+        <div title={userName}>{userName}</div>
         <img src={userAvatar} alt={"active-avatar"} />
       </div>
     </div>

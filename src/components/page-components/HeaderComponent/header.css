@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
     background-color: var(--bg-color-header);
     color: var(--color-white);
     padding: 0 32px ;

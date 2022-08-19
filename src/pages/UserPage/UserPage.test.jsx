@@ -94,6 +94,8 @@ describe("User Page tests", () => {
       userEvent.click(await screen.findByText("Some User"))
     );
     expect(await screen.findByText("some nickname 2")).toBeInTheDocument();
+    expect(await screen.findByText("You have no messages with this user"));
+    expect(await screen.findByText("Send")).toBeInTheDocument();
   });
 
   test("should show correct text if user doesnt exist", async () => {

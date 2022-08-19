@@ -98,6 +98,7 @@ describe("User list content tests", () => {
       "user-list-active-team-user"
     );
   });
+
   test("should render correct text if users doesn't exists", async () => {
     await act(() => {
       render(

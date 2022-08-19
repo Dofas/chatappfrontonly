@@ -24,12 +24,14 @@ describe("Team List tests", () => {
         render(<TeamListWithState />);
       });
     });
+
     test("should render team list", async () => {
       expect(await screen.findByText("#someTeam")).toBeInTheDocument();
       expect(await screen.findByText("#someTeam2")).toBeInTheDocument();
       expect(await screen.findByText("2")).toBeInTheDocument();
       expect(await screen.findByText("3")).toBeInTheDocument();
     });
+
     test("should open and close modal", async () => {
       const addBtn = await screen.findByTestId("add-team-button");
       await act(async () => userEvent.click(addBtn));
@@ -39,6 +41,18 @@ describe("Team List tests", () => {
       );
       expect(screen.queryByText("Type team name")).not.toBeInTheDocument();
     });
+
+    test("should prevent saving team with empty name and show error message", async () => {
+      const addTBtn = await screen.findByTestId("add-team-button");
+      await act(async () => userEvent.click(addTBtn));
+      await act(async () =>
+        userEvent.click(await screen.findByTestId("team-save-btn"))
+      );
+      expect(
+        await screen.findByText("You can not create team with empty name")
+      ).toBeInTheDocument();
+    });
+
     test("should call onChange function when team list item clicked", async () => {
       await act(async () =>
         userEvent.click(await screen.findByText("#someTeam2"))
