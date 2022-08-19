@@ -16,9 +16,9 @@ const ComponentWithModal = () => {
           <div
             data-testid={"close-modal-btn"}
             onClick={closeModal}
-            className={"modal-close-btn"}
+            className="modal-close-btn"
           />
-          <div className={"team-modal-content"}>
+          <div className="team-modal-content">
             <div onClick={closeModal}>Some modal text</div>
           </div>
         </Modal>

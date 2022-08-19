@@ -31,8 +31,8 @@ const UserPage = ({ activeLink }) => {
     <>
       <Header activeLink={activeLink} />
       <div
-        className={"user-page-content"}
-        data-testid={"user-page-content-data-id"}
+        className="user-page-content"
+        data-testid="user-page-content-data-id"
       >
         <ChannelList />
         <UserList />
@@ -41,7 +41,7 @@ const UserPage = ({ activeLink }) => {
       </div>
     </>
   ) : (
-    <div className={"user-page-load-error"}>User doesnt exist</div>
+    <div className="user-page-load-error">User doesnt exist</div>
   );
 
   return isLoading ? <Spinner /> : userContent;

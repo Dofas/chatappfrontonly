@@ -11,7 +11,7 @@ const messagesOption = [
 const Menu = () => {
   const [activeOption, setActiveOption] = useRecoilState(userListMenuOption);
   return (
-    <ul className={"user-list-menu"}>
+    <ul className="user-list-menu">
       {messagesOption.map((option) => (
         <li
           className={

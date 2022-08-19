@@ -19,22 +19,22 @@ const AddTeamModal = ({ isModal, closeModal }) => {
   return (
     <Modal show={isModal} onClose={closeModal}>
       <div
-        data-testid={"close-add-team-modal-btn"}
+        data-testid="close-add-team-modal-btn"
         onClick={closeModal}
-        className={"modal-close-btn"}
+        className="modal-close-btn"
       />
-      <div className={"team-modal-content"}>
+      <div className="team-modal-content">
         {isError && (
-          <div className={"team-modal-error-text"}>
+          <div className="team-modal-error-text">
             You can not create team with empty name
           </div>
         )}
         <div>Type team name</div>
-        <input ref={teamNameInputRef} className={"modal-input"} />
+        <input ref={teamNameInputRef} className="modal-input" />
         <div
-          className={"modal-save-btn"}
+          className="modal-save-btn"
           onClick={saveTeam}
-          data-testid={"team-save-btn"}
+          data-testid="team-save-btn"
         >
           Create team
         </div>

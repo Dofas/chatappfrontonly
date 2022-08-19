@@ -3,7 +3,7 @@ import "./groups-list-items.css";
 
 const GroupsListItems = ({ groups }) => {
   return groups?.length ? (
-    <ul className={"groups-list-items-container"}>
+    <ul className="groups-list-items-container">
       {groups.map((group) => (
         <li key={group} title={group}>
           #{group}
@@ -11,7 +11,7 @@ const GroupsListItems = ({ groups }) => {
       ))}
     </ul>
   ) : (
-    <div className={"empty-groups-list"}>Create or join to the group</div>
+    <div className="empty-groups-list">Create or join to the group</div>
   );
 };
 

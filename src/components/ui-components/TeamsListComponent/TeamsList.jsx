@@ -11,14 +11,14 @@ const TeamsList = ({ teams, activeTeam, setActiveTeam }) => {
 
   return (
     <div>
-      <div className={"team-list-header"}>
-        <span className={"title"}>Teams</span>
+      <div className="team-list-header">
+        <span className="title">Teams</span>
         <span
-          data-testid={"add-team-button"}
-          className={"add-img"}
+          data-testid="add-team-button"
+          className="add-img"
           onClick={openModal}
         >
-          <img src={AddIcon} alt={"add"} className={"team-add-btn-img"} />
+          <img src={AddIcon} alt="add" className="team-add-btn-img" />
         </span>
       </div>
       <TeamListItems

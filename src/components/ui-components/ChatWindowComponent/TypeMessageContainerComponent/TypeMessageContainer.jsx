@@ -37,17 +37,17 @@ const TypeMessageContainer = () => {
   };
 
   return (
-    <div className={"type-message-container"}>
+    <div className="type-message-container">
       <div
-        className={"paper-clip-container"}
-        data-testid={"paper-clip-btn"}
+        className="paper-clip-container"
+        data-testid="paper-clip-btn"
         onClick={onSettingClick}
         ref={ref}
       >
-        <img src={PaperClipImg} alt="paperClip" className={"paper-clip-img"} />
+        <img src={PaperClipImg} alt="paperClip" className="paper-clip-img" />
         {isSettings && (
           <div
-            className={"type-message-settings"}
+            className="type-message-settings"
             onClick={(e) => e.stopPropagation()}
           >
             <div>Select image</div>
@@ -55,17 +55,17 @@ const TypeMessageContainer = () => {
               type={"file"}
               name={"myImage"}
               onChange={onUploadImage}
-              data-testid={"upload-image-input"}
+              data-testid="upload-image-input"
             />
           </div>
         )}
       </div>
       <input
-        className={"type-message-input"}
+        className="type-message-input"
         placeholder={"Type your message…"}
         ref={messageInputRef}
       />
-      <button className={"send-message-button"} onClick={onSendBtnClick}>
+      <button className="send-message-button" onClick={onSendBtnClick}>
         Send
       </button>
     </div>

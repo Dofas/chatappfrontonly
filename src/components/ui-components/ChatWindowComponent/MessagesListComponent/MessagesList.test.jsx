@@ -2,7 +2,6 @@ import { act, render, screen } from "@testing-library/react";
 import MessagesList from "./MessagesList";
 import { WithActiveAndSelectedUser } from "../../../page-components/ChatComponent/Chat.test";
 import { RecoilRoot } from "recoil";
-import userEvent from "@testing-library/user-event";
 
 const messages = [
   {

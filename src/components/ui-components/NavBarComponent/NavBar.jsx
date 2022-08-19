@@ -22,7 +22,7 @@ const NavBar = ({ activeLink, id }) => {
   }, [id]);
 
   return (
-    <ul className={"header-nav-bar-container"}>
+    <ul className="header-nav-bar-container">
       {memorizedNavBarList.map((listItem) => (
         <li
           className={

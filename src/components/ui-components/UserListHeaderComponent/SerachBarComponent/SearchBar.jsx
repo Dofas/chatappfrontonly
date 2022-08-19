@@ -25,27 +25,27 @@ const SearchBar = () => {
   };
 
   return (
-    <div className={"user-list-search-container"} ref={ref}>
+    <div className="user-list-search-container" ref={ref}>
       {isSearching ? (
         <input
-          className={"user-list-search-input"}
-          data-testid={"user-list-search-input"}
+          className="user-list-search-input"
+          data-testid="user-list-search-input"
           autoFocus={true}
           value={searchValue}
           onChange={handleChangeInputValue}
           onKeyUp={onKeyUp}
         />
       ) : (
-        <span className={"title"} onClick={triggerSearching}>
+        <span className="title" onClick={triggerSearching}>
           {searchValue.length ? searchValue : `List of ${teamName}`}
         </span>
       )}
-      <span className={"user-list-search-btn"} onClick={triggerSearching}>
+      <span className="user-list-search-btn" onClick={triggerSearching}>
         <img
-          className={"user-list-search-img"}
-          data-testid={"user-list-search-icon"}
+          className="user-list-search-img"
+          data-testid="user-list-search-icon"
           src={SearchIcon}
-          alt={"search"}
+          alt="search"
         />
       </span>
     </div>

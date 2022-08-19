@@ -21,9 +21,9 @@ const ChannelList = () => {
   }, [teams]);
 
   const channelsListContent = (
-    <div className={"channel-list-container"}>
+    <div className="channel-list-container">
       {isError ? (
-        <span className={"title"}>Problems with load teams and groups</span>
+        <span className="title">Problems with load teams and groups</span>
       ) : (
         teams &&
         groups && (

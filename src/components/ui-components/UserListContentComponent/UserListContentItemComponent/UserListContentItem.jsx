@@ -28,11 +28,11 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
       }
       onClick={(e) => setChosenUser(e, user)}
     >
-      <div className={"position-relative"}>
+      <div className="position-relative">
         <img
-          className={"user-list-team-user-avatar"}
+          className="user-list-team-user-avatar"
           src={user.senderAvatar}
-          alt={"avt"}
+          alt="avatar"
         />
         <div
           className={
@@ -44,20 +44,16 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
           }
         />
       </div>
-      <div className={"user-list-team-user-info"}>
-        <div className={"user-list-team-user-name"}>
+      <div className="user-list-team-user-info">
+        <div className="user-list-team-user-name">
           <div title={user.senderName}>{user.senderName}</div>
-          <div
-            onClick={onSettingClick}
-            className={"position-relative"}
-            ref={ref}
-          >
-            <div className={"dot delete-action"} />
-            <div className={"dot delete-action"} />
-            <div className={"dot delete-action"} />
+          <div onClick={onSettingClick} className="position-relative" ref={ref}>
+            <div className="dot delete-action" />
+            <div className="dot delete-action" />
+            <div className="dot delete-action" />
             {isSettings && (
               <div
-                className={"user-list-item-setting"}
+                className="user-list-item-setting"
                 onClick={onDeleteUserClick}
               >
                 delete user
@@ -65,9 +61,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser }) => {
             )}
           </div>
         </div>
-        <div className={"user-list-team-user-messages"}>
+        <div className="user-list-team-user-messages">
           <div>{user.messageContent}</div>
-          <div className={"user-list-team-user-time"}>{user.time}</div>
+          <div className="user-list-team-user-time">{user.time}</div>
         </div>
       </div>
     </div>

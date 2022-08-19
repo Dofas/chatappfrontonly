@@ -13,7 +13,7 @@ const UserListContent = () => {
     setChosenUser(user);
   };
   return (
-    <div className={"user-list-team-users"}>
+    <div className="user-list-team-users">
       {users?.length ? (
         users.map((user) => (
           <UserListContentItem

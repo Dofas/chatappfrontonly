@@ -32,7 +32,7 @@ const Header = ({ activeLink }) => {
   }, [activeUser.id]);
 
   return (
-    <header className={"header"}>
+    <header className="header">
       <NavBar activeLink={activeLink} id={activeUser.id} />
       <ActiveUser
         notificationsCount={notifications.notificationsCount}

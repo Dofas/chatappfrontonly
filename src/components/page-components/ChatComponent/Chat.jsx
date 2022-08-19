@@ -16,17 +16,15 @@ const Chat = () => {
   );
 
   const messagesContent = (
-    <div className={"chat-container"}>
+    <div className="chat-container">
       {isError ? (
-        <span className={"title"}>Problems with load messages</span>
+        <span className="title">Problems with load messages</span>
       ) : messages ? (
         <>
           <ChatWindow messages={messages} />
         </>
       ) : (
-        <div className={"chat-empty-text"}>
-          Select user to see chat with him
-        </div>
+        <div className="chat-empty-text">Select user to see chat with him</div>
       )}
     </div>
   );

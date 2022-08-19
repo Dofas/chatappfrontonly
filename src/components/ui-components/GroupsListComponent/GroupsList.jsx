@@ -11,14 +11,14 @@ const GroupsList = ({ groups }) => {
 
   return (
     <div>
-      <div className={"group-list-header"}>
-        <span className={"title"}>Groups</span>
+      <div className="group-list-header">
+        <span className="title">Groups</span>
         <span
-          data-testid={"add-group-button"}
-          className={"add-img"}
+          data-testid="add-group-button"
+          className="add-img"
           onClick={openModal}
         >
-          <img src={AddDtn} alt={"add"} className={"groups-add-btn-icon"} />
+          <img src={AddDtn} alt="add" className="groups-add-btn-icon" />
         </span>
       </div>
       <GroupsListItems groups={groups} />

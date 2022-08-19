@@ -6,8 +6,8 @@ const Modal = ({ children, onClose }) => {
 
   return (
     <React.Fragment>
-      <div className={"modal-container"} onClick={onClose}>
-        <div className={"modal"} onClick={stopProp}>
+      <div className="modal-container" onClick={onClose}>
+        <div className="modal" onClick={stopProp}>
           {children}
         </div>
       </div>

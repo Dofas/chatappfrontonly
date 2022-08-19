@@ -25,16 +25,16 @@ const UserList = () => {
   }, [members]);
 
   const userListContent = (
-    <div className={"user-list-container"}>
+    <div className="user-list-container">
       {isError ? (
-        <span className={"title"}>Problems with load members</span>
+        <span className="title">Problems with load members</span>
       ) : members ? (
         <>
           <UserListHeader />
           <UserListContent />
         </>
       ) : (
-        <div className={"empty-user-list-text"}>
+        <div className="empty-user-list-text">
           You need some team to see members there
         </div>
       )}

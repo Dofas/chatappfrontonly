@@ -5,7 +5,7 @@ import "./user-list-header.css";
 
 const UserListHeader = () => {
   return (
-    <div className={"user-list-header-container"}>
+    <div className="user-list-header-container">
       <SearchBar />
       <Menu />
     </div>
