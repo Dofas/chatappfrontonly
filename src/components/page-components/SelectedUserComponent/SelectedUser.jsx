@@ -77,7 +77,7 @@ const SelectedUser = () => {
         </>
       ) : (
         <div className="selected-user-empty-text">
-          Select user for seen info about him
+          Select user to see info about him
         </div>
       )}
     </div>
