@@ -1,6 +1,6 @@
 import "./nav-bar.css";
-import { NavLink } from "react-router-dom";
 import { useMemo } from "react";
+import NavBarItem from "./NavBarItem";
 
 const NavBar = ({ activeLink, id }) => {
   const memorizedNavBarList = useMemo(() => {
@@ -24,14 +24,13 @@ const NavBar = ({ activeLink, id }) => {
   return (
     <ul className="header-nav-bar-container">
       {memorizedNavBarList.map((listItem) => (
-        <li
-          className={
-            activeLink === listItem.key ? "active-header-nav-bar-link" : ""
-          }
+        <NavBarItem
           key={listItem.key}
-        >
-          <NavLink to={listItem.path}>{listItem.text}</NavLink>
-        </li>
+          activeLink={activeLink}
+          itemLink={listItem.key}
+          itemPath={listItem.path}
+          itemText={listItem.text}
+        />
       ))}
     </ul>
   );

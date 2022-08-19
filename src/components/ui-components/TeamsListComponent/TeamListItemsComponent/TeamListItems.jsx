@@ -1,22 +1,20 @@
 import React from "react";
 import "./team-list-items.css";
+import TeamListItem from "./TeamListItem";
 
 const TeamListItems = ({ teams, activeTeam, setActiveTeam }) => {
   const onClickItem = (chosenTeam) => setActiveTeam(chosenTeam);
+
   return teams && teams.length ? (
     <ul className="team-list-items-container">
       {teams.map((team) => (
-        <li
+        <TeamListItem
           key={team.team}
-          title={team.team}
-          onClick={() => onClickItem(team.team)}
-          className={activeTeam === team.team ? "active-team" : ""}
-        >
-          <div className="team-name">#{team.team}</div>
-          <div className="team-members-count" data-testid="members-count">
-            {team.members.length}
-          </div>
-        </li>
+          team={team.team}
+          onClickTeam={onClickItem}
+          activeTeam={activeTeam}
+          teamMembers={team.members}
+        />
       ))}
     </ul>
   ) : (

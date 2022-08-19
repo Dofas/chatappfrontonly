@@ -1,13 +1,12 @@
 import React from "react";
 import "./groups-list-items.css";
+import GroupListItem from "./GroupListItem";
 
 const GroupsListItems = ({ groups }) => {
   return groups?.length ? (
     <ul className="groups-list-items-container">
       {groups.map((group) => (
-        <li key={group} title={group}>
-          #{group}
-        </li>
+        <GroupListItem key={group} group={group} />
       ))}
     </ul>
   ) : (

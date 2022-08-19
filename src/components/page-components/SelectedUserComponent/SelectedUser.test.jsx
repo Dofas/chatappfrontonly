@@ -61,7 +61,7 @@ describe("Selected user tests", () => {
       });
     });
     expect(
-      await screen.findByText("Select user for seen info about him")
+      await screen.findByText("Select user to see info about him")
     ).toBeInTheDocument();
   });
 });
