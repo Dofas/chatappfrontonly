@@ -15,7 +15,6 @@ const TypeMessageContainer = () => {
   const closeIsSettings = () => setIsSettings(false);
   const triggerSettings = () => setIsSettings(!isSettings);
   const messageInputRef = useRef();
-
   const ref = useClickOutside(closeIsSettings);
 
   //todo: can i set empty string for a ref ????
@@ -62,7 +61,7 @@ const TypeMessageContainer = () => {
       </div>
       <input
         className="type-message-input"
-        placeholder={"Type your message…"}
+        placeholder="Type your message…"
         ref={messageInputRef}
       />
       <button className="send-message-button" onClick={onSendBtnClick}>

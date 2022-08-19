@@ -17,6 +17,7 @@ const UserList = () => {
     activeUser?.id
   );
   const setUsers = useSetRecoilState(usersList);
+
   useEffect(() => {
     if (members?.length) {
       setUsers(members);
