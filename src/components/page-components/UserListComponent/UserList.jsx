@@ -8,8 +8,8 @@ import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import { usersList } from "../../../state/activeUserListState/atomActiveUserListState";
 import "./user-list.css";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
-import { chatWindowState } from "../../../state/responsiveState/atomChatWindowState";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
+import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 
 const UserList = () => {
   const activeTeam = useRecoilValue(activeChannel);
@@ -19,7 +19,7 @@ const UserList = () => {
     activeUser?.id
   );
   const setUsers = useSetRecoilState(usersList);
-  const isChatWindow = useRecoilValue(chatWindowState);
+  const selectedUser = useRecoilValue(selectedUserState);
   const { innerWidth } = useCalculateWindowSize();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const UserList = () => {
       className={
         innerWidth > 790
           ? "user-list-container"
-          : isChatWindow
+          : !!selectedUser
           ? "user-list-container display-hidden"
           : "user-list-container full-width"
       }
