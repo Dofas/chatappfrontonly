@@ -6,6 +6,8 @@ import { useLoadChatMessages } from "../../../utils/hooks/useLoadChatMessages";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 import ChatWindow from "../../ui-components/ChatWindowComponent/ChatWindow";
 import Spinner from "../../ui-components/SpinnerComponent/Spinner";
+import { chatWindowState } from "../../../state/responsiveState/atomChatWindowState";
+import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
 
 const Chat = () => {
   const selectedUser = useRecoilValue(selectedUserState);
@@ -15,8 +17,19 @@ const Chat = () => {
     activeUser?.id
   );
 
+  const isChatWindow = useRecoilValue(chatWindowState);
+  const { innerWidth } = useCalculateWindowSize();
+
   const messagesContent = (
-    <div className="chat-container">
+    <div
+      className={
+        innerWidth > 790
+          ? "chat-container"
+          : isChatWindow
+          ? "chat-container"
+          : "chat-container display-hidden"
+      }
+    >
       {isError ? (
         <span className="title">Problems with load messages</span>
       ) : messages ? (

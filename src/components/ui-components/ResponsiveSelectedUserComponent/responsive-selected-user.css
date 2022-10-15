@@ -1,0 +1,70 @@
+.responsive-selected-user-container {
+    display: none;
+    background-color: #7f7f7f;
+    position: relative;
+}
+
+.responsive-selected-user-container > .responsive-selected-user-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.responsive-selected-user-container > .responsive-selected-user-header-container > div {
+    display: flex;
+    align-items: center;
+}
+
+.responsive-selected-user-container > div > div > .selected-user-avatar {
+    padding: 5px;
+    align-items: center;
+    flex-direction: row;
+    font-size: 12px;
+    background-color: inherit;
+}
+
+.responsive-selected-user-container > div > div > .selected-user-avatar > div > img {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 0;
+    margin-right: 5px;
+}
+
+.responsive-selected-user-container > div > div .status {
+    left: 11%;
+}
+
+.responsive-selected-user-container > div > div .selected-user-name,
+.responsive-selected-user-container > div > div .selected-user-location,
+.responsive-selected-user-container .selected-user-info-block > span {
+    color: #161a1e;
+}
+
+.responsive-selected-user-container > .selected-user-info-container .selected-user-info-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.responsive-selected-user-container > .selected-user-info-container .selected-user-info-block:last-child {
+    padding-bottom: 0;
+}
+
+.responsive-selected-user-container > .selected-user-info-container > div {
+    margin-top: 5px;
+    box-shadow: none;
+}
+
+.responsive-selected-user-container .selected-user-info-block > span {
+    margin-right: 5px;
+}
+
+.responsive-selected-user-container .selected-user-info-block > div {
+    margin: 0;
+}
+
+.arrow {
+    font-size: 20px;
+    user-select:none;
+    cursor: pointer;
+}

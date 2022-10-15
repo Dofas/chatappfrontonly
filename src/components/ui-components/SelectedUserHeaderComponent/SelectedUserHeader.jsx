@@ -1,14 +1,29 @@
 import React from "react";
 
-const SelectedUserHeader = ({ avatar, name, location }) => {
+const SelectedUserHeader = ({ avatar, name, location, status }) => {
   return (
     <div className="selected-user-avatar">
-      <img alt="avatar" src={avatar} />
-      <div className="selected-user-name" title={name}>
-        {name}
+      <div className="position-relative">
+        <img alt="avatar" src={avatar} />
+        {status && (
+          <div
+            className={
+              status === "online"
+                ? "on status"
+                : status === "busy"
+                ? "busy status"
+                : "off status"
+            }
+          />
+        )}
       </div>
-      <div className="selected-user-location" title={location}>
-        {location}
+      <div>
+        <div className="selected-user-name" title={name}>
+          {name}
+        </div>
+        <div className="selected-user-location" title={location}>
+          {location}
+        </div>
       </div>
     </div>
   );

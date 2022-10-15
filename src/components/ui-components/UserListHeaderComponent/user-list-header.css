@@ -2,6 +2,15 @@
     box-shadow: inset 0 -1px 0 0 #3e444e;
 }
 
+.sidebar-toggle {
+    cursor: pointer;
+    display: none;
+}
+
+.sidebar-toggle > .arrow-left {
+    font-size: 25px;
+}
+
 .user-list-search-container {
     display: flex;
     justify-content: space-between;

@@ -7,6 +7,7 @@ import SelectedUserInfo from "../../ui-components/SelectedUserInfoComponent/Sele
 
 const SelectedUser = () => {
   const selectedUser = useRecoilValue(selectedUserState);
+
   return (
     <div className="selected-user-container">
       {selectedUser ? (
