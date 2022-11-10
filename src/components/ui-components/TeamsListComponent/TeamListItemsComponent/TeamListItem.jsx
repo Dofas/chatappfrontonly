@@ -5,7 +5,7 @@ const TeamListItem = ({ team, onClickTeam, activeTeam, teamMembers }) => {
     <li
       title={team}
       onClick={() => onClickTeam(team)}
-      className={activeTeam === team ? "active-team" : ""}
+      className={activeTeam.name === team ? "active-team" : ""}
     >
       <div className="team-name">#{team}</div>
       <div className="team-members-count" data-testid="members-count">

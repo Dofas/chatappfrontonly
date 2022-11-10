@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { UserService } from "../UserService/UserService";
 
-export function useAuth(userId) {
+export function useAuth(userNickName) {
   const [user, setUser] = useState(null);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -9,14 +9,20 @@ export function useAuth(userId) {
   const cancelRequest = useRef(false);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userNickName) return;
 
     cancelRequest.current = false;
     (async () => {
       try {
         setIsLoading(true);
-        const fetchedUser = await UserService.findUser(userId);
+        const fetchedUser = await UserService.findUser(userNickName);
         if (cancelRequest.current) return;
+        if (!fetchedUser?.status) {
+          setIsLoading(false);
+          setUser(null);
+          setIsError(true);
+          return;
+        }
         setIsLoading(false);
         setUser(fetchedUser);
         setIsError(false);
@@ -31,6 +37,6 @@ export function useAuth(userId) {
     return () => {
       cancelRequest.current = true;
     };
-  }, [userId]);
+  }, [userNickName]);
   return { user, isLoading, isError };
 }

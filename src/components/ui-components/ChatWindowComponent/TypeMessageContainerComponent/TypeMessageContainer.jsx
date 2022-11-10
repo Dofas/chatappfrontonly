@@ -1,32 +1,80 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import PaperClipImg from "../../../../assets/images/paperClip.jpg";
 import "./type-message-input.css";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedUserState } from "../../../../state/selectedUserState/atomSelectedUserState";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
+import { UserService } from "../../../../utils/UserService/UserService";
+import { allMessages } from "../../../../state/messagesState/atomMessages";
 
-const TypeMessageContainer = () => {
+function getCurrentTime() {
+  const now = new Date();
+  const currentMinutes =
+    now.getMinutes() > 9 ? now.getMinutes() : "0" + now.getMinutes();
+  const currentHours =
+    now.getHours() > 12 && now.getHours() < 23
+      ? { hours: now.getHours(), format: "am" }
+      : { hours: now.getHours(), format: "pm" };
+  return currentHours.hours + ":" + currentMinutes + currentHours.format;
+}
+
+const TypeMessageContainer = ({ socket }) => {
   const selectedUser = useRecoilValue(selectedUserState);
   const activeUser = useRecoilValue(activeUserInfo);
   const [isSettings, setIsSettings] = useState(false);
-  const [uploadedImage, setUploadImage] = useState(null);
+  const [messages, setMessages] = useRecoilState(allMessages);
+  const [uploadedImage, setUploadImage] = useState("");
+  const [message, setMessage] = useState("");
 
   const closeIsSettings = () => setIsSettings(false);
   const triggerSettings = () => setIsSettings(!isSettings);
-  const messageInputRef = useRef();
   const ref = useClickOutside(closeIsSettings);
 
-  //todo: can i set empty string for a ref ????
-  const onSendBtnClick = () => {
-    console.log(`message with content ${messageInputRef.current.value} send
-    from ${activeUser?.id} to ${selectedUser?.id}`);
-    messageInputRef.current.value = "";
+  const onSendBtnClick = async () => {
+    if (!activeUser?.id || !selectedUser?.id || !message) return;
+
+    const messageData = {
+      from: activeUser.id,
+      to: selectedUser.id,
+      sender: activeUser.id,
+      message: { text: message, sendTime: getCurrentTime() },
+      file: new File(["emptyFile"], "emptyFile.txt", {
+        type: "text/plain",
+      }),
+      isRead: false,
+    };
+    await UserService.createMessage(messageData);
+
+    socket.current.emit("send-msg", { ...messageData, file: undefined });
+    const newMessages = [...messages, messageData];
+    setMessages(newMessages);
+    setMessage("");
   };
 
-  const onUploadImage = (event) => {
-    console.log(`Uploaded image: ${event.target.files[0].name}`);
-    setUploadImage(event.target.files[0]);
+  const onUploadImage = async (event) => {
+    const messageData = {
+      from: activeUser.id,
+      to: selectedUser.id,
+      sender: activeUser.id,
+      message: { text: event.target.files[0].name, sendTime: getCurrentTime() },
+      file: event.target.files[0],
+      isRead: false,
+    };
+    const messageResp = await UserService.createMessage(messageData);
+    socket.current.emit("send-msg", {
+      ...messageData,
+      file: messageResp.fileName,
+    });
+    const newMessages = [
+      ...messages,
+      {
+        ...messageData,
+        message: { ...messageData.message, file: messageResp.fileName },
+      },
+    ];
+    setMessages(newMessages);
+    setUploadImage("");
     closeIsSettings();
   };
 
@@ -54,6 +102,7 @@ const TypeMessageContainer = () => {
               type={"file"}
               name={"myImage"}
               onChange={onUploadImage}
+              value={uploadedImage}
               data-testid="upload-image-input"
             />
           </div>
@@ -62,9 +111,14 @@ const TypeMessageContainer = () => {
       <input
         className="type-message-input"
         placeholder="Type your message…"
-        ref={messageInputRef}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
       />
-      <button className="send-message-button" onClick={onSendBtnClick}>
+      <button
+        className="send-message-button"
+        onClick={onSendBtnClick}
+        data-testid="send-message-button"
+      >
         Send
       </button>
     </div>

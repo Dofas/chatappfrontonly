@@ -68,3 +68,7 @@
     user-select:none;
     cursor: pointer;
 }
+
+.responsive-900 {
+    display: none;
+}

@@ -3,12 +3,12 @@ import TypeMessageContainer from "./TypeMessageContainerComponent/TypeMessageCon
 import MessagesList from "./MessagesListComponent/MessagesList";
 import ResponsiveSelectedUser from "../ResponsiveSelectedUserComponent/ResponsiveSelectedUser";
 
-const ChatWindow = ({ messages }) => {
+const ChatWindow = ({ setIsError, socket }) => {
   return (
     <>
-      <ResponsiveSelectedUser />
-      <MessagesList messages={messages} />
-      <TypeMessageContainer />
+      <ResponsiveSelectedUser socket={socket} />
+      <MessagesList setIsError={setIsError} socket={socket} />
+      <TypeMessageContainer socket={socket} />
     </>
   );
 };

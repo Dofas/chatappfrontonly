@@ -32,3 +32,9 @@
         display: block;
     }
 }
+
+@media (max-width: 790px) {
+    .chat-container .responsive-900 {
+        display: block;
+    }
+}

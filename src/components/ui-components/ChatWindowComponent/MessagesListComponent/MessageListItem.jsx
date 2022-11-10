@@ -1,15 +1,18 @@
 import React from "react";
+import { saveAs } from "file-saver";
 
-function checkIsImage(value) {
-  const imageRegex = /\.(gif|jpe?g|tiff?|png|webp|bmp)$/i;
-  return imageRegex.test(value);
-}
+const MessageListItem = ({
+  selectedUser,
+  activeUser,
+  text,
+  time,
+  sender,
+  file,
+}) => {
+  const downloadImage = (fileName) => {
+    saveAs(process.env.REACT_APP_API_URL + "/" + fileName, text);
+  };
 
-function removeWhiteSpaces(value) {
-  return value.replace(/ /g, "");
-}
-
-const MessageListItem = ({ selectedUser, activeUser, text, time, sender }) => {
   return (
     <div
       className={
@@ -19,25 +22,32 @@ const MessageListItem = ({ selectedUser, activeUser, text, time, sender }) => {
       }
     >
       <div className="messages-list-message-content">
-        {checkIsImage(text) ? (
+        {!!file ? (
           <div className="messages-list-message-image-container">
-            <a
-              download
-              href={"/images/".concat(removeWhiteSpaces(text))}
-              className="message-list-image-link-container"
+            <div
+              className="messages-list-download-image"
+              onClick={() => downloadImage(file)}
             >
               <img
                 className="message-list-image-link"
-                src={"/images/".concat(removeWhiteSpaces(text))}
+                src={process.env.REACT_APP_API_URL + "/" + file}
                 alt="loadedImage"
               />
               <div className="messages-list-message-time">{time}</div>
-            </a>
+            </div>
             <div className="messages-list-message-image-info">
               <div>{text}</div>
-              <a download href={"/images/".concat(removeWhiteSpaces(text))}>
+              <button
+                onClick={() => downloadImage(file)}
+                className="download-btn"
+                style={
+                  sender === selectedUser.id
+                    ? { alignSelf: "flex-end" }
+                    : { alignSelf: "flex-start" }
+                }
+              >
                 Download
-              </a>
+              </button>
             </div>
           </div>
         ) : (
@@ -58,8 +68,8 @@ const MessageListItem = ({ selectedUser, activeUser, text, time, sender }) => {
         <img
           src={
             sender === selectedUser.id
-              ? selectedUser.senderAvatar
-              : activeUser.avatar
+              ? process.env.REACT_APP_API_URL + "/" + selectedUser.avatar
+              : process.env.REACT_APP_API_URL + "/" + activeUser.avatar
           }
           className="messages-list-user-avatar"
           alt="avatar"

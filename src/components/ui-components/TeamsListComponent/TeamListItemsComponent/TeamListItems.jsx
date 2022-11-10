@@ -9,11 +9,11 @@ const TeamListItems = ({ teams, activeTeam, setActiveTeam }) => {
     <ul className="team-list-items-container">
       {teams.map((team) => (
         <TeamListItem
-          key={team.team}
-          team={team.team}
-          onClickTeam={onClickItem}
+          key={team.name}
+          team={team.name}
+          onClickTeam={() => onClickItem(team)}
           activeTeam={activeTeam}
-          teamMembers={team.members}
+          teamMembers={team.users}
         />
       ))}
     </ul>

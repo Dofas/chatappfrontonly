@@ -1,20 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./channel-list.css";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
-import { useLoadChannels } from "../../../utils/hooks/useLoadChannels";
 import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import TeamsList from "../../ui-components/TeamsListComponent/TeamsList";
 import GroupsList from "../../ui-components/GroupsListComponent/GroupsList";
-import { activeChannel } from "../../../state/activeChannelState/atomActiveChannelState";
+import {
+  activeChannel,
+  allGroups,
+  allTeams,
+} from "../../../state/activeChannelState/atomActiveChannelState";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
 import { sidebarState } from "../../../state/responsiveState/atomSideBarState";
 import { useClickOutside } from "../../../utils/hooks/useClickOutside";
+import { UserService } from "../../../utils/UserService/UserService";
+import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 
-const ChannelList = () => {
-  const activeUser = useRecoilValue(activeUserInfo);
+const ChannelList = ({ socket }) => {
   const [activeTeam, setActiveTeam] = useRecoilState(activeChannel);
-  const { teams, groups, isLoading, isError } = useLoadChannels(activeUser.id);
+  const [teams, setTeams] = useRecoilState(allTeams);
+  const [groups, setGroups] = useRecoilState(allGroups);
+  const activeUser = useRecoilValue(activeUserInfo);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [isSidebar, setIsSidebar] = useRecoilState(sidebarState);
   const { innerWidth } = useCalculateWindowSize();
   const closeSidebar = () => setIsSidebar(false);
@@ -22,10 +30,48 @@ const ChannelList = () => {
 
   useEffect(() => {
     if (teams?.length && !activeTeam) {
-      setActiveTeam(teams[0].team);
+      setActiveTeam(teams[0]);
     }
     //eslint-disable-next-line
   }, [teams]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("upd-team", (newTeams) => {
+        const fullTeams = [...teams, ...newTeams];
+        setTeams(fullTeams);
+      });
+
+      socket.current.on("upd-group", (newGroups) => {
+        const fullGroups = [...groups, ...newGroups];
+        setGroups(fullGroups);
+      });
+    }
+  }, [socket.current, setTeams, setGroups, teams, groups]);
+
+  useEffect(() => {
+    if (!activeUser?.id) return;
+    setIsLoading(true);
+    UserService.getTeams(activeUser?.id)
+      .then((respTeams) => {
+        setIsError(false);
+        setTeams(respTeams);
+      })
+      .catch(() => {
+        console.log(`Error while loading teams`);
+        setIsError(true);
+      });
+    UserService.getGroups(activeUser?.id)
+      .then((respGrp) => {
+        setIsError(false);
+        setGroups(respGrp);
+      })
+      .catch(() => {
+        console.log(`Error while loading teams`);
+        setIsError(true);
+      });
+    setIsLoading(false);
+  }, [setTeams, setGroups, activeUser]);
 
   const channelsListContent = (
     <div
@@ -48,8 +94,9 @@ const ChannelList = () => {
               teams={teams}
               activeTeam={activeTeam}
               setActiveTeam={setActiveTeam}
+              socket={socket}
             />
-            <GroupsList groups={groups} />
+            <GroupsList groups={groups} socket={socket} />
           </>
         )
       )}

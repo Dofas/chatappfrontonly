@@ -1,33 +1,93 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import UserListHeader from "../../ui-components/UserListHeaderComponent/UserListHeader";
 import UserListContent from "../../ui-components/UserListContentComponent/UserListContent";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { activeChannel } from "../../../state/activeChannelState/atomActiveChannelState";
-import { useLoadUsers } from "../../../utils/hooks/useLoadUsers";
-import Spinner from "../../ui-components/SpinnerComponent/Spinner";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  activeChannel,
+  allTeams,
+} from "../../../state/activeChannelState/atomActiveChannelState";
 import { usersList } from "../../../state/activeUserListState/atomActiveUserListState";
 import "./user-list.css";
-import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
+import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
+import { sidebarState } from "../../../state/responsiveState/atomSideBarState";
+import { UserService } from "../../../utils/UserService/UserService";
 
-const UserList = () => {
-  const activeTeam = useRecoilValue(activeChannel);
-  const activeUser = useRecoilValue(activeUserInfo);
-  const { members, isError, isLoading } = useLoadUsers(
-    activeTeam,
-    activeUser?.id
-  );
-  const setUsers = useSetRecoilState(usersList);
-  const selectedUser = useRecoilValue(selectedUserState);
+const UserList = ({ socket }) => {
+  const [activeTeam, setActiveTeam] = useRecoilState(activeChannel);
+  const [users, setUsers] = useRecoilState(usersList);
+  const [selectedUser, setSelectedUser] = useRecoilState(selectedUserState);
+  const setAllExistedTeams = useSetRecoilState(allTeams);
   const { innerWidth } = useCalculateWindowSize();
+  const setIsSidebar = useSetRecoilState(sidebarState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const changeSidebarState = () => {
+    setIsSidebar((prev) => !prev);
+  };
 
   useEffect(() => {
-    if (members?.length) {
-      setUsers(members);
-    }
+    (async () => {
+      if (activeTeam?.users) {
+        Promise.all(
+          activeTeam.users.map(async (user) => {
+            const userInfo = await UserService.findUser(user);
+            return userInfo;
+          })
+        )
+          .then((data) => setUsers(data))
+          .catch((error) => {
+            setIsError(true);
+            console.log(`Error while loading usersInfo ${error.message}`);
+          })
+          .finally(() => setIsLoading(false));
+      }
+    })();
+
     //eslint-disable-next-line
-  }, [members]);
+  }, [activeTeam?.users]);
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("upd-team-user", (updatedUsers) => {
+        setAllExistedTeams(updatedUsers.teams);
+        if (updatedUsers.isEmptyUsers) {
+          setActiveTeam("");
+          return;
+        }
+        if (
+          !updatedUsers.isEmptyUsers &&
+          activeTeam.name === updatedUsers.name
+        ) {
+          if (selectedUser.nickName === updatedUsers.nickNameToTDelete) {
+            setSelectedUser("");
+          }
+          const newUsers =
+            users?.length > 0
+              ? users.filter(
+                  (user) => user.nickName !== updatedUsers.nickNameToTDelete
+                )
+              : [];
+          const activeTeam = updatedUsers.teams.filter(
+            (team) => updatedUsers.name === team.name
+          )[0];
+          setActiveTeam(activeTeam);
+          setUsers(newUsers);
+        }
+      });
+    }
+  }, [
+    socket.current,
+    activeTeam,
+    selectedUser,
+    users,
+    setActiveTeam,
+    setAllExistedTeams,
+    setSelectedUser,
+    setUsers,
+  ]);
 
   const userListContent = (
     <div
@@ -41,14 +101,18 @@ const UserList = () => {
     >
       {isError ? (
         <span className="title">Problems with load members</span>
-      ) : members ? (
+      ) : activeTeam?.users ? (
         <>
           <UserListHeader />
-          <UserListContent />
+          <UserListContent socket={socket} />
         </>
       ) : (
         <div className="empty-user-list-text">
-          You need some team to see members there
+          <div className="sidebar-toggle" onClick={changeSidebarState}>
+            <span className="arrow-left">&#8592;</span>
+            <span>Open channel list</span>
+          </div>
+          <span>You need some team to see members there</span>
         </div>
       )}
     </div>

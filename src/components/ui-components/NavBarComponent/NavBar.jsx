@@ -42,7 +42,11 @@ const NavBar = ({ activeLink, id }) => {
 
   return (
     <>
-      <div className="burger-menu" onClick={updateMenu}>
+      <div
+        className="burger-menu"
+        onClick={updateMenu}
+        data-testid="burger-menu"
+      >
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>

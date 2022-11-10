@@ -1,12 +1,32 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import Chat from "./Chat";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 import { activeUser } from "../../../state/activeUserState/atomActiveUser";
 import { UserService } from "../../../utils/UserService/UserService";
+import MockedSocket from "socket.io-mock";
 
 jest.mock("../../../utils/UserService/UserService");
+
+export const allMessagesMockResponse = [
+  {
+    isRead: true,
+    message: { text: "Mock text 1", sendTime: "18:15am", file: null },
+    sender: "user2_id",
+    users: ["user1_id", "user2_id"],
+  },
+  {
+    isRead: true,
+    message: {
+      text: "Screenshot from 2022-10-04 21-59-00.png",
+      sendTime: "20:20am",
+      file: "8ebdf961-f0b0-4751-abad-4eb46d5dd5e5.png",
+    },
+    sender: "user2_id",
+    users: ["user1_id", "user2_id"],
+  },
+];
 
 export const WithActiveAndSelectedUser = ({ children }) => {
   const setActiveUser = useSetRecoilState(activeUser);
@@ -40,31 +60,18 @@ export const WithActiveAndSelectedUser = ({ children }) => {
   return <>{children}</>;
 };
 
-const allMessagesMockResponse = [
-  { getter: "user1_id", messageId: "message_1", sender: "user2_id" },
-  { getter: "user2_id", messageId: "message_2", sender: "user1_id" },
-];
-
-const firstMessageInfo = [
-  {
-    content: "Mock text 1",
-    id: "message_1",
-    sendTime: "10:30pm",
-  },
-];
-
-const secondMessageInfo = [
-  {
-    content: "Mock text 2",
-    id: "message_2",
-    sendTime: "12:51pm",
-  },
-];
-
 describe("Chat tests", () => {
   test("should show correct text if user doesn't select another user for chatting", async () => {
-    await act(() => {
-      render(<Chat />, { wrapper: RecoilRoot });
+    await act(async () => {
+      let socketMock = new MockedSocket();
+      await render(
+        <Chat
+          socket={{
+            current: socketMock.socketClient,
+          }}
+        />,
+        { wrapper: RecoilRoot }
+      );
     });
     expect(
       await screen.findByText("Select user to see chat with him")
@@ -74,38 +81,33 @@ describe("Chat tests", () => {
   test("should fetch data and then render correct messages list", async () => {
     const mockedUserService = jest.mocked(UserService);
     mockedUserService.getAllMessages.mockResolvedValue(allMessagesMockResponse);
-    mockedUserService.getMessageInfo
-      .mockResolvedValueOnce(firstMessageInfo)
-      .mockResolvedValueOnce(secondMessageInfo);
 
-    await act(() => {
-      render(
+    await act(async () => {
+      let socketMock = new MockedSocket();
+      await render(
         <WithActiveAndSelectedUser>
-          <Chat />
+          <Chat
+            socket={{
+              current: socketMock.socketClient,
+            }}
+          />
         </WithActiveAndSelectedUser>,
         { wrapper: RecoilRoot }
       );
     });
-    expect(await screen.findByText("Mock text 1")).toBeInTheDocument();
-    expect(await screen.findByText("10:30pm")).toBeInTheDocument();
-    expect(await screen.findByText("Mock text 2")).toBeInTheDocument();
-    expect(await screen.findByText("12:51pm")).toBeInTheDocument();
-  });
-
-  test("should show correct text if back-end return an error", async () => {
-    const mockedUserService = jest.mocked(UserService);
-    mockedUserService.getAllMessages.mockRejectedValue(new Error());
-
-    await act(() => {
-      render(
-        <WithActiveAndSelectedUser>
-          <Chat />
-        </WithActiveAndSelectedUser>,
-        { wrapper: RecoilRoot }
-      );
-    });
-    expect(
-      await screen.findByText("Problems with load messages")
-    ).toBeInTheDocument();
+    await waitFor(async () =>
+      expect(await screen.findByText("Mock text 1")).toBeInTheDocument()
+    );
+    await waitFor(async () =>
+      expect(await screen.findByText("18:15am")).toBeInTheDocument()
+    );
+    await waitFor(async () =>
+      expect(
+        await screen.findByText("Screenshot from 2022-10-04 21-59-00.png")
+      ).toBeInTheDocument()
+    );
+    await waitFor(async () =>
+      expect(await screen.findByText("20:20am")).toBeInTheDocument()
+    );
   });
 });

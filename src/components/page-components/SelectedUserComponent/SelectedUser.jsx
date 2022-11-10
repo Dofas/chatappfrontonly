@@ -7,21 +7,20 @@ import SelectedUserInfo from "../../ui-components/SelectedUserInfoComponent/Sele
 
 const SelectedUser = () => {
   const selectedUser = useRecoilValue(selectedUserState);
-
   return (
     <div className="selected-user-container">
-      {selectedUser ? (
+      {selectedUser?.id ? (
         <>
           <SelectedUserHeader
-            avatar={selectedUser?.senderAvatar}
-            name={selectedUser?.senderName}
+            avatar={selectedUser?.avatar}
+            name={selectedUser?.firstName + " " + selectedUser?.lastName}
             location={selectedUser?.location}
           />
           <SelectedUserInfo
             nickName={selectedUser?.nickName}
             email={selectedUser?.email}
             phone={selectedUser?.number}
-            dob={selectedUser?.dateOfBirth}
+            dob={selectedUser?.dateOfBirthday}
             gender={selectedUser?.gender}
             languages={selectedUser?.languages}
           />

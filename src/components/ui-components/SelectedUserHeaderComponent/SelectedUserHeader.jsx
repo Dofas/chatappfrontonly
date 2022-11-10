@@ -4,7 +4,7 @@ const SelectedUserHeader = ({ avatar, name, location, status }) => {
   return (
     <div className="selected-user-avatar">
       <div className="position-relative">
-        <img alt="avatar" src={avatar} />
+        <img alt="avatar" src={process.env.REACT_APP_API_URL + "/" + avatar} />
         {status && (
           <div
             className={

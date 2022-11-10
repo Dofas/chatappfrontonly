@@ -15,6 +15,10 @@
     .header > .header-nav-bar-container > li {
         padding: 23px 0 24px;
     }
+
+    .header .active-user-info-block > div:first-child {
+        max-width: 95px;
+    }
 }
 
 

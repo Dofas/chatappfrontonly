@@ -102,16 +102,25 @@
     display: flex;
 }
 
-.message-list-image-link-container {
-    display: flex;
-    position: relative;
+.download-btn {
+    border: none;
+    background-color: transparent;
+    color: #1b76ed;
+    cursor: pointer;
+    padding: 0;
 }
 
-.messages-list-item-selected-user > .messages-list-message-content > .messages-list-message-image-container > .message-list-image-link-container {
+.messages-list-download-image {
+    display: flex;
+    position: relative;
+    cursor: pointer;
+}
+
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-message-image-container > .messages-list-download-image {
     order: 1;
 }
 
-.message-list-image-link-container:after {
+.messages-list-download-image:after {
     content: '⌄';
     font-size: 20px;
     text-align: center;
@@ -126,29 +135,29 @@
     margin: 0;
 }
 
-.messages-list-item-selected-user .message-list-image-link-container:after {
-    left: calc(50% - 6px);
+.messages-list-item-selected-user .messages-list-download-image:after {
+    left: 50%;
 }
 
-.messages-list-item-active-user .message-list-image-link-container:after {
-    left: calc(50% + 6px);
+.messages-list-item-active-user .messages-list-download-image:after {
+    left: 50%;
 }
 
-.message-list-image-link-container:before {
+.messages-list-download-image:before {
     content: '';
     position: absolute;
-    width: calc(100% - 12px);
+    width: 100%;
     border-radius: 4px;
     height: 100%;
     opacity: 0.6;
     background-color: var(--color-background-blur);
 }
 
-.messages-list-item-active-user .message-list-image-link-container:before {
+.messages-list-item-active-user .messages-list-download-image:before {
     right: 0;
 }
 
-.messages-list-item-active-user > .messages-list-message-content > .messages-list-message-image-container .messages-list-message-time {
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-message-image-container .messages-list-message-time {
     right: 0;
 }
 
@@ -172,21 +181,17 @@
     border-radius: 4px;
 }
 
-.messages-list-item-selected-user .message-list-image-link {
+.messages-list-item-selected-user .messages-list-download-image {
     margin-right: 12px;
 }
 
-.messages-list-item-active-user .message-list-image-link {
+.messages-list-item-active-user .messages-list-download-image {
     margin-left: 12px;
 }
 
 .messages-list-message-image-info > div {
     margin-bottom: 4px;
     margin-top: 14px;
-}
-
-.messages-list-message-image-info > a {
-    color: var(--color-dark-blue);
 }
 
 .position-center {

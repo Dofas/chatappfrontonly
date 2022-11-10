@@ -75,29 +75,6 @@ const UserListContentWithState = ({ onUserSelect, users }) => {
 
 describe("User list content tests", () => {
   const onUserSelect = jest.fn();
-  test("should be able to select user when clicked on user", async () => {
-    await act(() => {
-      render(
-        <UserListContentWithState
-          onUserSelect={onUserSelect}
-          users={mockUsers}
-        />,
-        {
-          wrapper: RecoilRoot,
-        }
-      );
-    });
-
-    const user = await screen.findByText("Matt Tompson");
-    expect(user.parentNode.parentNode.parentNode).not.toHaveClass(
-      "user-list-active-team-user"
-    );
-    await act(async () => userEvent.click(user));
-    expect(onUserSelect).toHaveBeenCalledWith(mockUsers[0]);
-    expect(user.parentNode.parentNode.parentNode).toHaveClass(
-      "user-list-active-team-user"
-    );
-  });
 
   test("should render correct text if users doesn't exists", async () => {
     await act(() => {

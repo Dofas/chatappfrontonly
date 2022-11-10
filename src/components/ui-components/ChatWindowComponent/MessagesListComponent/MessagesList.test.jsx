@@ -2,26 +2,25 @@ import { act, render, screen } from "@testing-library/react";
 import MessagesList from "./MessagesList";
 import { WithActiveAndSelectedUser } from "../../../page-components/ChatComponent/Chat.test";
 import { RecoilRoot } from "recoil";
+import MockedSocket from "socket.io-mock";
+import { UserService } from "../../../../utils/UserService/UserService";
 
-const messages = [
-  {
-    messageText: "Big room.jpg",
-    messageTime: "11:22pm",
-    sender: "user1_id",
-  },
-  {
-    messageText: "Mock message text",
-    messageTime: "14:32pm",
-    sender: "user2_id",
-  },
-];
+jest.mock("../../../../utils/UserService/UserService");
 
 describe("Messages list tests", () => {
   test("should render correct text if messages not exist", async () => {
-    await act(() => {
-      render(
+    const mockedUserService = jest.mocked(UserService);
+    mockedUserService.getAllMessages.mockResolvedValueOnce([]);
+    await act(async () => {
+      let socketMock = new MockedSocket();
+      await render(
         <WithActiveAndSelectedUser>
-          <MessagesList />
+          <MessagesList
+            socket={{
+              current: socketMock.socketClient,
+            }}
+            setIsError={jest.fn()}
+          />
         </WithActiveAndSelectedUser>,
         { wrapper: RecoilRoot }
       );
@@ -29,25 +28,5 @@ describe("Messages list tests", () => {
     expect(
       await screen.findByText("You have no messages with this user")
     ).toBeInTheDocument();
-  });
-
-  test("should render correct message list and download image from message", async () => {
-    await act(() => {
-      render(
-        <WithActiveAndSelectedUser>
-          <MessagesList messages={messages} />
-        </WithActiveAndSelectedUser>,
-        { wrapper: RecoilRoot }
-      );
-    });
-    expect(await screen.findByText("Big room.jpg")).toBeInTheDocument();
-    expect(await screen.findByText("11:22pm")).toBeInTheDocument();
-    expect(await screen.findByText("Mock message text")).toBeInTheDocument();
-    expect(await screen.findByText("14:32pm")).toBeInTheDocument();
-    expect(screen.getByText("Download")).toHaveAttribute("download");
-    expect(screen.getByText("Download")).toHaveAttribute(
-      "href",
-      "/images/Bigroom.jpg"
-    );
   });
 });

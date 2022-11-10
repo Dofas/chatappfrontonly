@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./responsive-selected-user.css";
 import { useRecoilState } from "recoil";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 import SelectedUserHeader from "../SelectedUserHeaderComponent/SelectedUserHeader";
 import SelectedUserInfo from "../SelectedUserInfoComponent/SelectedUserInfo";
 
-const ResponsiveSelectedUser = () => {
+const ResponsiveSelectedUser = ({ socket }) => {
   const [selectedUser, setSelectedUser] = useRecoilState(selectedUserState);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -13,35 +13,49 @@ const ResponsiveSelectedUser = () => {
 
   const disSelectUser = () => setSelectedUser("");
 
+  useEffect(() => {
+    socket.current.on("upd-status", (newStatus) => {
+      if (selectedUser.nickName === newStatus.nickName) {
+        setSelectedUser({ ...selectedUser, status: newStatus.status });
+      }
+    });
+  }, [socket.current, selectedUser, setSelectedUser]);
+
   return (
-    <div className="responsive-selected-user-container">
-      <div className="responsive-selected-user-header-container">
-        <div>
-          <span className="arrow" onClick={disSelectUser}>
-            &#8592;
+    selectedUser?.id && (
+      <div className="responsive-selected-user-container">
+        <div className="responsive-selected-user-header-container">
+          <div>
+            <span className="arrow responsive-900" onClick={disSelectUser}>
+              &#8592;
+            </span>
+            <SelectedUserHeader
+              avatar={selectedUser?.avatar}
+              name={selectedUser?.firstName + " " + selectedUser?.lastName}
+              location={selectedUser?.location}
+              status={selectedUser?.status}
+            />
+          </div>
+          <span
+            className="arrow"
+            onClick={changeCollapse}
+            data-testid="collapse-user-info"
+          >
+            &#8595;
           </span>
-          <SelectedUserHeader
-            avatar={selectedUser?.senderAvatar}
-            name={selectedUser?.senderName}
-            location={selectedUser?.location}
-            status={selectedUser?.userStatus}
-          />
         </div>
-        <span className="arrow" onClick={changeCollapse}>
-          &#8595;
-        </span>
+        {isCollapsed && (
+          <SelectedUserInfo
+            nickName={selectedUser?.nickName}
+            email={selectedUser?.email}
+            phone={selectedUser?.number}
+            dob={selectedUser?.dateOfBirthday}
+            gender={selectedUser?.gender}
+            languages={selectedUser?.languages}
+          />
+        )}
       </div>
-      {isCollapsed && (
-        <SelectedUserInfo
-          nickName={selectedUser?.nickName}
-          email={selectedUser?.email}
-          phone={selectedUser?.number}
-          dob={selectedUser?.dateOfBirth}
-          gender={selectedUser?.gender}
-          languages={selectedUser?.languages}
-        />
-      )}
-    </div>
+    )
   );
 };
 

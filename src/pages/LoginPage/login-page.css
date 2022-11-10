@@ -1,0 +1,20 @@
+.login-page-container {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #161a1e;
+}
+
+.login-page-container > div {
+    margin-bottom: 15px;
+    color: #24cf5f;
+}
+
+.login-page-container > button {
+    width: 100px;
+    height: 50px;
+    text-transform: uppercase;
+    background-color: #24cf5f;
+}

@@ -37,7 +37,7 @@ const SearchBar = () => {
         />
       ) : (
         <span className="title" onClick={triggerSearching}>
-          {searchValue.length ? searchValue : `List of ${teamName}`}
+          {searchValue.length ? searchValue : `List of ${teamName.name}`}
         </span>
       )}
       <span className="user-list-search-btn" onClick={triggerSearching}>

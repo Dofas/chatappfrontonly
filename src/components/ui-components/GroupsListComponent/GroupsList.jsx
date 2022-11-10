@@ -4,7 +4,7 @@ import AddDtn from "../../../assets/images/grey-plus.jpg";
 import GroupsListItems from "./GroupListItemsComponent/GroupsListItems";
 import AddGroupModal from "./AddGroupModalComponent/AddGroupModal";
 
-const GroupsList = ({ groups }) => {
+const GroupsList = ({ groups, socket }) => {
   const [isModal, setIsModal] = useState(null);
   const openModal = () => setIsModal(true);
   const closeModal = () => setIsModal(false);
@@ -22,7 +22,13 @@ const GroupsList = ({ groups }) => {
         </span>
       </div>
       <GroupsListItems groups={groups} />
-      {isModal && <AddGroupModal isModal={isModal} closeModal={closeModal} />}
+      {isModal && (
+        <AddGroupModal
+          isModal={isModal}
+          closeModal={closeModal}
+          socket={socket}
+        />
+      )}
     </div>
   );
 };

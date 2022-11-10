@@ -56,6 +56,8 @@
 .active-user-info-block {
     display: flex;
     align-items: center;
+    position: relative;
+    cursor: pointer;
 }
 
 .active-user-info-block > div:first-child {
@@ -70,4 +72,13 @@
     height: 32px;
     border-radius: 50%;
     margin-left: 16px;
+}
+
+.header-menu-exit {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    background-color: #161a1e;
+    color: red;
+    cursor: pointer;
 }

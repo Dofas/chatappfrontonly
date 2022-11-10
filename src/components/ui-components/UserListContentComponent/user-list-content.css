@@ -41,6 +41,22 @@
     background-color: var(--color-red);
 }
 
+.user-list-unread-messages-count {
+    position: relative;
+    color: black;
+    background-color: #1b76ed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    bottom: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .dot {
     display: inline-block;
     height: 5px;
@@ -98,13 +114,14 @@
     font-size: 12px;
     line-height: 1.5;
     color: var(--color-text-grey);
+    height: 18px;
 }
 
 .user-list-team-user-messages > div {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 176px;
+    max-width: 170px;
 }
 
 .user-list-team-user-time {

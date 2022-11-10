@@ -2,7 +2,9 @@ import { render, act, screen } from "@testing-library/react";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { useEffect } from "react";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
-import SelectedUser from "./SelectedUser";
+import ResponsiveSelectedUser from "./ResponsiveSelectedUser";
+import MockedSocket from "socket.io-mock";
+import userEvent from "@testing-library/user-event";
 
 const userInfo = {
   dateOfBirthday: "January 2, 1990",
@@ -25,14 +27,21 @@ const userInfo = {
 
 const SelectedUserWithState = ({ user }) => {
   const setUser = useSetRecoilState(selectedUserState);
+  let socketMock = new MockedSocket();
   useEffect(() => {
     setUser(user);
   }, []);
-  return <SelectedUser />;
+  return (
+    <ResponsiveSelectedUser
+      socket={{
+        current: socketMock.socketClient,
+      }}
+    />
+  );
 };
 
-describe("Selected user tests", () => {
-  test("should render correct user info", async () => {
+describe("Responsible Selected user tests", () => {
+  test("should render correct user info and be able to open and close additional info", async () => {
     await act(() => {
       render(<SelectedUserWithState user={userInfo} />, {
         wrapper: RecoilRoot,
@@ -40,6 +49,21 @@ describe("Selected user tests", () => {
     });
     expect(await screen.findByText("Matt Tompson")).toBeInTheDocument();
     expect(await screen.findByText("San Francisco, USA")).toBeInTheDocument();
+
+    expect(screen.queryByText("Nickname")).not.toBeInTheDocument();
+    expect(screen.queryByText("some nickname 2")).not.toBeInTheDocument();
+    expect(screen.queryByText("Email")).not.toBeInTheDocument();
+    expect(screen.queryByText("someemail2@gmail.com")).not.toBeInTheDocument();
+    expect(screen.queryByText("Phone Number")).not.toBeInTheDocument();
+    expect(screen.queryByText("(805) 651-9081")).not.toBeInTheDocument();
+    expect(screen.queryByText("Date of birthday")).not.toBeInTheDocument();
+    expect(screen.queryByText("January 2, 1990")).not.toBeInTheDocument();
+    expect(screen.queryByText("Gender")).not.toBeInTheDocument();
+    expect(screen.queryByText("Male")).not.toBeInTheDocument();
+    expect(screen.queryByText("Languages")).not.toBeInTheDocument();
+    expect(screen.queryByText("English")).not.toBeInTheDocument();
+    expect(screen.queryByText("Show full profile")).not.toBeInTheDocument();
+    await userEvent.click(await screen.findByTestId("collapse-user-info"));
     expect(await screen.findByText("Nickname")).toBeInTheDocument();
     expect(await screen.findByText("some nickname 2")).toBeInTheDocument();
     expect(await screen.findByText("Email")).toBeInTheDocument();
@@ -53,16 +77,5 @@ describe("Selected user tests", () => {
     expect(await screen.findByText("Languages")).toBeInTheDocument();
     expect(await screen.findByText("English")).toBeInTheDocument();
     expect(await screen.findByText("Show full profile")).toBeInTheDocument();
-  });
-
-  test("should render correct text if user while user dont select user", async () => {
-    await act(() => {
-      render(<SelectedUserWithState user={undefined} />, {
-        wrapper: RecoilRoot,
-      });
-    });
-    expect(
-      await screen.findByText("Select user to see info about him")
-    ).toBeInTheDocument();
   });
 });

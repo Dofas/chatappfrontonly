@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import AddTeamModal from "./AddTeamModalComponent/AddTeamModal";
 import TeamListItems from "./TeamListItemsComponent/TeamListItems";
 
-const TeamsList = ({ teams, activeTeam, setActiveTeam }) => {
+const TeamsList = ({ teams, activeTeam, setActiveTeam, socket }) => {
   const [isModal, setIsModal] = useState(null);
   const openModal = () => setIsModal(true);
   const closeModal = () => setIsModal(false);
@@ -26,7 +26,13 @@ const TeamsList = ({ teams, activeTeam, setActiveTeam }) => {
         activeTeam={activeTeam}
         setActiveTeam={setActiveTeam}
       />
-      {isModal && <AddTeamModal isModal={isModal} closeModal={closeModal} />}
+      {isModal && (
+        <AddTeamModal
+          isModal={isModal}
+          closeModal={closeModal}
+          socket={socket}
+        />
+      )}
     </div>
   );
 };

@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import UserPage from "../pages/UserPage/UserPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegiterPage/RegisterPage";
 
 const AppLayout = () => {
   return (
@@ -17,20 +19,25 @@ const AppLayout = () => {
   );
 };
 
-const AppRoutes = () => {
+const AppRoutes = ({ socket }) => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<AppLayout />}>
-          <Route
-            index
-            element={<Navigate to={"/chatapp/messages/user1_id"} />}
-          />
+          <Route index element={<Navigate to={"/chatapp/register"} />} />
           <Route
             path={"/chatapp/messages/:id"}
-            element={<UserPage activeLink={"messages"} />}
+            element={<UserPage socket={socket} activeLink={"messages"} />}
           />
         </Route>
+        <Route
+          path={"/chatapp/login"}
+          element={<LoginPage socket={socket} />}
+        />
+        <Route
+          path={"/chatapp/register"}
+          element={<RegisterPage socket={socket} />}
+        />
         <Route path={"*"} element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>

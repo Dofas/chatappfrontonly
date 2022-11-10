@@ -8,3 +8,15 @@
     color: var(--color-red);
     margin-bottom: 20px;
 }
+
+.team-modal-users-list {
+    height: 150px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.team-modal-users-list > .team-modal-user-item {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}

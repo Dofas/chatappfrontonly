@@ -4,25 +4,37 @@ import { filteredUserList } from "../../../state/activeUserListState/selectorAct
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 import "./user-list-content.css";
 import UserListContentItem from "./UserListContentItemComponent/UserListContentItem";
+import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
+import { UserService } from "../../../utils/UserService/UserService";
 
-const UserListContent = () => {
+const UserListContent = ({ socket }) => {
   const users = useRecoilValue(filteredUserList);
   const [chosenUser, setChosenUser] = useRecoilState(selectedUserState);
+  const activeUser = useRecoilValue(activeUserInfo);
 
-  const setActiveUserClick = (e, user) => {
+  const setActiveUserClick = async (e, user) => {
     setChosenUser(user);
+    const users = { from: activeUser.id, to: user.id };
+    UserService.updateReadStatus(users).catch((error) => {
+      console.log(`Error while loading messages ${error.message}`);
+    });
   };
+
   return (
     <div className="user-list-team-users">
       {users?.length ? (
-        users.map((user) => (
-          <UserListContentItem
-            user={user}
-            chosenUser={chosenUser}
-            setChosenUser={setActiveUserClick}
-            key={user.senderName.concat(user.messageContent)}
-          />
-        ))
+        users.map(
+          (user) =>
+            user.id !== activeUser.id && (
+              <UserListContentItem
+                user={user}
+                chosenUser={chosenUser}
+                setChosenUser={setActiveUserClick}
+                key={user.nickName}
+                socket={socket}
+              />
+            )
+        )
       ) : (
         <div>No users matched</div>
       )}
@@ -30,4 +42,4 @@ const UserListContent = () => {
   );
 };
 
-export default UserListContent;
+export default React.memo(UserListContent);

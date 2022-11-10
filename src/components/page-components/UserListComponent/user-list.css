@@ -4,13 +4,17 @@
     background-color: var(--color-black);
     overflow-y: auto;
     height: calc(100vh - 65px);
-    flex-basis: 340px;
-    min-width: 340px;
+    flex-basis: 350px;
+    min-width: 350px;
     color: #fff;
 }
 
 .user-list-container.display-hidden {
     display: none;
+}
+
+.user-list-container .user-list-team-user-messages {
+    justify-content: space-between;
 }
 
 .user-list-container.full-width {

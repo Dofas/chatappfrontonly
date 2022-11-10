@@ -1,0 +1,28 @@
+.register-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #161a1e;
+    color: #24cf5f;
+    height: inherit;
+    justify-content: space-between;
+    font-size: 16px;
+}
+
+.register-page-container > div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.register-page-container > div > div:first-child {
+    margin-bottom: 5px;
+}
+
+.register-page-container > button {
+    width: 200px;
+    height: 50px;
+    background-color: #24cf5f;
+    text-transform: uppercase;
+    font-size: 20px;
+}
