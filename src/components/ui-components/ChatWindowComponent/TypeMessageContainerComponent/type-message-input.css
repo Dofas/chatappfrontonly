@@ -13,6 +13,8 @@
     border-color: transparent;
     resize: none;
     outline: transparent;
+    font-family: 'Avenir-Roman', serif;
+    font-size: 14px;
 }
 
 .type-message-input::placeholder {

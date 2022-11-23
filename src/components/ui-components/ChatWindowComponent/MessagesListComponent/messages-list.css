@@ -40,6 +40,8 @@
     line-height: 1.43;
     padding: 0;
     max-width: 400px;
+    font-family: 'Avenir-Roman', serif;
+    font-size: 14px;
 }
 
 .messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text {
