@@ -44,12 +44,12 @@ const TypeMessageContainer = ({ socket }) => {
       }),
       isRead: false,
     };
-    await UserService.createMessage(messageData);
-
-    socket.current.emit("send-msg", { ...messageData, file: undefined });
-    const newMessages = [...messages, messageData];
-    setMessages(newMessages);
-    setMessage("");
+    await UserService.createMessage(messageData).then(() => {
+      socket.current.emit("send-msg", { ...messageData, file: undefined });
+      const newMessages = [...messages, messageData];
+      setMessages(newMessages);
+      setMessage("");
+    });
   };
 
   const onUploadImage = async (event) => {
@@ -61,26 +61,35 @@ const TypeMessageContainer = ({ socket }) => {
       file: event.target.files[0],
       isRead: false,
     };
-    const messageResp = await UserService.createMessage(messageData);
-    socket.current.emit("send-msg", {
-      ...messageData,
-      file: messageResp.fileName,
-    });
-    const newMessages = [
-      ...messages,
-      {
+    await UserService.createMessage(messageData).then((messageResp) => {
+      socket.current.emit("send-msg", {
         ...messageData,
-        message: { ...messageData.message, file: messageResp.fileName },
-      },
-    ];
-    setMessages(newMessages);
-    setUploadImage("");
-    closeIsSettings();
+        file: messageResp.fileName,
+      });
+      const newMessages = [
+        ...messages,
+        {
+          ...messageData,
+          message: { ...messageData.message, file: messageResp.fileName },
+        },
+      ];
+      setMessages(newMessages);
+      setUploadImage("");
+      closeIsSettings();
+    });
   };
 
   const onSettingClick = (e) => {
     e.stopPropagation();
     triggerSettings();
+  };
+
+  const onKeyDownTypeMessageInput = async (event) => {
+    const keyCode = event.which || event.keyCode;
+    if (keyCode === 13 && !event.shiftKey) {
+      event.preventDefault();
+      await onSendBtnClick();
+    }
   };
 
   return (
@@ -108,11 +117,13 @@ const TypeMessageContainer = ({ socket }) => {
           </div>
         )}
       </div>
-      <input
+      <textarea
         className="type-message-input"
         placeholder="Type your message…"
         value={message}
+        contentEditable={false}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={(event) => onKeyDownTypeMessageInput(event)}
       />
       <button
         className="send-message-button"

@@ -11,7 +11,10 @@ const ResponsiveSelectedUser = ({ socket }) => {
 
   const changeCollapse = () => setIsCollapsed((prev) => !prev);
 
-  const disSelectUser = () => setSelectedUser("");
+  const disSelectUser = (event) => {
+    event.stopPropagation();
+    setSelectedUser("");
+  };
 
   useEffect(() => {
     socket.current.on("upd-status", (newStatus) => {
@@ -24,11 +27,13 @@ const ResponsiveSelectedUser = ({ socket }) => {
   return (
     selectedUser?.id && (
       <div className="responsive-selected-user-container">
-        <div className="responsive-selected-user-header-container">
-          <div>
-            <span className="arrow responsive-900" onClick={disSelectUser}>
-              &#8592;
-            </span>
+        <div
+          className="responsive-selected-user-header-container"
+          onClick={changeCollapse}
+          data-testid="collapse-user-info"
+        >
+          <div onClick={(event) => disSelectUser(event)}>
+            <span className="arrow responsive-900">&#8592;</span>
             <SelectedUserHeader
               avatar={selectedUser?.avatar}
               name={selectedUser?.firstName + " " + selectedUser?.lastName}
@@ -36,13 +41,6 @@ const ResponsiveSelectedUser = ({ socket }) => {
               status={selectedUser?.status}
             />
           </div>
-          <span
-            className="arrow"
-            onClick={changeCollapse}
-            data-testid="collapse-user-info"
-          >
-            &#8595;
-          </span>
         </div>
         {isCollapsed && (
           <SelectedUserInfo

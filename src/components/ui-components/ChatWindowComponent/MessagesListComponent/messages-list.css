@@ -32,8 +32,21 @@
     border-radius: 3px;
 }
 
+.messages-list-message-text {
+    background: transparent;
+    outline: none;
+    resize: none;
+    border: none;
+    line-height: 1.43;
+    padding: 0;
+    max-width: 400px;
+}
+
 .messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text {
     background-color: var(--color-dark-blue);
+}
+
+.messages-list-item-selected-user > .messages-list-message-content > .messages-list-item-text textarea {
     color: var(--color-white);
 }
 

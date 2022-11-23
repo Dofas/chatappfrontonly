@@ -13,8 +13,25 @@
 }
 
 .login-page-container > button {
-    width: 100px;
+    width: 200px;
     height: 50px;
     text-transform: uppercase;
     background-color: #24cf5f;
+    font-size: 20px;
+}
+
+.login-page-login-button {
+    margin-top: 15px;
+}
+
+.login-page-create-text {
+    color: green;
+    font-size: 22px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.login-page-container > .login-page-error-message {
+    color: red;
+    font-size: 15px;
 }

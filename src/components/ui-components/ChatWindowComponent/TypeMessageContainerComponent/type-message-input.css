@@ -11,6 +11,8 @@
 .type-message-input {
     width: 100%;
     border-color: transparent;
+    resize: none;
+    outline: transparent;
 }
 
 .type-message-input::placeholder {

@@ -9,7 +9,7 @@ const LoginPage = ({ socket }) => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!nickName || !password) {
       setIsError(true);
       return;
@@ -32,6 +32,11 @@ const LoginPage = ({ socket }) => {
       });
   };
 
+  const handleEnterSubmit = (event) => {
+    if (event.key !== "Enter") return;
+    handleSubmit();
+  };
+
   return (
     <div className="login-page-container">
       <div>
@@ -39,7 +44,8 @@ const LoginPage = ({ socket }) => {
         <input
           data-testid="login-page-nickName"
           value={nickName}
-          onChange={(e) => setNickname(e.target.value)}
+          onChange={(event) => setNickname(event.target.value)}
+          onKeyDown={handleEnterSubmit}
         />
       </div>
       <div>
@@ -48,16 +54,17 @@ const LoginPage = ({ socket }) => {
           type="password"
           data-testid="login-page-password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
+          onKeyDown={handleEnterSubmit}
         />
       </div>
-      <button onClick={handleSubmit}>Login</button>
-      <span style={{ color: "green", fontSize: 22, marginTop: 30 }}>
-        Create account
-      </span>
+      <button className="login-page-login-button" onClick={handleSubmit}>
+        Login
+      </button>
+      <span className="login-page-create-text">Create account</span>
       <button onClick={() => navigate("/chatapp/register")}>Register</button>
       {isError && (
-        <div style={{ color: "red", fontSize: 15 }}>
+        <div className="login-page-error-message">
           Incorrect nickname or password
         </div>
       )}

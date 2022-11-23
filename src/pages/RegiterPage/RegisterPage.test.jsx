@@ -28,7 +28,9 @@ describe("Register page tests", () => {
       )
     );
     await act(() => userEvent.click(screen.getByText(/Register/i)));
-    expect(screen.getByText("You failed) refill fields")).toBeInTheDocument();
+    expect(screen.getAllByText("Field is required").length).toBe(6);
+    expect(screen.getAllByText("Field is incorrect").length).toBe(4);
+    expect(screen.getByText("Incorrect passwords")).toBeInTheDocument();
   });
 
   test("should navigate to login page", async () => {
@@ -93,7 +95,7 @@ describe("Register page tests", () => {
     await userEvent.type(languagesInput, "languagesInput");
     await userEvent.type(passwordInput, "passwordInput");
     await userEvent.type(confirmPasswordInput, "passwordInput");
-    await act(() => userEvent.click(screen.getByText(/Register/i)));
+    await act(async () => userEvent.click(screen.getByText(/Register/i)));
 
     expect(window.location.href.includes("nickNameInput")).toBeTruthy();
     expect(window.location.href.includes("messages")).toBeTruthy();

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./user-page.css";
 import Header from "../../components/page-components/HeaderComponent/Header";
 import { useParams } from "react-router-dom";
@@ -24,32 +24,31 @@ const UserPage = ({ activeLink, socket }) => {
 
   const activeUserInfoState = useRecoilValue(activeUserInfo);
 
+  const isFirstRender = useRef(null);
+
   useEffect(() => {
     if (socket.current) {
       if (activeUserInfoState?.id) {
-        socket.current.emit("add-user", activeUserInfoState.id);
-        UserService.updateStatus(activeUserInfoState.id, {
-          status: "online",
-        });
-        socket.current.emit("change-status", {
-          nickName: activeUserInfoState.id,
-          status: "online",
-        });
+        if (!isFirstRender.current) {
+          socket.current.emit("add-user", activeUserInfoState.id);
+          UserService.updateStatus(activeUserInfoState.id, {
+            status: "online",
+          });
+          socket.current.emit("change-status", {
+            nickName: activeUserInfoState.id,
+            status: "online",
+          });
+          isFirstRender.current = true;
+        }
       }
-
-      window.onbeforeunload = function () {
-        UserService.updateStatus(activeUserInfoState.id, {
-          status: "offline",
-        });
-        socket.current.emit("change-status", {
-          nickName: activeUserInfoState.id,
-          status: "offline",
-        });
-      };
+      // window.addEventListener("beforeunload", (event) => {
+      //   console.log("here");
+      //   socket.current.emit("change-status", {
+      //     nickName: activeUserInfoState.id,
+      //     status: "offline",
+      //   });
+      // });
     }
-    return () => {
-      window.onbeforeunload = function () {};
-    };
   }, [socket.current, activeUserInfoState]);
 
   useEffect(() => {

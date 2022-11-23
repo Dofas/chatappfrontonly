@@ -6,7 +6,6 @@ import Globe from "../../../assets/images/globe.jpg";
 import { useState } from "react";
 import { useClickOutside } from "../../../utils/hooks/useClickOutside";
 import { useNavigate } from "react-router-dom";
-import { UserService } from "../../../utils/UserService/UserService";
 import { useRecoilValue } from "recoil";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 
@@ -31,7 +30,6 @@ const ActiveUser = ({
 
   const exitHandler = async (e) => {
     e.stopPropagation();
-    await UserService.updateStatus(activeUser.id, { status: "offline" });
     socket.current.emit("change-status", {
       nickName: activeUser.id,
       status: "offline",
