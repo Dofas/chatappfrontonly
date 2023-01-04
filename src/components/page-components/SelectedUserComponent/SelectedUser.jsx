@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
-import "./selected-user.css";
+import "./selected-user.scss";
 import SelectedUserHeader from "../../ui-components/SelectedUserHeaderComponent/SelectedUserHeader";
 import SelectedUserInfo from "../../ui-components/SelectedUserInfoComponent/SelectedUserInfo";
 

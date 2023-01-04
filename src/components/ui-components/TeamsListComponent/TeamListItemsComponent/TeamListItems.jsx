@@ -1,5 +1,5 @@
 import React from "react";
-import "./team-list-items.css";
+import "./team-list-items.scss";
 import TeamListItem from "./TeamListItem";
 
 const TeamListItems = ({ teams, activeTeam, setActiveTeam }) => {

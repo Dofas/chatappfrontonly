@@ -1,3 +1,5 @@
+@import "../../../page-components/AppComponent/variables";
+
 .group-modal-content {
     display: flex;
     align-items: center;
@@ -5,7 +7,7 @@
 }
 
 .group-modal-error-text {
-    color: var(--color-red);
+    color: $color-red;
     margin-bottom: 20px;
 }
 
@@ -14,10 +16,11 @@
     overflow-y: auto;
     align-self: center;
     margin-top: 10px;
+
+    > .group-modal-user-item {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
 }
 
-.group-modal-users-list > .group-modal-user-item {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}

@@ -1,7 +1,7 @@
 import React from "react";
 import Menu from "./MenuComponent/Menu";
 import SearchBar from "./SerachBarComponent/SearchBar";
-import "./user-list-header.css";
+import "./user-list-header.scss";
 import { useSetRecoilState } from "recoil";
 import { sidebarState } from "../../../state/responsiveState/atomSideBarState";
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./channel-list.css";
+import "./channel-list.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import TeamsList from "../../ui-components/TeamsListComponent/TeamsList";

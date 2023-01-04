@@ -5,19 +5,19 @@
     flex-direction: column;
     justify-content: center;
     background-color: #161a1e;
-}
 
-.login-page-container > div {
-    margin-bottom: 15px;
-    color: #24cf5f;
-}
+    > div {
+        margin-bottom: 15px;
+        color: #24cf5f;
+    }
 
-.login-page-container > button {
-    width: 200px;
-    height: 50px;
-    text-transform: uppercase;
-    background-color: #24cf5f;
-    font-size: 20px;
+    > button {
+        width: 200px;
+        height: 50px;
+        text-transform: uppercase;
+        background-color: #24cf5f;
+        font-size: 20px;
+    }
 }
 
 .login-page-login-button {
@@ -31,7 +31,9 @@
     margin-bottom: 15px;
 }
 
-.login-page-container > .login-page-error-message {
-    color: red;
-    font-size: 15px;
+.login-page-container {
+    .login-page-error-message {
+        color: red;
+        font-size: 15px;
+    }
 }

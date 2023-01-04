@@ -7,7 +7,7 @@ import {
   allTeams,
 } from "../../../state/activeChannelState/atomActiveChannelState";
 import { usersList } from "../../../state/activeUserListState/atomActiveUserListState";
-import "./user-list.css";
+import "./user-list.scss";
 import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./register-page.css";
+import "./register-page.scss";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../utils/UserService/UserService";
 import { validateSpecSymbols } from "../../components/ui-components/TeamsListComponent/AddTeamModalComponent/AddTeamModal";

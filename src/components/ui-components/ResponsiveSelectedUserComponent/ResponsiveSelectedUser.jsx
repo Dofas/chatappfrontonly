@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./responsive-selected-user.css";
+import "./responsive-selected-user.scss";
 import { useRecoilState } from "recoil";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 import SelectedUserHeader from "../SelectedUserHeaderComponent/SelectedUserHeader";

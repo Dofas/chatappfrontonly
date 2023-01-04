@@ -1,17 +1,19 @@
+@import "../AppComponent/variables";
+
 .chat-container {
     position: relative;
-    background-color: var(--color-bg-white-grey);
-    border: solid 1px #979797;
+    background-color: $color-bg-white-grey;
+    border: solid 1px $chat-container-border-color;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     height: calc(100vh - 65px);
     min-width: 320px;
-}
 
-.chat-container.display-hidden {
-    display: none;
+    &.display-hidden {
+        display: none;
+    }
 }
 
 .chat-empty-text {
@@ -28,13 +30,17 @@
 }
 
 @media (max-width: 1250px) {
-    .chat-container > .responsive-selected-user-container {
-        display: block;
+    .chat-container {
+        > .responsive-selected-user-container {
+            display: block;
+        }
     }
 }
 
 @media (max-width: 790px) {
-    .chat-container .responsive-900 {
-        display: block;
+    .chat-container {
+        .responsive-900 {
+            display: block;
+        }
     }
 }

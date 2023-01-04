@@ -1,4 +1,4 @@
-import "./nav-bar.css";
+import "./nav-bar.scss";
 import React, { useMemo, useState } from "react";
 import NavBarItem from "./NavBarItem";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";

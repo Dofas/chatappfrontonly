@@ -1,0 +1,37 @@
+@import "../../../page-components/AppComponent/variables";
+
+.team-list-items-container {
+    > li {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 28px 6px 34px;
+        margin-bottom: 12px;
+    }
+}
+
+.team-name {
+    font-family: Avenir, serif;
+    line-height: 1.29;
+    color: $color-text-grey;
+    max-width: 125px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.active-team {
+    background-color: rgba(255,255,255, 0.03);
+
+    > .team-name {
+        color: $color-white;
+        font-family: Avenir-Roman, serif;
+    }
+}
+
+.team-members-count {
+    color: $color-white;
+}
+
+.empty-team-list {
+    color: $color-green;
+}

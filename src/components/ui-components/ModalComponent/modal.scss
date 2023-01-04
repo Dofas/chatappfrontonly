@@ -1,3 +1,5 @@
+@import "../../page-components/AppComponent/variables";
+
 .modal-container {
     position: fixed;
     display: flex;
@@ -24,8 +26,8 @@
     margin: 20px auto;
     border-radius: 4px;
     padding-bottom: 20px;
-    background-color: var(--color-black);
-    color: var(--color-green);
+    background-color: $color-black;
+    color: $color-green;
     align-self: center;
     font-size: 22px;
     box-shadow: 0 12px 25px 0 rgba(199, 175, 189, .25);
@@ -35,22 +37,22 @@
     position: absolute;
     right: 10px;
     top: 5px;
-}
 
-.modal-close-btn:before {
-    content: "X";
-    font-family: Avenir-Roman, serif;
-    font-size: 25px;
-    font-weight: bold;
-    color: var(--color-red);
-    cursor: pointer;
+    &:before {
+        content: "X";
+        font-family: Avenir-Roman, serif;
+        font-size: 25px;
+        font-weight: bold;
+        color: $color-red;
+        cursor: pointer;
+    }
 }
 
 .modal-input {
     border: none;
     background: transparent;
-    color: var(--color-green);
-    border-bottom: 2px solid var(--color-green);
+    color: $color-green;
+    border-bottom: 2px solid $color-green;
     outline: none;
     font-size: 20px;
     margin-top: 30px;
@@ -59,6 +61,6 @@
 
 .modal-save-btn {
     padding: 15px;
-    border: 1px solid var(--color-green);
+    border: 1px solid $color-green;
     cursor: pointer;
 }

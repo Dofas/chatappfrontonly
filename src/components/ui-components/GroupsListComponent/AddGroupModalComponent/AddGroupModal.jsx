@@ -1,4 +1,4 @@
-import "./add-group-modal.css";
+import "./add-group-modal.scss";
 import Modal from "../../ModalComponent/Modal";
 import { useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";

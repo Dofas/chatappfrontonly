@@ -1,3 +1,5 @@
+@import "../../../page-components/AppComponent/variables";
+
 .team-modal-content {
     display: flex;
     align-items: center;
@@ -5,7 +7,7 @@
 }
 
 .team-modal-error-text {
-    color: var(--color-red);
+    color: $color-red;
     margin-bottom: 20px;
 }
 
@@ -13,10 +15,10 @@
     height: 150px;
     overflow-y: auto;
     margin-top: 10px;
-}
 
-.team-modal-users-list > .team-modal-user-item {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
+    > .team-modal-user-item {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+    }
 }

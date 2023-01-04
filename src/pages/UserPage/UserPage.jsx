@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "./user-page.css";
+import "./user-page.scss";
 import Header from "../../components/page-components/HeaderComponent/Header";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../utils/hooks/useAuth";
@@ -41,13 +41,6 @@ const UserPage = ({ activeLink, socket }) => {
           isFirstRender.current = true;
         }
       }
-      // window.addEventListener("beforeunload", (event) => {
-      //   console.log("here");
-      //   socket.current.emit("change-status", {
-      //     nickName: activeUserInfoState.id,
-      //     status: "offline",
-      //   });
-      // });
     }
   }, [socket.current, activeUserInfoState]);
 

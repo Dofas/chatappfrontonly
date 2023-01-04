@@ -1,4 +1,4 @@
-import "./app.css";
+import "./app.scss";
 import AppRoutes from "../../../routes/AppRoutes";
 import { useEffect, useRef } from "react";
 import { io } from "socket.io-client";

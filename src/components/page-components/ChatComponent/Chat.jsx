@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
-import "./chat.css";
+import "./chat.scss";
 import ChatWindow from "../../ui-components/ChatWindowComponent/ChatWindow";
 import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowSize";
 

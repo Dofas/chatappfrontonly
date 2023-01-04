@@ -1,4 +1,4 @@
-import "./active-user.css";
+import "./active-user.scss";
 import Star from "../../../assets/images/star.jpg";
 import Bell from "../../../assets/images/bell.jpg";
 import Question from "../../../assets/images/question.jpg";

@@ -1,3 +1,5 @@
+@import "variables";
+
 @font-face {
     font-family: 'Avenir-Roman';
     src: url('../../../assets/fonts/AvenirLTStd-Roman.woff'),
@@ -12,51 +14,30 @@
     font-style: normal;
 }
 
-:root {
-    --color-full-black: #000;
-    --color-black: #14171a;
-    --bg-color-header: #171b20;
-    --color-light-black: rgba(23, 26, 30);
-    --color-img-bg:  #161a1e;
-    --color-text-grey: #5f6773;
-    --time-text-color-grey: #939393;
-    --color-img-border: #40454b;
-    --color-green: #24cf5f;
-    --color-red: #e62c2c;
-    --color-white: #ffffff;
-    --color-blue: #2473da;
-    --color-dark-blue: #1b76ed;
-    --color-dot-white: #b8bdc5;
-    --color-text-light-grey: #797f86;
-    --color-text-white-grey: #80878f;
-    --color-bg-white-grey: #f3f4f7;
-    --color-background-blur: #232323;
-}
-
 ::-webkit-scrollbar {
     width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
+    box-shadow: inset 0 0 5px $scroll-track-color;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: darkgreen;
+    background: $scroll-color;
     border-radius: 10px;
 }
 
 .title {
-    color: var(--color-white);
+    color: $color-white;
     font-size: 16px;
     line-height: 1.25;
 }
 
 .add-img {
     opacity: 0.7;
-    border: solid 1px var(--color-img-border);
-    background-color: var(--color-img-bg);
+    border: solid 1px var $color-img-border;
+    background-color: $color-img-bg;
     border-radius: 50%;
     height: 24px;
     width: 24px;

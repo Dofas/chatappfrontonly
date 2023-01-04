@@ -1,10 +1,12 @@
+@import "../../page-components/AppComponent/variables";
+
 .spinner-container {
     height: inherit;
     width: inherit;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-black);
+    background-color: $color-black;
 }
 
 @keyframes spin {

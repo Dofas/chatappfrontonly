@@ -1,5 +1,5 @@
 import React from "react";
-import "./groups-list-items.css";
+import "./groups-list-items.scss";
 import GroupListItem from "./GroupListItem";
 
 const GroupsListItems = ({ groups }) => {

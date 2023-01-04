@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./messages-list.css";
+import "./messages-list.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedUserState } from "../../../../state/selectedUserState/atomSelectedUserState";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";

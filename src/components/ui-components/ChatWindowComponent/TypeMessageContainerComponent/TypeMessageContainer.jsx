@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PaperClipImg from "../../../../assets/images/paperClip.jpg";
-import "./type-message-input.css";
+import "./type-message-input.scss";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedUserState } from "../../../../state/selectedUserState/atomSelectedUserState";

@@ -1,4 +1,4 @@
-import "./header.css";
+import "./header.scss";
 import { useRecoilValue } from "recoil";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 import NavBar from "../../ui-components/NavBarComponent/NavBar";

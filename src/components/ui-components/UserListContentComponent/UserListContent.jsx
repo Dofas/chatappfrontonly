@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { filteredUserList } from "../../../state/activeUserListState/selectorActiveUserListState";
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
-import "./user-list-content.css";
+import "./user-list-content.scss";
 import UserListContentItem from "./UserListContentItemComponent/UserListContentItem";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../../utils/UserService/UserService";

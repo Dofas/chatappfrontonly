@@ -1,0 +1,82 @@
+.register-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #161a1e;
+    color: #24cf5f;
+    height: inherit;
+    font-size: 16px;
+    justify-content: center;
+    overflow-x: hidden;
+
+    > div {
+        display: flex;
+
+        &:first-child {
+            margin-bottom: 30px;
+        }
+
+        &:last-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        > button {
+            width: 200px;
+            height: 50px;
+            background-color: #24cf5f;
+            text-transform: uppercase;
+            font-size: 20px;
+            margin: 20px 0;
+        }
+
+        > div > div {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            > div:first-child {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+.register-page-inner-container {
+    input {
+        margin-bottom: 12px;
+    }
+
+    > div > div:last-child input {
+        margin-bottom: 0;
+    }
+}
+
+.register-page-login-text  {
+    color: green;
+    font-size: 22px;
+    text-align: center;
+}
+
+@media (max-width: 720px) {
+    .styles-container {
+        width: unset;
+        height: unset;
+    }
+
+    .register-page-container {
+        min-height: 100vh;
+        height: unset;
+
+        > div:first-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .register-page-inner-container {
+        flex-direction: column;
+        font-size: 14px;
+        text-align: center;
+    }
+}
