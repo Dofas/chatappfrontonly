@@ -1,7 +1,7 @@
 import React from "react";
 
 const ErrorElement = ({ text }) => {
-  return <div style={{ color: "red" }}>{text}</div>;
+  return <div className="register-page-error-field">{text}</div>;
 };
 
 export default ErrorElement;

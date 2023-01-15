@@ -39,35 +39,56 @@ const LoginPage = ({ socket }) => {
 
   return (
     <div className="login-page-container">
-      <div>
-        <div>Enter nickname:</div>
-        <input
-          data-testid="login-page-nickName"
-          value={nickName}
-          onChange={(event) => setNickname(event.target.value)}
-          onKeyDown={handleEnterSubmit}
-        />
-      </div>
-      <div>
-        <div>Enter password:</div>
-        <input
-          type="password"
-          data-testid="login-page-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          onKeyDown={handleEnterSubmit}
-        />
-      </div>
-      <button className="login-page-login-button" onClick={handleSubmit}>
-        Login
-      </button>
-      <span className="login-page-create-text">Create account</span>
-      <button onClick={() => navigate("/chatapp/register")}>Register</button>
-      {isError && (
-        <div className="login-page-error-message">
-          Incorrect nickname or password
+      <div className="login-page-inner-container">
+        <span className="login-page-header">
+          <div>Login to your account</div>
+          <div>Thank you for get back to our chat community</div>
+        </span>
+        <div className="login-page-form">
+          <div className="input-container-text-only">
+            <input
+              data-testid="login-page-nickName"
+              id="login-page-nickname"
+              placeholder="&nbsp;"
+              value={nickName}
+              onChange={(event) => setNickname(event.target.value)}
+              onKeyDown={handleEnterSubmit}
+            />
+            <label htmlFor="login-page-nickname">Enter nickname</label>
+          </div>
+          <div className="input-container-text-only">
+            <input
+              type="password"
+              id="login-page-password"
+              data-testid="login-page-password"
+              placeholder="&nbsp;"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              onKeyDown={handleEnterSubmit}
+            />
+            <label htmlFor="login-page-password">Enter password</label>
+          </div>
+          <button className="login-page-login-button" onClick={handleSubmit}>
+            Sign in
+          </button>
+          <span>
+            <span className="login-page-create-text">
+              Don{"'"}t have an account yet?
+            </span>
+            <button
+              onClick={() => navigate("/chatapp/register")}
+              className="login-page-register-button"
+            >
+              Join our chat community
+            </button>
+          </span>
+          {isError && (
+            <div className="login-page-error-message">
+              Incorrect nickname or password
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -6,7 +6,13 @@
 }
 
 .user-list-active-team-user {
-    background-color: $color-blue;
+    background-color: $white-purple;
+
+    .user-list-team-user-name,
+    .user-list-team-user-messages,
+    .user-list-team-user-time {
+        color: $color-white;
+    }
 
     > .user-list-team-user-info {
         > .user-list-team-user-messages {
@@ -82,9 +88,9 @@
 
 .user-list-item-setting {
     position: absolute;
-    border: 1px solid $color-green;
+    border: 1px solid $color-white;
     padding: 2px 5px;
-    color: $color-green;
+    color: $color-white;
     width: 83px;
     top: -14px;
     left: -90px;
@@ -111,6 +117,7 @@
     margin-bottom: 2px;
     font-size: 14px;
     justify-content: space-between;
+    color: $color-text-light-grey;
 
     > div {
         &:first-child {

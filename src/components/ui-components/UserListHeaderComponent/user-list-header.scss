@@ -23,8 +23,8 @@
 .user-list-search-input {
     border: none;
     background: transparent;
-    color: $color-white;
-    border-bottom: 2px solid $color-green;
+    color: $color-full-black;
+    border-bottom: 2px solid $bg-color-header;
     outline: none;
     text-align: center;
     width: 80%;
@@ -68,8 +68,7 @@
     }
 
     > .user-list-menu-selected-option {
-        color: $color-white;
-        box-shadow: inset 0 -2px 0 0 #c92020;
+        color: $color-full-black;
     }
 }
 

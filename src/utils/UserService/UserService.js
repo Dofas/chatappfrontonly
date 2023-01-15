@@ -12,7 +12,7 @@ export class UserService {
     formData.append("dateOfBirthday", userInfo.dateOfBirthday);
     formData.append("password", userInfo.password);
     formData.append("gender", userInfo.gender);
-    formData.append("languages", JSON.stringify(userInfo.languages.split(",")));
+    formData.append("languages", userInfo.languages);
     formData.append("avatar", userInfo.file);
     const response = await axios.post(
       process.env.REACT_APP_API_URL + "/api/user/registration",

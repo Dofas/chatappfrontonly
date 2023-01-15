@@ -31,7 +31,7 @@ const RegisterPage = ({ socket }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
   const [file, setFile] = useState(null);
-  const [languages, setLanguages] = useState("");
+  const [languages, setLanguages] = useState([]);
   const [isError, setIsError] = useState(noErrorState);
   const [isUserExist, setIsUserExist] = useState(false);
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const RegisterPage = ({ socket }) => {
       !validateDateOfBirthday(dateOfBirthday) ||
       password !== confirmPassword ||
       !gender ||
-      !languages
+      !languages.length
     ) {
       setIsError({
         firstNameError: !firstName,
@@ -92,7 +92,7 @@ const RegisterPage = ({ socket }) => {
         passwordError: !password || password !== confirmPassword,
         genderError: !gender,
         fileError: !file,
-        languagesError: !languages,
+        languagesError: !languages.length,
       });
       return false;
     }
@@ -134,131 +134,237 @@ const RegisterPage = ({ socket }) => {
       .catch(() => setIsUserExist(true));
   };
 
+  const changeLanguages = (newLanguage) => {
+    let newLanguages;
+
+    if (languages.includes(newLanguage)) {
+      newLanguages = languages.filter((language) => language !== newLanguage);
+    } else {
+      newLanguages = [...languages, newLanguage];
+    }
+
+    setLanguages(newLanguages);
+  };
+
   return (
     <div className="register-page-container">
       <div className="register-page-inner-container">
         <div>
-          <div>
-            <div>Enter first name:</div>
+          <div className="input-container-text-only">
             <input
               data-testid="firstName"
+              id="register-page-first-name"
+              placeholder="&nbsp;"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
+            <label htmlFor="register-page-first-name">Enter first name:</label>
             {isError.firstNameError && (
               <ErrorElement text={"Field is required"} />
             )}
           </div>
-          <div>
-            <div>Enter last name:</div>
+          <div className="input-container-text-only">
             <input
               data-testid="lastName"
+              id="register-page-last-name"
+              placeholder="&nbsp;"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
+            <label htmlFor="register-page-last-name">Enter last name:</label>
             {isError.lastNameError && (
               <ErrorElement text={"Field is required"} />
             )}
           </div>
-          <div>
-            <div>Enter address:</div>
+          <div className="input-container-border-bottom">
             <input
               data-testid="address"
+              id="register-page-address"
+              placeholder="&nbsp;"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
+            <label htmlFor="register-page-address">Enter address:</label>
+            <span className="input-border" />
             {isError.locationError && (
               <ErrorElement text={"Field is required"} />
             )}
           </div>
-          <div>
-            <div>Enter nickname:</div>
+          <div className="input-container-border-bottom">
             <input
               data-testid="nickName"
+              id="register-page-nickname"
+              placeholder="&nbsp;"
               value={nickName}
               onChange={(e) => setNickName(e.target.value)}
             />
+            <label htmlFor="register-page-nickname">Enter nickname:</label>
+            <span className="input-border" />
             {isError.nickNameError && (
               <ErrorElement text={"Field is incorrect"} />
             )}
           </div>
-          <div>
-            <div>Enter email:</div>
+          <div className="input-container-border-bottom">
             <input
               data-testid="email"
+              id="register-page-email"
+              placeholder="&nbsp;"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <label htmlFor="register-page-email">Enter email:</label>
+            <span className="input-border" />
             {isError.emailError && <ErrorElement text={"Field is incorrect"} />}
           </div>
-          <div>
-            <div>Enter phone number in format +38-XXX-XXX-XXXX:</div>
+          <div className="input-container-border-bottom">
             <input
               data-testid="phone"
+              id="register-page-phone"
+              placeholder="&nbsp;"
               value={number}
               onChange={(e) => setNumber(e.target.value)}
             />
+            <label htmlFor="register-page-phone">+38-XXX-XXX-XXXX:</label>
+            <span className="input-border" />
             {isError.numberError && (
               <ErrorElement text={"Field is incorrect"} />
             )}
           </div>
         </div>
         <div>
-          <div>
-            <div>Enter date of birth in format January 1 2022:</div>
+          <div className="input-container-text-only">
             <input
               data-testid="dob"
               value={dateOfBirthday}
+              id="register-page-dob"
+              placeholder="&nbsp;"
               onChange={(e) => setDateOfBirthday(e.target.value)}
             />
+            <label htmlFor="register-page-dob">
+              Dob format January 1 2020:
+            </label>
             {isError.dateOfBirthdayError && (
               <ErrorElement text={"Field is incorrect"} />
             )}
           </div>
-          <div>
-            <div>Enter gender:</div>
-            <input
-              data-testid="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            />
+          <div className="register-page-gender-container">
+            <div>Choose gender:</div>
+            <div>
+              <div>
+                <label className="label-radio-button">
+                  <input
+                    type="radio"
+                    value="Male"
+                    checked={gender === "Male"}
+                    className="input-radio-button"
+                    onChange={(event) => setGender(event.target.value)}
+                  />
+                  <span className="radio-button" />
+                </label>
+                <span onClick={() => setGender("Male")}>Male</span>
+              </div>
+              <div>
+                <label className="label-radio-button">
+                  <input
+                    type="radio"
+                    value="Female"
+                    checked={gender === "Female"}
+                    className="input-radio-button"
+                    onChange={(event) => setGender(event.target.value)}
+                  />
+                  <span className="radio-button" />
+                </label>
+                <span onClick={() => setGender("Female")}>Female</span>
+              </div>
+            </div>
             {isError.genderError && <ErrorElement text={"Field is required"} />}
           </div>
-          <div>
-            <div>Enter file image:</div>
-            <input
-              data-testid="file"
-              type="file"
-              onChange={(e) => setFile(e.target.files[0])}
-            />
+          <div className="register-page-file-container">
+            <div className="register-page-file-wrapper">
+              <button className="register-page-file-button">
+                Choose avatar:
+              </button>
+              <input
+                data-testid="file"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                className="register-page-file-input"
+              />
+            </div>
+            {file && (
+              <div className="register-page-file-name" title={file.name}>
+                {file.name}
+              </div>
+            )}
             {isError.fileError && <ErrorElement text={"Field is required"} />}
           </div>
-          <div>
-            <div>Enter languages seperated by coma:</div>
-            <input
-              data-testid="languages"
-              value={languages}
-              onChange={(e) => setLanguages(e.target.value)}
-            />
-            {isError.emailError && <ErrorElement text={"Field is required"} />}
+          <div className="register-page-language-container">
+            <div>Choose languages:</div>
+            <div>
+              <div>
+                <div>
+                  <label className="register-page-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={languages.includes("Ukrainian")}
+                      value="Ukrainian"
+                      onChange={(event) => changeLanguages(event.target.value)}
+                      className="register-page-checkbox-input"
+                    />
+                    <span className="register-page-checkbox" />
+                  </label>
+                </div>
+                <span onClick={() => changeLanguages("Ukrainian")}>
+                  Ukrainian
+                </span>
+              </div>
+              <div>
+                <div>
+                  <label className="register-page-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={languages.includes("English")}
+                      value="English"
+                      onChange={(event) => changeLanguages(event.target.value)}
+                      className="register-page-checkbox-input"
+                    />
+                    <span className="register-page-checkbox" />
+                  </label>
+                </div>
+                <span onClick={() => changeLanguages("English")}>English</span>
+              </div>
+            </div>
+            {isError.languagesError && (
+              <ErrorElement text={"Field is required"} />
+            )}
           </div>
-          <div>
-            <div>Enter password:</div>
+          <div className="input-container-border-full">
             <input
               value={password}
               data-testid="password"
+              id="register-page-password"
+              placeholder="&nbsp;"
               type="password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            <label htmlFor="register-page-password">Enter password:</label>
+            <span className="input-border-full" />
           </div>
-          <div>
-            <div>Enter confirm password:</div>
-            <input
-              value={confirmPassword}
-              data-testid="confirmPassword"
-              type="password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+          <div className="register-page-password-container">
+            <div className="input-container-border-full">
+              <input
+                value={confirmPassword}
+                data-testid="confirmPassword"
+                id="register-page-confirm-password"
+                placeholder="&nbsp;"
+                type="password"
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <label htmlFor="register-page-confirm-password">
+                Enter confirm password:
+              </label>
+              <span className="input-border-full" />
+            </div>
             {isError.passwordError && (
               <ErrorElement text={"Incorrect passwords"} />
             )}
@@ -266,14 +372,18 @@ const RegisterPage = ({ socket }) => {
         </div>
       </div>
       <div>
-        <button onClick={onSubmit}>Register</button>
-        <span className="register-page-login-text">Have an account</span>
-        <button onClick={() => navigate("/chatapp/login")}>Login</button>
-        {isUserExist && (
-          <div style={{ color: "red" }}>
-            User with this nickname already exist
-          </div>
-        )}
+        <button onClick={onSubmit}>Create account</button>
+        <div className="register-page-login-redirect">
+          <span className="register-page-login-text">
+            Already have an account ?
+          </span>
+          <button onClick={() => navigate("/chatapp/login")}>Log in</button>
+          {isUserExist && (
+            <div style={{ color: "red" }}>
+              User with this nickname already exist
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

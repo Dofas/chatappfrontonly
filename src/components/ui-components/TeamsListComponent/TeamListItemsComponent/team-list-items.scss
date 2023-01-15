@@ -20,18 +20,18 @@
 }
 
 .active-team {
-    background-color: rgba(255,255,255, 0.03);
+    background-color: rgba(255,255,255, 0.1);
 
     > .team-name {
-        color: $color-white;
+        color: $color-text-light-grey;
         font-family: Avenir-Roman, serif;
     }
 }
 
 .team-members-count {
-    color: $color-white;
+    color: $color-text-light-grey;
 }
 
 .empty-team-list {
-    color: $color-green;
+    color: $color-text-light-grey;
 }

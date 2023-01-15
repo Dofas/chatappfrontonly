@@ -1,39 +1,71 @@
+@import "../../components/page-components/AppComponent/variables";
+
 .login-page-container {
-    height: inherit;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background-color: #161a1e;
+    background-color: $bg-color-header;
+    width: 100vw;
+    height: 100vh;
 
-    > div {
-        margin-bottom: 15px;
-        color: #24cf5f;
-    }
+    .login-page-inner-container {
+        display: flex;
+        flex-direction: column;
 
-    > button {
-        width: 200px;
-        height: 50px;
-        text-transform: uppercase;
-        background-color: #24cf5f;
-        font-size: 20px;
-    }
-}
 
-.login-page-login-button {
-    margin-top: 15px;
-}
+        .login-page-header {
+            div {
+                font-size: 25px;
+                color: $color-grey;
+                margin-bottom: 20px;
+            }
+        }
 
-.login-page-create-text {
-    color: green;
-    font-size: 22px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
+        .login-page-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-.login-page-container {
-    .login-page-error-message {
-        color: red;
-        font-size: 15px;
+            > div {
+                margin-bottom: 15px;
+                color: $color-full-black;
+            }
+
+            > button {
+                width: 200px;
+                height: 50px;
+                text-transform: uppercase;
+                font-size: 20px;
+                background-color: $color-white;
+                cursor: pointer;
+            }
+
+            .login-page-login-button {
+                margin-top: 15px;
+            }
+
+            .login-page-create-text {
+                color: $color-full-black;
+                font-size: 22px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            .login-page-error-message {
+                color: red;
+                font-size: 20px;
+                margin-top: 10px;
+            }
+
+            .login-page-register-button {
+                border: none;
+                background-color: transparent;
+                font-size: 20px;
+                margin-top: 15px;
+                color: $color-blue;
+                cursor: pointer;
+            }
+        }
     }
 }

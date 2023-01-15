@@ -46,6 +46,11 @@
     > li {
         margin-right: 24px;
         padding: 23px 0 21px;
+        color: $color-text-grey;
+
+        &.active-header-nav-bar-link {
+            color: $color-white;
+        }
     }
 
     &.hidden {
@@ -70,6 +75,4 @@
     }
 }
 
-.active-header-nav-bar-link {
-    box-shadow: inset 0 -2px 0 0 #24cf5f;
-}
+

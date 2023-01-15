@@ -26,8 +26,8 @@
     margin: 20px auto;
     border-radius: 4px;
     padding-bottom: 20px;
-    background-color: $color-black;
-    color: $color-green;
+    background-color: $bg-color-header;
+    color: $color-white;
     align-self: center;
     font-size: 22px;
     box-shadow: 0 12px 25px 0 rgba(199, 175, 189, .25);
@@ -51,8 +51,8 @@
 .modal-input {
     border: none;
     background: transparent;
-    color: $color-green;
-    border-bottom: 2px solid $color-green;
+    color: $color-white;
+    border-bottom: 2px solid $color-white;
     outline: none;
     font-size: 20px;
     margin-top: 30px;
@@ -61,6 +61,6 @@
 
 .modal-save-btn {
     padding: 15px;
-    border: 1px solid $color-green;
+    border: 1px solid $color-white;
     cursor: pointer;
 }

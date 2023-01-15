@@ -2,7 +2,7 @@
 
 .selected-user-container {
     position: relative;
-    background-color: $color-light-black;
+    background-color: $color-white;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 65px);
@@ -13,7 +13,7 @@
 .selected-user-avatar {
     display: flex;
     flex-direction: column;
-    background-color: $color-black;
+    background-color: $color-white;
     align-items: center;
     padding: 24px 62px;
     font-family: Avenir, sans-serif;
@@ -31,7 +31,7 @@
 }
 
 .selected-user-name {
-    color: $color-white;
+    color: $color-full-black;
     margin-bottom: 6px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -69,7 +69,7 @@
     }
 
     .selected-user-profile-link {
-        color: $color-green;
+        color: $bg-color-header;
         cursor: pointer;
     }
 }
@@ -82,7 +82,7 @@
     }
 
     > div {
-        color: $color-white;
+        color: $color-full-black;
         margin-top: 4px;
         margin-bottom: 14px;
         text-overflow: ellipsis;
@@ -101,7 +101,7 @@
     height: 70px;
     top: calc(50% - 35px);
     font-size: 24px;
-    color: var(--color-white);
+    color: $color-black;
     text-align: center;
 }
 
