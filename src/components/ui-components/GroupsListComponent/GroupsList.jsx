@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./groups-list.scss";
-import AddDtn from "../../../assets/images/grey-plus.jpg";
+import AddDtn from "../../../assets/images/grey-plus.svg";
 import GroupsListItems from "./GroupListItemsComponent/GroupsListItems";
 import AddGroupModal from "./AddGroupModalComponent/AddGroupModal";
 

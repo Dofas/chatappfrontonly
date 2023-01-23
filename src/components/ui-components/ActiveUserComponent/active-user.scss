@@ -8,6 +8,11 @@
         display: flex;
         padding: 16px 0;
 
+        .header-question-image {
+            width: 22px;
+            height: 22px;
+        }
+
         > li {
             display: flex;
             align-items: center;

@@ -1,8 +1,8 @@
 import "./active-user.scss";
-import Star from "../../../assets/images/star.jpg";
-import Bell from "../../../assets/images/bell.jpg";
-import Question from "../../../assets/images/question.jpg";
-import Globe from "../../../assets/images/globe.jpg";
+import Star from "../../../assets/images/star.svg";
+import Bell from "../../../assets/images/bell.svg";
+import Question from "../../../assets/images/question.svg";
+import Globe from "../../../assets/images/globe.svg";
 import { useState } from "react";
 import { useClickOutside } from "../../../utils/hooks/useClickOutside";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +64,11 @@ const ActiveUser = ({
           <img src={Bell} alt="bell" />
         </li>
         <li>
-          <img src={Question} alt="question" />
+          <img
+            src={Question}
+            alt="question"
+            className="header-question-image"
+          />
         </li>
         <li>
           <img src={Globe} alt="globe" />

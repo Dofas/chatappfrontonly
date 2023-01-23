@@ -3,22 +3,33 @@
 .login-page-container {
     display: flex;
     align-items: center;
-    flex-direction: column;
     justify-content: center;
-    background-color: $bg-color-header;
     width: 100vw;
     height: 100vh;
+
+    .login-page-image-background {
+        margin-left: auto;
+        width: 50%;
+        height: 50%;
+    }
 
     .login-page-inner-container {
         display: flex;
         flex-direction: column;
+        margin-left: auto;
 
 
         .login-page-header {
+            margin-right: 20px;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
             div {
                 font-size: 25px;
-                color: $color-grey;
                 margin-bottom: 20px;
+                text-align: center;
             }
         }
 
@@ -49,7 +60,6 @@
                 color: $color-full-black;
                 font-size: 22px;
                 margin-top: 15px;
-                margin-bottom: 15px;
             }
 
             .login-page-error-message {
@@ -62,10 +72,31 @@
                 border: none;
                 background-color: transparent;
                 font-size: 20px;
-                margin-top: 15px;
                 color: $color-blue;
                 cursor: pointer;
             }
+        }
+
+        .login-page-register-redirection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .login-page-container {
+        .login-page-image-background {
+            display: none;
+        }
+
+        .login-page-inner-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0;
         }
     }
 }

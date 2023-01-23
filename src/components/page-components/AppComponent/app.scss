@@ -35,10 +35,6 @@
 }
 
 .add-img {
-    opacity: 0.7;
-    border: solid 1px var $color-img-border;
-    background-color: $color-img-bg;
-    border-radius: 50%;
     height: 24px;
     width: 24px;
     display: flex;
@@ -92,7 +88,7 @@
     input:focus + label {
         top: -27px;
         font-size: 12px;
-        color: $color-white;
+        color: $color-black;
     }
 }
 
@@ -131,14 +127,14 @@
     input:focus + label {
         top: -27px;
         font-size: 12px;
-        color: $color-white;
+        color: $color-black;
     }
 
     .input-border {
         display:inline-block;
         width: 0;
         height: 2px;
-        background: $color-green;
+        background: $color-black;
         position: relative;
         bottom: 18px;
         -webkit-transition: all ease-in-out .15s;
@@ -189,7 +185,7 @@
     input:focus + label {
         top: -27px;
         font-size: 12px;
-        color: $color-white;
+        color: $color-black;
     }
 
     .input-border-full {
@@ -218,8 +214,8 @@
         &::before {
             left: 0;
             bottom: 0;
-            border-right: 0 solid $color-green;
-            border-bottom: 0 solid $color-green;
+            border-right: 0 solid $color-black;
+            border-bottom: 0 solid $color-black;
             transition:
                     border 0s linear 0.4s,
                     height 0.1s linear 0.2s,
@@ -229,8 +225,8 @@
         &::after {
             right: 0;
             top: 0;
-            border-left: 0 solid $color-green;
-            border-top: 0 solid $color-green;
+            border-left: 0 solid $color-black;
+            border-top: 0 solid $color-black;
             transition:
                     border 0s linear .2s,
                     height .1s linear,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./login-page.scss";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../utils/UserService/UserService";
+import LoginPageImageBackground from "../../assets/images/login-page-image-background.jpg";
 
 const LoginPage = ({ socket }) => {
   const [nickName, setNickname] = useState("");
@@ -71,7 +72,7 @@ const LoginPage = ({ socket }) => {
           <button className="login-page-login-button" onClick={handleSubmit}>
             Sign in
           </button>
-          <span>
+          <span className="login-page-register-redirection">
             <span className="login-page-create-text">
               Don{"'"}t have an account yet?
             </span>
@@ -89,6 +90,11 @@ const LoginPage = ({ socket }) => {
           )}
         </div>
       </div>
+      <img
+        src={LoginPageImageBackground}
+        alt="login-img"
+        className="login-page-image-background"
+      />
     </div>
   );
 };

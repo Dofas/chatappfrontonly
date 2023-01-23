@@ -12,7 +12,7 @@
 .team-name {
     font-family: Avenir, serif;
     line-height: 1.29;
-    color: $color-text-grey;
+    color: $color-white;
     max-width: 125px;
     overflow: hidden;
     white-space: nowrap;
@@ -23,15 +23,15 @@
     background-color: rgba(255,255,255, 0.1);
 
     > .team-name {
-        color: $color-text-light-grey;
+        color: $color-white;
         font-family: Avenir-Roman, serif;
     }
 }
 
 .team-members-count {
-    color: $color-text-light-grey;
+    color: $color-white;
 }
 
 .empty-team-list {
-    color: $color-text-light-grey;
+    color: $color-white;
 }

@@ -1,5 +1,5 @@
 import "./team-list.scss";
-import AddIcon from "../../../assets/images/personAdd.jpg";
+import AddIcon from "../../../assets/images/personAdd.svg";
 import React, { useState } from "react";
 import AddTeamModal from "./AddTeamModalComponent/AddTeamModal";
 import TeamListItems from "./TeamListItemsComponent/TeamListItems";
