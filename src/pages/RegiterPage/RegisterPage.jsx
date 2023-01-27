@@ -5,6 +5,9 @@ import { UserService } from "../../utils/UserService/UserService";
 import { validateSpecSymbols } from "../../components/ui-components/TeamsListComponent/AddTeamModalComponent/AddTeamModal";
 import ErrorElement from "./ErrorElement";
 import RegisterPageImageBackground from "../../assets/images/register-page-image-background.svg";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/dist/style.css";
+import { format } from "date-fns";
 
 const noErrorState = {
   firstNameError: false,
@@ -37,16 +40,6 @@ const RegisterPage = ({ socket }) => {
   const [isUserExist, setIsUserExist] = useState(false);
   const navigate = useNavigate();
 
-  function validateDateOfBirthday(dateOfBirthday) {
-    return (
-      String(dateOfBirthday)
-        .toLowerCase()
-        .match(
-          /January \d{1,2} \d{4}|February \d{1,2} \d{4}|March \d{1,2} \d{4}|April \d{1,2} \d{4}|May \d{1,2} \d{4}|June \d{1,2} \d{4}|July \d{1,2} \d{4}|August \d{1,2} \d{4}|September \d{1,2} \d{4}|October \d{1,2} \d{4}|November \d{1,2} \d{4}|December \d{1,2} \d{4}$/gim
-        )?.[0]?.length === dateOfBirthday.length
-    );
-  }
-
   function validateNumber(number) {
     return (
       String(number)
@@ -77,7 +70,7 @@ const RegisterPage = ({ socket }) => {
       !file ||
       !validateEmail(email) ||
       !validateNumber(number) ||
-      !validateDateOfBirthday(dateOfBirthday) ||
+      !dateOfBirthday ||
       password !== confirmPassword ||
       !gender ||
       !languages.length
@@ -89,7 +82,7 @@ const RegisterPage = ({ socket }) => {
         nickNameError: !nickName || !validateSpecSymbols(nickName),
         emailError: !validateEmail(email),
         numberError: !validateNumber(number),
-        dateOfBirthdayError: !validateDateOfBirthday(dateOfBirthday),
+        dateOfBirthdayError: !dateOfBirthday,
         passwordError: !password || password !== confirmPassword,
         genderError: !gender,
         fileError: !file,
@@ -113,7 +106,7 @@ const RegisterPage = ({ socket }) => {
       nickName,
       email,
       number,
-      dateOfBirthday,
+      dateOfBirthday: format(dateOfBirthday, "PPP"),
       password,
       gender,
       languages,
@@ -147,6 +140,7 @@ const RegisterPage = ({ socket }) => {
     setLanguages(newLanguages);
   };
 
+  console.log(dateOfBirthday);
   return (
     <div className="register-page-container">
       <div>
@@ -238,17 +232,19 @@ const RegisterPage = ({ socket }) => {
             </div>
           </div>
           <div>
-            <div className="input-container-text-only">
-              <input
-                data-testid="dob"
-                value={dateOfBirthday}
-                id="register-page-dob"
-                placeholder="&nbsp;"
-                onChange={(e) => setDateOfBirthday(e.target.value)}
+            <div className="date-picker-container">
+              <DayPicker
+                mode="single"
+                selected={dateOfBirthday}
+                onSelect={setDateOfBirthday}
+                showOutsideDays
+                fixedWeeks
+                footer={
+                  !!dateOfBirthday
+                    ? `Pick ${format(dateOfBirthday, "PPP")}`
+                    : "Enter your date of birth"
+                }
               />
-              <label htmlFor="register-page-dob">
-                Dob format January 1 2020:
-              </label>
               {isError.dateOfBirthdayError && (
                 <ErrorElement text={"Field is incorrect"} />
               )}
@@ -347,18 +343,20 @@ const RegisterPage = ({ socket }) => {
                 <ErrorElement text={"Field is required"} />
               )}
             </div>
-            <div className="input-container-border-full">
-              <input
-                value={password}
-                data-testid="password"
-                id="register-page-password"
-                className="register-page-password-input"
-                placeholder="&nbsp;"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <label htmlFor="register-page-password">Enter password:</label>
-              <span className="input-border-full" />
+            <div>
+              <div className="input-container-border-full">
+                <input
+                  value={password}
+                  data-testid="password"
+                  id="register-page-password"
+                  className="register-page-password-input"
+                  placeholder="&nbsp;"
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <label htmlFor="register-page-password">Enter password:</label>
+                <span className="input-border-full" />
+              </div>
             </div>
             <div className="register-page-password-container">
               <div className="input-container-border-full">

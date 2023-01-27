@@ -9,6 +9,22 @@
     justify-content: center;
     overflow-x: hidden;
 
+    .date-picker-container {
+        position: relative;
+        min-width: 275px;
+
+        .rdp {
+            --rdp-cell-size: 28px;
+            --rdp-accent-color: #0000ff;
+            --rdp-background-color: #e7edff;
+            --rdp-accent-color-dark: #3003e1;
+            --rdp-background-color-dark: #180270;
+            --rdp-outline: 2px solid var(--rdp-accent-color);
+            --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+            margin: 1em;
+        }
+    }
+
     .register-page-image-background {
         margin-left: auto;
         width: 50%;
@@ -48,6 +64,7 @@
                 background-color: $color-white;
                 font-size: 20px;
                 margin: 20px 0;
+                cursor: pointer;
             }
 
             > div > div {
@@ -315,6 +332,9 @@
 
     > div:first-child {
         margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
 
