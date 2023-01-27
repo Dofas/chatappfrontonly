@@ -239,6 +239,7 @@ const RegisterPage = ({ socket }) => {
                 onSelect={setDateOfBirthday}
                 showOutsideDays
                 fixedWeeks
+                disabled={(date) => date.getTime() > new Date().getTime()}
                 footer={
                   !!dateOfBirthday
                     ? `Pick ${format(dateOfBirthday, "PPP")}`
