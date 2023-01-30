@@ -3,6 +3,7 @@ import "./login-page.scss";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../utils/UserService/UserService";
 import LoginPageImageBackground from "../../assets/images/login-page-image-background.jpg";
+import InputWithoutBorder from "../../components/ui-components/InputComponents/InputWithoutBorder/InputWithoutBorder";
 
 const LoginPage = ({ socket }) => {
   const [nickName, setNickname] = useState("");
@@ -46,29 +47,23 @@ const LoginPage = ({ socket }) => {
           <div>Thank you for get back to our chat community</div>
         </span>
         <div className="login-page-form">
-          <div className="input-container-text-only">
-            <input
-              data-testid="login-page-nickName"
-              id="login-page-nickname"
-              placeholder="&nbsp;"
-              value={nickName}
-              onChange={(event) => setNickname(event.target.value)}
-              onKeyDown={handleEnterSubmit}
-            />
-            <label htmlFor="login-page-nickname">Enter nickname</label>
-          </div>
-          <div className="input-container-text-only">
-            <input
-              type="password"
-              id="login-page-password"
-              data-testid="login-page-password"
-              placeholder="&nbsp;"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              onKeyDown={handleEnterSubmit}
-            />
-            <label htmlFor="login-page-password">Enter password</label>
-          </div>
+          <InputWithoutBorder
+            testId="login-page-nickName"
+            id="login-page-nickname"
+            value={nickName}
+            onChange={setNickname}
+            onKeyDown={handleEnterSubmit}
+            labelText="Enter nickname"
+          />
+          <InputWithoutBorder
+            testId="login-page-password"
+            id="login-page-password"
+            value={password}
+            onChange={setPassword}
+            onKeyDown={handleEnterSubmit}
+            labelText="Enter password"
+            type="password"
+          />
           <button className="login-page-login-button" onClick={handleSubmit}>
             Sign in
           </button>

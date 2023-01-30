@@ -25,7 +25,9 @@ describe("Login page tests", () => {
         </RecoilRoot>
       )
     );
-    await act(() => userEvent.click(screen.getByText(/Register/i)));
+    await act(() =>
+      userEvent.click(screen.getByText(/Join our chat community/i))
+    );
 
     expect(window.location.href.includes("register")).toBeTruthy();
   });
@@ -45,7 +47,7 @@ describe("Login page tests", () => {
         </RecoilRoot>
       )
     );
-    await act(() => userEvent.click(screen.getByText(/Login/i)));
+    await act(() => userEvent.click(screen.getByText(/Sign In/i)));
     expect(
       screen.getByText("Incorrect nickname or password")
     ).toBeInTheDocument();
@@ -74,7 +76,7 @@ describe("Login page tests", () => {
     await userEvent.type(nickNameInput, "nickNameInput");
     await userEvent.type(passwordInput, "passwordInput");
 
-    await act(() => userEvent.click(screen.getByText(/Login/i)));
+    await act(() => userEvent.click(screen.getByText(/Sign in/i)));
 
     expect(window.location.href.includes("nickNameInput")).toBeTruthy();
     expect(window.location.href.includes("messages")).toBeTruthy();

@@ -1,0 +1,38 @@
+@import "../../../page-components/AppComponent/variables";
+
+.input-container-text-only {
+  border-top: 20px solid transparent;
+  position: relative;
+
+  input {
+    border: none;
+    appearance: none;
+    padding: 12px;
+    border-radius: 3px;
+    width: 200px;
+    background: $color-grey;
+  }
+
+  label {
+    position: absolute;
+    left: 12px;
+    transform: translateY(50%);
+    width: calc(100% - 24px);
+    color: $color-text-grey;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    transition:
+            top 0.3s ease,
+            color 0.3s ease,
+            font-size 0.3s ease;
+  }
+
+  input:not(:placeholder-shown) + label,
+  input:focus + label {
+    top: 0;
+    font-size: 12px;
+    color: $color-black;
+  }
+}

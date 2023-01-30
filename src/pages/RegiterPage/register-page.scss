@@ -9,22 +9,6 @@
     justify-content: center;
     overflow-x: hidden;
 
-    .date-picker-container {
-        position: relative;
-        min-width: 275px;
-
-        .rdp {
-            --rdp-cell-size: 28px;
-            --rdp-accent-color: #0000ff;
-            --rdp-background-color: #e7edff;
-            --rdp-accent-color-dark: #3003e1;
-            --rdp-background-color-dark: #180270;
-            --rdp-outline: 2px solid var(--rdp-accent-color);
-            --rdp-outline-selected: 3px solid var(--rdp-accent-color);
-            margin: 1em;
-        }
-    }
-
     .register-page-image-background {
         margin-left: auto;
         width: 50%;
@@ -40,6 +24,22 @@
         text-align: center;
         bottom: 0;
         height: 18px;
+    }
+
+    .register-page-date-picker-container {
+        margin-bottom: 18px;
+        padding-top: 20px;
+        position: relative;
+
+        .date-picker-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-page-error-field {
+            bottom: -13px;
+        }
     }
 
     > div {
@@ -65,6 +65,7 @@
                 font-size: 20px;
                 margin: 20px 0;
                 cursor: pointer;
+                border-radius: 3px;
             }
 
             > div > div {
@@ -91,7 +92,11 @@
 
         input:not(:placeholder-shown) + label,
         input:focus + label {
-            top: -23px;
+            top: -22px;
+        }
+
+        & + .register-page-error-field {
+            bottom: 7px;
         }
     }
 
@@ -110,15 +115,8 @@
             top: -23px;
         }
 
-        input:not(:placeholder-shown) ~ .input-border,
-        input:focus ~ .input-border,
-        input:hover ~ .input-border,
-        input:active ~ .input-border {
-            width: 200px;
-        }
-
-        .register-page-error-field {
-            bottom: 2px;
+        & + .register-page-error-field {
+            bottom: 6px;
         }
     }
 
@@ -137,47 +135,8 @@
             display: flex;
 
             > div {
-                display: flex;
-                align-items: center;
-
                 &:first-child {
                     margin-right: 20px;
-                }
-
-                .label-radio-button {
-                    width: 21px;
-                    height: 21px;
-                    border: 2px solid black;
-                    border-radius: 50%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin-right: 5px;
-                    cursor: pointer;
-
-                    .radio-button {
-                        display: inline-block;
-                        width: calc(100% - 6px);
-                        height: calc(100% - 6px);
-                        border-radius: 50%;
-                        background-color: $color-black;
-                        opacity: 0;
-                        transition: opacity .5s ease;
-                    }
-
-                    .input-radio-button {
-                        display: none;
-                    }
-
-                    .input-radio-button:checked {
-                        + .radio-button {
-                            opacity: 1;
-                        }
-                    }
-                }
-
-                span {
-                    cursor: pointer;
                 }
             }
         }
@@ -194,45 +153,9 @@
         }
             > div {
             display: flex;
-            > div {
+
+            .check-box-container {
                 margin-right: 20px;
-                display: flex;
-                align-items: center;
-
-                &:last-child {
-                    margin-right: 0;
-                }
-
-                .register-page-checkbox-label {
-                    width: 21px;
-                    height: 21px;
-                    cursor: pointer;
-                    display: flex;
-                    margin-right: 5px;
-
-                    .register-page-checkbox {
-                        width: 100%;
-                        height: 100%;
-                        border: 2px solid black;
-                        display: inline-block;
-                        border-radius: 3px;
-                        background: black url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png") center/1250% no-repeat;
-                        transition: background-size .2s ease;
-                    }
-
-                    .register-page-checkbox-input:checked + .register-page-checkbox {
-                        background-size: 60%;
-                        transition: background-size .25s cubic-bezier(0.7, 0, 0.18, 1.24);
-                    }
-
-                    .register-page-checkbox-input {
-                        display: none;
-                    }
-                }
-
-                span {
-                    cursor: pointer;
-                }
             }
         }
     }
@@ -243,35 +166,6 @@
 
         .register-page-error-field {
             bottom: -17px;
-        }
-
-        .register-page-file-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-
-            .register-page-file-button {
-                border: 2px solid gray;
-                color: gray;
-                background-color: white;
-                padding: 4px 10px;
-                border-radius: 8px;
-                font-size: 16px;
-                font-weight: bold;
-                max-width: 185px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-            }
-
-            .register-page-file-input {
-                font-size: 100px;
-                position: absolute;
-                left: 0;
-                top: 0;
-                opacity: 0;
-                height: 30px;
-            }
         }
     }
 
@@ -330,15 +224,18 @@
         margin-bottom: 18px;
     }
 
-    > div:first-child {
-        margin-right: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+    > div {
+
+        &:first-child {
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .register-page-container {
         .register-page-image-background {
             display: none;
@@ -356,7 +253,7 @@
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 840px) {
     .styles-container {
         width: unset;
         height: unset;

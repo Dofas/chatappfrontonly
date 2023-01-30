@@ -1,0 +1,42 @@
+@import "../../page-components/AppComponent/variables";
+
+.label-radio-button-container {
+  display: flex;
+  align-items: center;
+
+  .label-radio-button {
+    width: 21px;
+    height: 21px;
+    border: 2px solid black;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    cursor: pointer;
+
+    .radio-button {
+      display: inline-block;
+      width: calc(100% - 6px);
+      height: calc(100% - 6px);
+      border-radius: 50%;
+      background-color: $color-black;
+      opacity: 0;
+      transition: opacity .5s ease;
+    }
+
+    .input-radio-button {
+      display: none;
+    }
+
+    .input-radio-button:checked {
+      + .radio-button {
+        opacity: 1;
+      }
+    }
+  }
+
+  span {
+    cursor: pointer;
+  }
+}

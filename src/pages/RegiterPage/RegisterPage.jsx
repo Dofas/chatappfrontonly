@@ -5,8 +5,13 @@ import { UserService } from "../../utils/UserService/UserService";
 import { validateSpecSymbols } from "../../components/ui-components/TeamsListComponent/AddTeamModalComponent/AddTeamModal";
 import ErrorElement from "./ErrorElement";
 import RegisterPageImageBackground from "../../assets/images/register-page-image-background.svg";
-import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+import InputWithoutBorder from "../../components/ui-components/InputComponents/InputWithoutBorder/InputWithoutBorder";
+import InputWithBorderBottom from "../../components/ui-components/InputComponents/InputWithBorderBottom/InputWithBorderBottom";
+import InputWithFullBorder from "../../components/ui-components/InputComponents/InputWithFullBorder/InputWithFullBorder";
+import RadioButton from "../../components/ui-components/RadioButtonComponent/RadioButton";
+import CheckBox from "../../components/ui-components/CheckBoxComponent/CheckBox";
+import FileInput from "../../components/ui-components/FileInputComponent/FileInput";
+import PopupDatePicker from "../../components/ui-components/DatePickerComponent/PopupDatePicker";
 import { format } from "date-fns";
 
 const noErrorState = {
@@ -140,242 +145,164 @@ const RegisterPage = ({ socket }) => {
     setLanguages(newLanguages);
   };
 
-  console.log(dateOfBirthday);
   return (
     <div className="register-page-container">
       <div>
         <div className="register-page-inner-container">
           <div>
-            <div className="input-container-text-only">
-              <input
-                data-testid="firstName"
+            <div className="position-relative">
+              <InputWithoutBorder
                 id="register-page-first-name"
-                placeholder="&nbsp;"
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={setFirstName}
+                labelText="Enter first name:"
+                testId="firstName"
               />
-              <label htmlFor="register-page-first-name">
-                Enter first name:
-              </label>
               {isError.firstNameError && (
-                <ErrorElement text={"Field is required"} />
+                <ErrorElement text="Field is required" />
               )}
             </div>
-            <div className="input-container-text-only">
-              <input
-                data-testid="lastName"
+            <div className="position-relative">
+              <InputWithoutBorder
                 id="register-page-last-name"
-                placeholder="&nbsp;"
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={setLastName}
+                labelText="Enter last name:"
+                testId="lastName"
               />
-              <label htmlFor="register-page-last-name">Enter last name:</label>
               {isError.lastNameError && (
-                <ErrorElement text={"Field is required"} />
+                <ErrorElement text="Field is required" />
               )}
             </div>
-            <div className="input-container-border-bottom">
-              <input
-                data-testid="address"
+            <div className="position-relative">
+              <InputWithBorderBottom
                 id="register-page-address"
-                placeholder="&nbsp;"
                 value={location}
-                onChange={(e) => setLocation(e.target.value)}
+                onChange={setLocation}
+                labelText="Enter address:"
+                testId="address"
               />
-              <label htmlFor="register-page-address">Enter address:</label>
-              <span className="input-border" />
               {isError.locationError && (
-                <ErrorElement text={"Field is required"} />
+                <ErrorElement text="Field is required" />
               )}
             </div>
-            <div className="input-container-border-bottom">
-              <input
-                data-testid="nickName"
+            <div className="position-relative">
+              <InputWithBorderBottom
                 id="register-page-nickname"
-                placeholder="&nbsp;"
                 value={nickName}
-                onChange={(e) => setNickName(e.target.value)}
+                onChange={setNickName}
+                labelText="Enter nickname:"
+                testId="nickName"
               />
-              <label htmlFor="register-page-nickname">Enter nickname:</label>
-              <span className="input-border" />
               {isError.nickNameError && (
-                <ErrorElement text={"Field is incorrect"} />
+                <ErrorElement text="Field is incorrect" />
               )}
             </div>
-            <div className="input-container-border-bottom">
-              <input
-                data-testid="email"
+            <div className="position-relative">
+              <InputWithBorderBottom
                 id="register-page-email"
-                placeholder="&nbsp;"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={setEmail}
+                labelText="Enter email:"
+                testId="email"
               />
-              <label htmlFor="register-page-email">Enter email:</label>
-              <span className="input-border" />
-              {isError.emailError && (
-                <ErrorElement text={"Field is incorrect"} />
-              )}
+              {isError.emailError && <ErrorElement text="Field is incorrect" />}
             </div>
-            <div className="input-container-border-bottom">
-              <input
-                data-testid="phone"
+            <div className="position-relative">
+              <InputWithBorderBottom
                 id="register-page-phone"
-                placeholder="&nbsp;"
                 value={number}
-                onChange={(e) => setNumber(e.target.value)}
+                onChange={setNumber}
+                labelText="+38-XXX-XXX-XXXX:"
+                testId="phone"
               />
-              <label htmlFor="register-page-phone">+38-XXX-XXX-XXXX:</label>
-              <span className="input-border" />
               {isError.numberError && (
-                <ErrorElement text={"Field is incorrect"} />
+                <ErrorElement text="Field is incorrect" />
               )}
             </div>
           </div>
           <div>
-            <div className="date-picker-container">
-              <DayPicker
-                mode="single"
-                selected={dateOfBirthday}
-                onSelect={setDateOfBirthday}
-                showOutsideDays
-                fixedWeeks
-                disabled={(date) => date.getTime() > new Date().getTime()}
-                footer={
-                  !!dateOfBirthday
-                    ? `Pick ${format(dateOfBirthday, "PPP")}`
-                    : "Enter your date of birth"
-                }
+            <div className="register-page-date-picker-container">
+              <PopupDatePicker
+                value={dateOfBirthday}
+                onChange={setDateOfBirthday}
+                text="Enter your date of birth"
               />
               {isError.dateOfBirthdayError && (
-                <ErrorElement text={"Field is incorrect"} />
+                <ErrorElement text="Field is incorrect" />
               )}
             </div>
             <div className="register-page-gender-container">
               <div>Choose gender:</div>
               <div>
-                <div>
-                  <label className="label-radio-button">
-                    <input
-                      type="radio"
-                      value="Male"
-                      checked={gender === "Male"}
-                      className="input-radio-button"
-                      onChange={(event) => setGender(event.target.value)}
-                    />
-                    <span className="radio-button" />
-                  </label>
-                  <span onClick={() => setGender("Male")}>Male</span>
-                </div>
-                <div>
-                  <label className="label-radio-button">
-                    <input
-                      type="radio"
-                      value="Female"
-                      checked={gender === "Female"}
-                      className="input-radio-button"
-                      onChange={(event) => setGender(event.target.value)}
-                    />
-                    <span className="radio-button" />
-                  </label>
-                  <span onClick={() => setGender("Female")}>Female</span>
-                </div>
-              </div>
-              {isError.genderError && (
-                <ErrorElement text={"Field is required"} />
-              )}
-            </div>
-            <div className="register-page-file-container">
-              <div className="register-page-file-wrapper">
-                <button className="register-page-file-button">
-                  {file?.name ?? "Choose avatar:"}
-                </button>
-                <input
-                  data-testid="file"
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  className="register-page-file-input"
+                <RadioButton
+                  value="Male"
+                  checked={gender === "Male"}
+                  onChange={setGender}
+                  labelText="Male"
+                />
+                <RadioButton
+                  value="Female"
+                  checked={gender === "Female"}
+                  onChange={setGender}
+                  labelText="Female"
                 />
               </div>
-              {isError.fileError && <ErrorElement text={"Field is required"} />}
+              {isError.genderError && <ErrorElement text="Field is required" />}
+            </div>
+            <div className="register-page-file-container">
+              <FileInput
+                text={file?.name ?? "Choose avatar:"}
+                onChange={setFile}
+                testId="file"
+              />
+              {isError.fileError && <ErrorElement text="Field is required" />}
             </div>
             <div className="register-page-language-container">
               <div>Choose languages:</div>
               <div>
-                <div>
-                  <div>
-                    <label className="register-page-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={languages.includes("Ukrainian")}
-                        value="Ukrainian"
-                        onChange={(event) =>
-                          changeLanguages(event.target.value)
-                        }
-                        className="register-page-checkbox-input"
-                      />
-                      <span className="register-page-checkbox" />
-                    </label>
-                  </div>
-                  <span onClick={() => changeLanguages("Ukrainian")}>
-                    Ukrainian
-                  </span>
-                </div>
-                <div>
-                  <div>
-                    <label className="register-page-checkbox-label">
-                      <input
-                        type="checkbox"
-                        checked={languages.includes("English")}
-                        value="English"
-                        onChange={(event) =>
-                          changeLanguages(event.target.value)
-                        }
-                        className="register-page-checkbox-input"
-                      />
-                      <span className="register-page-checkbox" />
-                    </label>
-                  </div>
-                  <span onClick={() => changeLanguages("English")}>
-                    English
-                  </span>
-                </div>
+                <CheckBox
+                  checked={languages.includes("Ukrainian")}
+                  onChange={changeLanguages}
+                  value="Ukrainian"
+                  labelText="Ukrainian"
+                />
+                <CheckBox
+                  checked={languages.includes("English")}
+                  onChange={changeLanguages}
+                  value="English"
+                  labelText="English"
+                />
               </div>
               {isError.languagesError && (
                 <ErrorElement text={"Field is required"} />
               )}
             </div>
             <div>
-              <div className="input-container-border-full">
-                <input
-                  value={password}
-                  data-testid="password"
+              <div className="position-relative">
+                <InputWithFullBorder
                   id="register-page-password"
+                  value={password}
+                  onChange={setPassword}
+                  labelText="Enter password:"
+                  testId="password"
                   className="register-page-password-input"
-                  placeholder="&nbsp;"
                   type="password"
-                  onChange={(e) => setPassword(e.target.value)}
                 />
-                <label htmlFor="register-page-password">Enter password:</label>
-                <span className="input-border-full" />
               </div>
             </div>
             <div className="register-page-password-container">
-              <div className="input-container-border-full">
-                <input
-                  value={confirmPassword}
-                  data-testid="confirmPassword"
-                  id="register-page-confirm-password"
-                  placeholder="&nbsp;"
-                  type="password"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <label htmlFor="register-page-confirm-password">
-                  Enter confirm password:
-                </label>
-                <span className="input-border-full" />
-              </div>
+              <InputWithFullBorder
+                id="register-page-confirm-password"
+                value={confirmPassword}
+                onChange={setConfirmPassword}
+                labelText="Enter confirm password:"
+                testId="confirmPassword"
+                className="register-page-password-input"
+                type="password"
+              />
               {isError.passwordError && (
-                <ErrorElement text={"Incorrect passwords"} />
+                <ErrorElement text="Incorrect passwords" />
               )}
             </div>
           </div>

@@ -1,0 +1,39 @@
+.check-box-container {
+  display: flex;
+  align-items: center;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  .checkbox-label {
+    width: 21px;
+    height: 21px;
+    cursor: pointer;
+    display: flex;
+    margin-right: 5px;
+
+    .checkbox-img {
+      width: 100%;
+      height: 100%;
+      border: 2px solid black;
+      display: inline-block;
+      border-radius: 3px;
+      background: black url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/White_check.svg/1200px-White_check.svg.png") center/1250% no-repeat;
+      transition: background-size .2s ease;
+    }
+
+    .checkbox-input:checked + .checkbox-img {
+      background-size: 60%;
+      transition: background-size .25s cubic-bezier(0.7, 0, 0.18, 1.24);
+    }
+
+    .checkbox-input {
+      display: none;
+    }
+  }
+
+  span {
+    cursor: pointer;
+  }
+}

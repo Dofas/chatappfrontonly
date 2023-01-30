@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userSearchValue } from "../../../../state/activeUserListState/atomActiveUserListState";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
 import { activeChannel } from "../../../../state/activeChannelState/atomActiveChannelState";
-import SearchIcon from "../../../../assets/images/searchBtn.svg";
+import SearchIcon2 from "../../../../assets/images/searchBtn.svg";
 
 const SearchBar = () => {
   const [isSearching, setIsSearching] = useState(false);
@@ -40,14 +40,13 @@ const SearchBar = () => {
           {searchValue.length ? searchValue : `List of ${teamName.name}`}
         </span>
       )}
-      <span className="user-list-search-btn" onClick={triggerSearching}>
-        <img
-          className="user-list-search-img"
-          data-testid="user-list-search-icon"
-          src={SearchIcon}
-          alt="search"
-        />
-      </span>
+      <img
+        className="user-list-search-img"
+        data-testid="user-list-search-icon"
+        src={SearchIcon2}
+        alt="search"
+        onClick={triggerSearching}
+      />
     </div>
   );
 };

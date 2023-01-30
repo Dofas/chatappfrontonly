@@ -18,6 +18,11 @@
     display: flex;
     justify-content: space-between;
     margin: 18px 16px 25px 24px;
+
+    > .title {
+        display: flex;
+        align-items: center;
+    }
 }
 
 .user-list-search-input {
@@ -30,21 +35,10 @@
     width: 80%;
 }
 
-.user-list-search-btn {
-    border: solid 1px #40454b;
-    background-color: #212931;
+.user-list-search-img {
     height: 24px;
     width: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-}
-
-.user-list-search-img {
-    height: 13px;
-    width: 13px;
 }
 
 .user-list-menu {

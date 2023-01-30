@@ -1,0 +1,41 @@
+.date-picker-container {
+  position: relative;
+
+  .date-picker-trigger-button {
+    width: 200px;
+    height: 27px;
+    background-color: #ffffff;
+    color: black;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+
+  .rdp {
+    --rdp-cell-size: 28px;
+    --rdp-accent-color: #0000ff;
+    --rdp-background-color: #e7edff;
+    --rdp-accent-color-dark: #3003e1;
+    --rdp-background-color-dark: #180270;
+    --rdp-outline: 2px solid var(--rdp-accent-color);
+    --rdp-outline-selected: 3px solid var(--rdp-accent-color);
+    margin: 1em;
+  }
+
+  .date-picker {
+    position: absolute;
+    bottom: -15px;
+    left: 185px;
+    min-width: 275px;
+  }
+}
+
+@media (max-width: 720px) {
+  .date-picker-container {
+    .date-picker {
+      bottom: 40px;
+      left: -20px;
+      background-color: white;
+    }
+  }
+}

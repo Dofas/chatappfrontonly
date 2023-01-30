@@ -27,7 +27,7 @@ describe("Register page tests", () => {
         </RecoilRoot>
       )
     );
-    await act(() => userEvent.click(screen.getByText(/Register/i)));
+    await act(() => userEvent.click(screen.getByText(/Create account/i)));
     expect(screen.getAllByText("Field is required").length).toBe(6);
     expect(screen.getAllByText("Field is incorrect").length).toBe(4);
     expect(screen.getByText("Incorrect passwords")).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe("Register page tests", () => {
         </RecoilRoot>
       )
     );
-    await act(() => userEvent.click(screen.getByText(/Login/i)));
+    await act(() => userEvent.click(screen.getByText(/Log In/i)));
 
     expect(window.location.href.includes("login")).toBeTruthy();
   });
@@ -77,10 +77,10 @@ describe("Register page tests", () => {
     const nickNameInput = screen.getByTestId("nickName");
     const emailInput = screen.getByTestId("email");
     const phoneInput = screen.getByTestId("phone");
-    const dobInput = screen.getByTestId("dob");
-    const genderInput = screen.getByTestId("gender");
+    const dobBtn = screen.getByText("Enter your date of birth");
+    const genderInput = screen.getByText("Male");
     const fileInput = screen.getByTestId("file");
-    const languagesInput = screen.getByTestId("languages");
+    const languagesInput = screen.getByText("Ukrainian");
     const passwordInput = screen.getByTestId("password");
     const confirmPasswordInput = screen.getByTestId("confirmPassword");
     await userEvent.type(firstNameInput, "firstNameInput");
@@ -89,13 +89,14 @@ describe("Register page tests", () => {
     await userEvent.type(nickNameInput, "nickNameInput");
     await userEvent.type(emailInput, "emailInput@gmail.com");
     await userEvent.type(phoneInput, "+38-111-111-1111");
-    await userEvent.type(dobInput, "March 1 2020");
-    await userEvent.type(genderInput, "genderInput");
+    await userEvent.click(dobBtn);
+    await userEvent.click(screen.getByText("20"));
+    await userEvent.click(genderInput);
     await userEvent.upload(fileInput, fakeFile);
-    await userEvent.type(languagesInput, "languagesInput");
+    await userEvent.click(languagesInput);
     await userEvent.type(passwordInput, "passwordInput");
     await userEvent.type(confirmPasswordInput, "passwordInput");
-    await act(async () => userEvent.click(screen.getByText(/Register/i)));
+    await act(async () => userEvent.click(screen.getByText(/Create account/i)));
 
     expect(window.location.href.includes("nickNameInput")).toBeTruthy();
     expect(window.location.href.includes("messages")).toBeTruthy();
