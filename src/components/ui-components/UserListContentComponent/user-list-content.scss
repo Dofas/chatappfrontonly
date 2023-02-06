@@ -88,21 +88,15 @@
 
 .user-list-item-setting {
     position: absolute;
-    border: 1px solid $color-white;
     padding: 2px 5px;
-    color: $color-white;
     width: 83px;
     top: -14px;
     left: -90px;
     text-align: center;
     transition: all .4s;
-
-    &:hover {
-        background-color: $color-red;
-        color: $color-white;
-        border-color: $color-red;
-
-    }
+    background-color: $color-red;
+    color: $color-white;
+    border-color: $color-red;
 }
 
 
