@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./login-page.scss";
 import { useNavigate } from "react-router-dom";
 import { UserService } from "../../utils/UserService/UserService";
-import LoginPageImageBackground from "../../assets/images/login-page-image-background.jpg";
+import LoginPageImageBackground from "../../assets/images/login-page-image-background.svg";
 import InputWithoutBorder from "../../components/ui-components/InputComponents/InputWithoutBorder/InputWithoutBorder";
 
 const LoginPage = ({ socket }) => {
@@ -67,22 +67,24 @@ const LoginPage = ({ socket }) => {
           <button className="login-page-login-button" onClick={handleSubmit}>
             Sign in
           </button>
-          <span className="login-page-register-redirection">
-            <span className="login-page-create-text">
-              Don{"'"}t have an account yet?
+          <div className="position-relative">
+            <span className="login-page-register-redirection">
+              <span className="login-page-create-text">
+                Don{"'"}t have an account yet?
+              </span>
+              <button
+                onClick={() => navigate("/chatapp/register")}
+                className="login-page-register-button"
+              >
+                Join our chat community
+              </button>
             </span>
-            <button
-              onClick={() => navigate("/chatapp/register")}
-              className="login-page-register-button"
-            >
-              Join our chat community
-            </button>
-          </span>
-          {isError && (
-            <div className="login-page-error-message">
-              Incorrect nickname or password
-            </div>
-          )}
+            {isError && (
+              <div className="login-page-error-message">
+                Incorrect nickname or password
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <img

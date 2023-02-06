@@ -5,12 +5,12 @@
   position: relative;
 
   input {
-    border: none;
     appearance: none;
     padding: 12px;
-    border-radius: 3px;
     width: 200px;
     background: $color-grey;
+    border: 1px solid black;
+    border-radius: 3px;
   }
 
   label {

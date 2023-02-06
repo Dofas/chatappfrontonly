@@ -161,8 +161,12 @@
     }
 
     .register-page-file-container {
-        margin-bottom: 20px;
+        margin-bottom: 32px;
         position: relative;
+
+        .file-input-container {
+            margin-bottom: 0;
+        }
 
         .register-page-error-field {
             bottom: -17px;
@@ -187,6 +191,7 @@
     .input-container-border-full {
         input {
             padding: 4px;
+            width: 210px;
         }
 
         label {

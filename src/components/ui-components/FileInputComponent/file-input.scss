@@ -2,20 +2,20 @@
   position: relative;
   overflow: hidden;
   display: inline-block;
+  width: 100%;
 
   .file-input-button {
     border: 2px solid gray;
     background-color: white;
     padding: 4px 10px;
     border-radius: 3px;
-    min-width: 200px;
-    max-width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
   }
 
   .file-input-input {

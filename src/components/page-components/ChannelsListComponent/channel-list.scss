@@ -4,8 +4,6 @@
     background-color: $bg-color-header;
     overflow-y: auto;
     height: calc(100vh - 65px);
-    flex-basis: 240px;
-    min-width: 240px;
 
     .title {
         color: $color-white;

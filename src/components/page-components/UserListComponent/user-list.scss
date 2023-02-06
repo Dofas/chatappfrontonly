@@ -7,8 +7,6 @@
     border: solid 1px #979797;
     overflow-y: auto;
     height: calc(100vh - 65px);
-    flex-basis: 350px;
-    min-width: 350px;
     color: #fff;
 
     &.display-hidden {
@@ -56,6 +54,7 @@
     .user-list-container {
         .sidebar-toggle {
             display: block;
+            color: black;
         }
     }
 }
