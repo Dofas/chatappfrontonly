@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { saveAs } from "file-saver";
+import classNames from "classnames";
 
 function getTextWidth(textToCheck) {
   const text = document.createElement("span");
@@ -13,7 +14,8 @@ function getTextWidth(textToCheck) {
   text.style.whiteSpace = "no-wrap";
   text.innerHTML = textToCheck;
 
-  const width = Math.ceil(text.offsetWidth);
+  const width =
+    Math.ceil(text.offsetWidth) < 60 ? 60 : Math.ceil(text.offsetWidth);
   const formattedWidth = width * 1.7 + "px";
 
   document.body.removeChild(text);
@@ -46,10 +48,10 @@ const MessageListItem = ({
     }
     if (
       parseInt(messageRef.current.scrollHeight, 10) <= 48 &&
-      parseInt(messageRef.current.scrollHeight, 10) !== 19
+      parseInt(messageRef.current.scrollHeight, 10) !== 21
     ) {
       messageRef.current.style.height = "";
-      messageRef.current.style.height = "19px";
+      messageRef.current.style.height = "21px";
     } else {
       if (
         parseInt(messageRef.current.style.height, 10) !==
@@ -64,11 +66,11 @@ const MessageListItem = ({
 
   return (
     <div
-      className={
-        sender === selectedUser.id
-          ? "messages-list-item messages-list-item-selected-user"
-          : "messages-list-item messages-list-item-active-user"
-      }
+      className={classNames(
+        "messages-list-item",
+        { "messages-list-item-selected-user": sender === selectedUser.id },
+        { "messages-list-item-active-user": sender !== selectedUser.id }
+      )}
     >
       <div className="messages-list-message-content">
         {!!file ? (
@@ -88,12 +90,11 @@ const MessageListItem = ({
               <div>{text}</div>
               <button
                 onClick={() => downloadImage(file)}
-                className="download-btn"
-                style={
-                  sender === selectedUser.id
-                    ? { alignSelf: "flex-end" }
-                    : { alignSelf: "flex-start" }
-                }
+                className={classNames(
+                  "download-btn",
+                  { "flex-end": sender === selectedUser.id },
+                  { "flex-start": sender !== selectedUser.id }
+                )}
               >
                 Download
               </button>
@@ -101,6 +102,14 @@ const MessageListItem = ({
           </div>
         ) : (
           <>
+            <div className="messages-list-item-user-name">
+              <div>
+                {sender === selectedUser.id
+                  ? selectedUser.firstName.concat(" ", selectedUser.lastName)
+                  : activeUser.name}
+              </div>
+              <div>{time}</div>
+            </div>
             <div className="messages-list-item-text">
               <textarea
                 className={"messages-list-message-text"}
@@ -108,13 +117,7 @@ const MessageListItem = ({
                 disabled
                 defaultValue={text}
               ></textarea>
-              <div className="messages-list-message-time">{time}</div>
             </div>
-            <div
-              className={
-                sender === selectedUser.id ? "triangle" : "backup-triangle"
-              }
-            />
           </>
         )}
       </div>

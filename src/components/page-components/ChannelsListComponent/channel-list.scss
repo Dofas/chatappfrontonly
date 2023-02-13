@@ -1,12 +1,12 @@
 @import "../AppComponent/variables";
 
 .channel-list-container {
-    background-color: $bg-color-header;
     overflow-y: auto;
-    height: calc(100vh - 65px);
+    height: calc(100vh - 67px);
+    color: $color-black;
 
     .title {
-        color: $color-white;
+        color: $color-black;
     }
 }
 

@@ -2,11 +2,42 @@
 
 .user-list-team-user {
     display: flex;
+    flex-direction: column;
     padding: 16px 0 0 0;
+    transition: all .5s ease;
+    color: $color-black;
+
+    &:hover {
+        background-color: #bdabe1;
+    }
+
+    .user-list-full-info {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 24px 0 24px;
+
+        .user-list-full-info-avatar {
+            width: 51px;
+            position: relative;
+        }
+    }
+
+    .info {
+        display: flex;
+        width: calc(100% - 51px);
+        justify-content: space-between;
+
+        .info-name {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 180px;
+        }
+    }
 }
 
 .user-list-active-team-user {
-    background-color: #0101cc;
+    background-color: #bdabe1;
 
     .user-list-team-user-name,
     .user-list-team-user-messages,
@@ -21,7 +52,9 @@
             }
         }
     }
-
+    .info {
+        color: $color-white;
+    }
 }
 
 .position-relative {
@@ -32,14 +65,13 @@
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    margin-left: 24px;
     margin-right: 16px;
 }
 
 .status {
     position: absolute;
-    top: -5%;
-    left: 35%;
+    top: 60%;
+    left: 51%;
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -78,7 +110,7 @@
     display: inline-block;
     height: 5px;
     width: 5px;
-    background-color: $color-dot-white;
+    background-color: $color-black;
     border-radius: 50%;
 }
 
@@ -101,9 +133,13 @@
 
 
 .user-list-team-user-info {
-    box-shadow: inset 0 -1px 0 0 rgba(90, 95, 101, 0.5);
-    padding-bottom: 16px;
-    width: 235px;
+    box-shadow: inset 0 -1px 0 0 #e9e9e9;
+    align-self: center;
+    display: flex;
+    padding: 0 8px 8px 24px;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
 }
 
 .user-list-team-user-name {
@@ -112,6 +148,7 @@
     font-size: 14px;
     justify-content: space-between;
     color: $color-text-light-grey;
+    order: 1;
 
     > div {
         &:first-child {
@@ -135,10 +172,7 @@
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
-        max-width: 170px;
+        max-width: 250px;
     }
 }
 
-.user-list-team-user-time {
-    margin-left: 15px;
-}

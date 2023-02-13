@@ -26,8 +26,8 @@
     margin: 20px auto;
     border-radius: 4px;
     padding-bottom: 20px;
-    background-color: #000075;
-    color: $color-white;
+    background-color: $color-white;
+    color: $color-black;
     align-self: center;
     font-size: 22px;
     box-shadow: 0 12px 25px 0 rgba(199, 175, 189, .25);
@@ -61,6 +61,6 @@
 
 .modal-save-btn {
     padding: 15px;
-    border: 1px solid $color-white;
+    border: 1px solid $color-black;
     cursor: pointer;
 }

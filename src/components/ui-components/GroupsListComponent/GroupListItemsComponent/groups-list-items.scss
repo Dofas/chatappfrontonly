@@ -5,15 +5,20 @@
     > li {
         font-family: Avenir, serif;
         line-height: 1.29;
-        color: $color-white;
+        color: $color-black;
         max-width: 140px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         margin: 0 0 24px 32px;
+
+        &:hover {
+            background-color: #bdabe1;
+            transition: all 0.5s ease-in-out;
+        }
     }
 }
 
 .empty-groups-list {
-    color: $color-white;
+    color: $color-black;
 }

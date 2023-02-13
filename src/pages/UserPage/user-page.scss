@@ -11,7 +11,7 @@
 .user-page-content {
     display: grid;
     grid-template-columns: 240px 350px 220px 1fr;
-    min-height: calc(100vh - 65px);
+    min-height: calc(100vh - 67px);
 }
 
 @media (max-width: 1250px) {
@@ -26,6 +26,7 @@
 
         .channel-list-container {
             width: 240px;
+            background-color: #7006d5;
         }
     }
 }

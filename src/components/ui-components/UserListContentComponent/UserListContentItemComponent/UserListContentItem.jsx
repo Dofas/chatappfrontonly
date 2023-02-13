@@ -11,6 +11,7 @@ import {
   allMessages,
   unreadMessages,
 } from "../../../../state/messagesState/atomMessages";
+import classNames from "classnames";
 
 const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   const [isSettings, setIsSettings] = useState(false);
@@ -174,11 +175,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
 
   return (
     <div
-      className={
-        chosenUser?.id === user.id
-          ? "user-list-team-user user-list-active-team-user"
-          : "user-list-team-user"
-      }
+      className={classNames("user-list-team-user", {
+        "user-list-active-team-user": chosenUser?.id === user.id,
+      })}
       onClick={(e) => {
         setChosenUser(e, user);
         const userToClear = allUnreadMessages.find(
@@ -192,32 +191,43 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         }
       }}
     >
-      <div className="position-relative">
-        <img
-          className="user-list-team-user-avatar"
-          src={process.env.REACT_APP_API_URL + "/" + user.avatar}
-          alt="avatar"
-        />
-        <div
-          className={
-            status === "online"
-              ? "on status"
-              : status === "busy"
-              ? "busy status"
-              : "off status"
-          }
-        />
-        {allUnreadMessages.find((element) => element.id === user.id) && (
-          <div className="user-list-unread-messages-count">
-            {allUnreadMessages.find((element) => element.id === user.id)?.count}
+      <div className="user-list-full-info">
+        <div className="user-list-full-info-avatar">
+          <img
+            className="user-list-team-user-avatar"
+            src={process.env.REACT_APP_API_URL + "/" + user.avatar}
+            alt="avatar"
+          />
+          <div
+            className={
+              status === "online"
+                ? "on status"
+                : status === "busy"
+                ? "busy status"
+                : "off status"
+            }
+          />
+          {allUnreadMessages.find((element) => element.id === user.id) && (
+            <div className="user-list-unread-messages-count">
+              {
+                allUnreadMessages.find((element) => element.id === user.id)
+                  ?.count
+              }
+            </div>
+          )}
+        </div>
+        <div className="info">
+          <div
+            title={user.firstName + " " + user.lastName}
+            className="info-name"
+          >
+            {user.firstName + " " + user.lastName}
           </div>
-        )}
+          <div className="user-list-team-user-time">{message?.time}</div>
+        </div>
       </div>
       <div className="user-list-team-user-info">
         <div className="user-list-team-user-name">
-          <div title={user.firstName + " " + user.lastName}>
-            {user.firstName + " " + user.lastName}
-          </div>
           <div
             onClick={onSettingClick}
             className="position-relative"
@@ -239,7 +249,6 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         </div>
         <div className="user-list-team-user-messages">
           <div>{message?.text}</div>
-          <div className="user-list-team-user-time">{message?.time}</div>
         </div>
       </div>
     </div>

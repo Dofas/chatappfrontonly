@@ -4,6 +4,22 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+
+    .input-container-border-bottom {
+        margin: 15px 0;
+
+        input {
+            bottom: 0;
+        }
+
+        label {
+            transform: translateY(25%);
+        }
+
+        .input-border {
+            bottom: 1px;
+        }
+    }
 }
 
 .group-modal-error-text {

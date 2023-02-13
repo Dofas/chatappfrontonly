@@ -1,6 +1,6 @@
 import "./add-group-modal.scss";
 import Modal from "../../ModalComponent/Modal";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   allGroups,
@@ -9,18 +9,19 @@ import {
 import { UserService } from "../../../../utils/UserService/UserService";
 import { validateSpecSymbols } from "../../TeamsListComponent/AddTeamModalComponent/AddTeamModal";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
+import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
 
 const AddGroupModal = ({ isModal, closeModal, socket }) => {
   const [isError, setIsError] = useState(false);
-  const groupNameInputRef = useRef(null);
+  const [groupName, setGroupName] = useState();
   const [users, setUsers] = useRecoilState(allUsers);
   const [groups, setGroups] = useRecoilState(allGroups);
   const activeUser = useRecoilValue(activeUserInfo);
 
   const saveGroup = async () => {
     if (
-      groupNameInputRef.current.value === "" ||
-      !validateSpecSymbols(groupNameInputRef.current.value) ||
+      groupName === "" ||
+      !validateSpecSymbols(groupName) ||
       users.filter((user) => user.checked === true).length === 0
     ) {
       setIsError(true);
@@ -30,7 +31,7 @@ const AddGroupModal = ({ isModal, closeModal, socket }) => {
       .map((user) => (user.checked === true ? user.nickName : undefined))
       .filter((nick) => nick !== undefined);
     const group = {
-      name: groupNameInputRef.current.value,
+      name: groupName,
       users: [activeUser.id, ...checkedUsers],
     };
     await UserService.createGroup(group);
@@ -64,11 +65,13 @@ const AddGroupModal = ({ isModal, closeModal, socket }) => {
           </div>
         )}
         <div>There is only add group functional</div>
-        <div>Type group name</div>
-        <input
-          ref={groupNameInputRef}
+        <InputWithBorderBottom
+          id="add-group-modal-team-name"
+          value={groupName}
+          onChange={setGroupName}
+          labelText="Type group name"
           className="modal-input"
-          data-testid="group-name-input"
+          testId="group-name-input"
         />
         <div
           onClick={saveGroup}

@@ -9,7 +9,7 @@
 
 .messages-list-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     max-width: 80%;
     margin-bottom: 48px;
@@ -21,7 +21,8 @@
     .messages-list-message-content {
 
         > .messages-list-item-text {
-            background-color: $color-grey;
+            background-color: #e9ecf5;
+            border-top-right-radius: 0;
 
             textarea {
                 color: $color-full-black;
@@ -63,7 +64,8 @@
 
     .messages-list-message-content {
         > .messages-list-item-text {
-            background-color: #0202e8;
+            background-color: #8362cb;
+            border-top-left-radius: 0;
 
             textarea {
                 color: $color-white;
@@ -101,12 +103,13 @@
 .messages-list-message-content {
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .messages-list-item-text {
     position: relative;
     padding: 16px;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 .messages-list-message-text {
@@ -221,4 +224,19 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.flex-end {
+    align-self: flex-end;
+}
+
+.flex-start {
+    align-self: flex-start;
+}
+
+.messages-list-item-user-name {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 5px;
 }

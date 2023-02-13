@@ -1,6 +1,6 @@
 import "./add-team-modal.scss";
 import Modal from "../../ModalComponent/Modal";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   allTeams,
@@ -8,6 +8,7 @@ import {
 } from "../../../../state/activeChannelState/atomActiveChannelState";
 import { UserService } from "../../../../utils/UserService/UserService";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
+import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
 
 export const validateSpecSymbols = (stringToCheck) => {
   return (
@@ -18,7 +19,7 @@ export const validateSpecSymbols = (stringToCheck) => {
 };
 
 const AddTeamModal = ({ isModal, closeModal, socket }) => {
-  const teamNameInputRef = useRef(null);
+  const [teamName, setTeamName] = useState();
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useRecoilState(allUsers);
   const activeUser = useRecoilValue(activeUserInfo);
@@ -26,8 +27,8 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
 
   const saveTeam = async () => {
     if (
-      teamNameInputRef.current.value === "" ||
-      !validateSpecSymbols(teamNameInputRef.current.value) ||
+      teamName === "" ||
+      !validateSpecSymbols(teamName) ||
       users.filter((user) => user.checked === true).length === 0 ||
       !activeUser?.id
     ) {
@@ -38,7 +39,7 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
       .map((user) => (user.checked === true ? user.nickName : undefined))
       .filter((nick) => nick !== undefined);
     const team = {
-      name: teamNameInputRef.current.value,
+      name: teamName,
       users: [activeUser.id, ...checkedUsers],
     };
     await UserService.createTeam(team);
@@ -71,11 +72,13 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
             or use space or spec symbols
           </div>
         )}
-        <div>Type team name</div>
-        <input
-          ref={teamNameInputRef}
+        <InputWithBorderBottom
+          id="add-team-modal-team-name"
+          value={teamName}
+          onChange={setTeamName}
+          labelText="Type team name"
           className="modal-input"
-          data-testid="team-name-input"
+          testId="team-name-input"
         />
         <div
           className="modal-save-btn"

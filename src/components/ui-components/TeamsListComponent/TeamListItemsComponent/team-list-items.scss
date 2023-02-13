@@ -6,13 +6,18 @@
         justify-content: space-between;
         padding: 6px 28px 6px 34px;
         margin-bottom: 12px;
+
+        &:hover {
+            background-color: #bdabe1;
+            transition: all 0.5s ease-in-out;
+        }
     }
 }
 
 .team-name {
     font-family: Avenir, serif;
     line-height: 1.29;
-    color: $color-white;
+    color: $color-black;
     max-width: 125px;
     overflow: hidden;
     white-space: nowrap;
@@ -20,18 +25,18 @@
 }
 
 .active-team {
-    background-color: rgba(255,255,255, 0.1);
+    background-color: #bdabe1;
 
     > .team-name {
-        color: $color-white;
+        color: $color-black;
         font-family: Avenir-Roman, serif;
     }
 }
 
 .team-members-count {
-    color: $color-white;
+    color: $color-black;
 }
 
 .empty-team-list {
-    color: $color-white;
+    color: $color-black;
 }

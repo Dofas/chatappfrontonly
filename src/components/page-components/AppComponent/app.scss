@@ -15,17 +15,14 @@
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px $scroll-track-color;
-    border-radius: 10px;
+    -webkit-appearance: none;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: $scroll-color;
-    border-radius: 10px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 .title {
