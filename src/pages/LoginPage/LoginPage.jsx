@@ -18,13 +18,13 @@ const LoginPage = ({ socket }) => {
     }
     const data = { nickName, password };
     UserService.loginUser(data)
-      .then((data) => {
+      .then(async (data) => {
         if (data.status) {
           socket.current.emit("change-status", {
             nickName,
             status: "online",
           });
-          localStorage.setItem(nickName.toString(), "auth");
+          localStorage.setItem("auth", data.data.accessToken);
           navigate(`/chatapp/messages/${nickName}`);
         }
       })

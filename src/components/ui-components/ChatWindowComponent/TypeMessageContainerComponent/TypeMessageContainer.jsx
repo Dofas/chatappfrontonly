@@ -44,7 +44,10 @@ const TypeMessageContainer = ({ socket }) => {
       }),
       isRead: false,
     };
-    await UserService.createMessage(messageData).then(() => {
+    await UserService.createMessage(
+      messageData,
+      localStorage.getItem("auth")
+    ).then(() => {
       socket.current.emit("send-msg", { ...messageData, file: undefined });
       const newMessages = [...messages, messageData];
       setMessages(newMessages);
@@ -61,7 +64,10 @@ const TypeMessageContainer = ({ socket }) => {
       file: event.target.files[0],
       isRead: false,
     };
-    await UserService.createMessage(messageData).then((messageResp) => {
+    await UserService.createMessage(
+      messageData,
+      localStorage.getItem("auth")
+    ).then((messageResp) => {
       socket.current.emit("send-msg", {
         ...messageData,
         file: messageResp.fileName,

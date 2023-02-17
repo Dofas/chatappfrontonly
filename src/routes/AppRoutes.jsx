@@ -10,10 +10,12 @@ import UserPage from "../pages/UserPage/UserPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegiterPage/RegisterPage";
+import Auth from "../components/AuthComponent/Auth";
 
 const AppLayout = () => {
   return (
     <>
+      <Auth />
       <Outlet />
     </>
   );

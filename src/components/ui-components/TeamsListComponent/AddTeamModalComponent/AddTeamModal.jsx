@@ -43,7 +43,7 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
       name: teamName,
       users: [activeUser.id, ...checkedUsers],
     };
-    await UserService.createTeam(team);
+    await UserService.createTeam(team, localStorage.getItem("auth"));
     const newTeams = [team];
     socket.current.emit("add-team", newTeams);
     const fullTeams = [...teams, ...newTeams];

@@ -37,7 +37,11 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
     const newUsers = channel.users.filter(
       (user) => user !== userToDelete.nickName
     );
-    await UserService.updateTeam(channel.name, { users: newUsers });
+    await UserService.updateTeam(
+      channel.name,
+      { users: newUsers },
+      localStorage.getItem("auth")
+    );
 
     let newTeams = [];
     if (newUsers.length === 0) {
@@ -64,7 +68,10 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
 
   useEffect(() => {
     if (!user?.id || !activeUser?.id) return;
-    UserService.getLastMessage({ from: activeUser.id, to: user.id })
+    UserService.getLastMessage(
+      { from: activeUser.id, to: user.id },
+      localStorage.getItem("auth")
+    )
       .then((messageResp) => {
         setMessage({
           text: messageResp?.message?.text,
@@ -75,7 +82,10 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         console.log(`Error while loading last messages ${error.message}`)
       );
 
-    UserService.getUnreadMessages({ from: activeUser.id, to: user.id })
+    UserService.getUnreadMessages(
+      { from: activeUser.id, to: user.id },
+      localStorage.getItem("auth")
+    )
       .then((messageResp) => {
         if (messageResp?.messagesCount) {
           if (!allUnreadMessages.some((element) => element.id === user.id)) {
@@ -95,7 +105,7 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
 
   useEffect(() => {
     if (!user?.id) return;
-    UserService.getStatus(user.id)
+    UserService.getStatus(user.id, localStorage.getItem("auth"))
       .then((statusResp) => {
         setStatus(statusResp.status);
       })
@@ -137,7 +147,10 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         }
         if (newMessage.from === chosenUser?.id) {
           const users = { from: newMessage.from, to: chosenUser.id };
-          UserService.updateReadStatus(users).catch((error) => {
+          UserService.updateReadStatus(
+            users,
+            localStorage.getItem("auth")
+          ).catch((error) => {
             console.log(`Error while loading messages ${error.message}`);
           });
           const restUsersInUnreadMessages = allUnreadMessages.filter(

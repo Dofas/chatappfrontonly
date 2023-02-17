@@ -21,7 +21,7 @@ const MessagesList = ({ setIsError, socket }) => {
     if (!activeUser?.id || !selectedUser?.id) return;
     const users = { from: activeUser.id, to: selectedUser.id };
     setIsLoading(true);
-    UserService.getAllMessages(users)
+    UserService.getAllMessages(users, localStorage.getItem("auth"))
       .then((resp) => {
         setIsError(false);
         setMessages(resp);

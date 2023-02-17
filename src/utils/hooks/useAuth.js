@@ -15,7 +15,12 @@ export function useAuth(userNickName) {
     (async () => {
       try {
         setIsLoading(true);
-        const fetchedUser = await UserService.findUser(userNickName);
+        console.log("before find");
+        const fetchedUser = await UserService.findUser(
+          userNickName,
+          localStorage.getItem("auth")
+        );
+        console.log("fetchedUser", fetchedUser);
         if (cancelRequest.current) return;
         if (!fetchedUser?.status) {
           setIsLoading(false);

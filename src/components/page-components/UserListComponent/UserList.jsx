@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserListHeader from "../../ui-components/UserListHeaderComponent/UserListHeader";
 import UserListContent from "../../ui-components/UserListContentComponent/UserListContent";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   activeChannel,
   allTeams,
@@ -33,7 +33,10 @@ const UserList = ({ socket }) => {
       if (activeTeam?.users) {
         Promise.all(
           activeTeam.users.map(async (user) => {
-            const userInfo = await UserService.findUser(user);
+            const userInfo = await UserService.findUser(
+              user,
+              localStorage.getItem("auth")
+            );
             return userInfo;
           })
         )

@@ -15,9 +15,11 @@ const UserListContent = ({ socket }) => {
   const setActiveUserClick = async (e, user) => {
     setChosenUser(user);
     const users = { from: activeUser.id, to: user.id };
-    UserService.updateReadStatus(users).catch((error) => {
-      console.log(`Error while loading messages ${error.message}`);
-    });
+    UserService.updateReadStatus(users, localStorage.getItem("auth")).catch(
+      (error) => {
+        console.log(`Error while loading messages ${error.message}`);
+      }
+    );
   };
 
   return (

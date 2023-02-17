@@ -51,7 +51,7 @@ const ChannelList = ({ socket }) => {
   useEffect(() => {
     if (!activeUser?.id) return;
     setIsLoading(true);
-    UserService.getTeams(activeUser?.id)
+    UserService.getTeams(activeUser?.id, localStorage.getItem("auth"))
       .then((respTeams) => {
         setIsError(false);
         setTeams(respTeams);
@@ -60,7 +60,7 @@ const ChannelList = ({ socket }) => {
         console.log(`Error while loading teams`);
         setIsError(true);
       });
-    UserService.getGroups(activeUser?.id)
+    UserService.getGroups(activeUser?.id, localStorage.getItem("auth"))
       .then((respGrp) => {
         setIsError(false);
         setGroups(respGrp);

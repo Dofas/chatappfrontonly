@@ -119,7 +119,8 @@ const RegisterPage = ({ socket }) => {
     };
 
     UserService.createUser(userInfo)
-      .then(() => {
+      .then((data) => {
+        console.log("data", data);
         setIsUserExist(false);
         socket.current.emit("register-user", {
           ...userInfo,

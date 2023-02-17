@@ -34,7 +34,7 @@ const AddGroupModal = ({ isModal, closeModal, socket }) => {
       name: groupName,
       users: [activeUser.id, ...checkedUsers],
     };
-    await UserService.createGroup(group);
+    await UserService.createGroup(group, localStorage.getItem("auth"));
     const newGroups = [group];
     socket.current.emit("add-group", newGroups);
     const fullGroups = [...groups, ...newGroups];
