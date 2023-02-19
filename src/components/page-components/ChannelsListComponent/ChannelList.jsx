@@ -3,7 +3,6 @@ import "./channel-list.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Spinner from "../../ui-components/SpinnerComponent/Spinner";
 import TeamsList from "../../ui-components/TeamsListComponent/TeamsList";
-import GroupsList from "../../ui-components/GroupsListComponent/GroupsList";
 import {
   activeChannel,
   allGroups,
@@ -73,6 +72,7 @@ const ChannelList = ({ socket }) => {
     setIsLoading(false);
   }, [setTeams, setGroups, activeUser]);
 
+  //todo: to activate groups uncomment GroupList component
   const channelsListContent = (
     <div
       ref={ref}
@@ -96,7 +96,7 @@ const ChannelList = ({ socket }) => {
               setActiveTeam={setActiveTeam}
               socket={socket}
             />
-            <GroupsList groups={groups} socket={socket} />
+            {/*<GroupsList groups={groups} socket={socket} />*/}
           </>
         )
       )}

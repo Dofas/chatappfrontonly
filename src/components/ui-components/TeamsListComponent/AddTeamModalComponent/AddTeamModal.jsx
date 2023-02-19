@@ -80,13 +80,6 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
           className="modal-input"
           testId="team-name-input"
         />
-        <div
-          className="modal-save-btn"
-          onClick={saveTeam}
-          data-testid="team-save-btn"
-        >
-          Create team
-        </div>
         <div className="team-modal-users-list">
           {!!users &&
             users.map(
@@ -105,6 +98,15 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
                   </div>
                 )
             )}
+        </div>
+      </div>
+      <div className="team-modal-footer">
+        <div
+          className="modal-save-btn"
+          onClick={saveTeam}
+          data-testid="team-save-btn"
+        >
+          Create team
         </div>
       </div>
     </Modal>

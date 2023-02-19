@@ -1,12 +1,17 @@
 @import "../AppComponent/variables";
 
 .channel-list-container {
-    overflow-y: auto;
     height: calc(100vh - 67px);
     color: $color-black;
 
     .title {
         color: $color-black;
+    }
+
+    > div {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
     }
 }
 
