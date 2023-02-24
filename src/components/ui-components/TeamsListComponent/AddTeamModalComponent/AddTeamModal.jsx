@@ -9,6 +9,7 @@ import {
 import { UserService } from "../../../../utils/UserService/UserService";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
 import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
+import CloseIcon from "../../../../assets/images/modal-close.svg";
 
 export const validateSpecSymbols = (stringToCheck) => {
   return (
@@ -59,19 +60,18 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
   };
 
   return (
-    <Modal show={isModal} onClose={closeModal}>
-      <div
-        data-testid="close-add-team-modal-btn"
-        onClick={closeModal}
-        className="modal-close-btn"
-      />
+    <Modal show={isModal} onClose={closeModal} className='create-team-modal'>
+      <div>
+        <div className='team-list-modal-header'>Create team</div>
+        <img
+            src={CloseIcon}
+            // data-testid="close-add-team-modal-btn"
+            onClick={closeModal}
+            className="modal-close-btn"
+        />
+      </div>
+
       <div className="team-modal-content">
-        {isError && (
-          <div className="team-modal-error-text">
-            You can not create empty team name <br />
-            or use space or spec symbols
-          </div>
-        )}
         <InputWithBorderBottom
           id="add-team-modal-team-name"
           value={teamName}
@@ -99,15 +99,27 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
                 )
             )}
         </div>
+        {isError && (
+            <div className="team-modal-error-text">
+              You can not create empty team name
+              or use space or spec symbols
+            </div>
+        )}
       </div>
       <div className="team-modal-footer">
-        <div
+        <button
+            className="modal-cancel-btn"
+            onClick={closeModal}
+        >
+          Cancel
+        </button>
+        <button
           className="modal-save-btn"
           onClick={saveTeam}
           data-testid="team-save-btn"
         >
           Create team
-        </div>
+        </button>
       </div>
     </Modal>
   );

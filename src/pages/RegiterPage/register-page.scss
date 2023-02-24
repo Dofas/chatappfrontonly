@@ -9,6 +9,14 @@
     justify-content: center;
     overflow-x: hidden;
 
+    .register-page-login-button {
+        background-color: #7034e9;
+        border: 1px solid #7034e9;
+        color: white;
+        font-weight: 600;
+        text-transform: none;
+    }
+
     .register-page-image-background {
         margin-left: auto;
         width: 50%;
@@ -17,8 +25,8 @@
 
     .register-page-error-field {
         position: absolute;
-        color: white;
-        background-color: red;
+        color: red;
+        background-color: transparent;
         font-size: 12px;
         width: 100%;
         text-align: center;
@@ -38,7 +46,7 @@
         }
 
         .register-page-error-field {
-            bottom: -13px;
+            bottom: -18px;
         }
     }
 
@@ -96,7 +104,7 @@
         }
 
         & + .register-page-error-field {
-            bottom: 7px;
+            bottom: 2px;
         }
     }
 
@@ -116,7 +124,7 @@
         }
 
         & + .register-page-error-field {
-            bottom: 6px;
+            bottom: 2px;
         }
     }
 
@@ -126,7 +134,7 @@
         position: relative;
 
         .register-page-error-field {
-            bottom: -18px;
+            bottom: -19px;
             align-items: center;
             justify-content: center;
         }
@@ -147,7 +155,7 @@
         margin-bottom: 20px;
 
         .register-page-error-field {
-            bottom: -18px;
+            bottom: -19px;
             align-items: center;
             justify-content: center;
         }
@@ -169,7 +177,7 @@
         }
 
         .register-page-error-field {
-            bottom: -17px;
+            bottom: -20px;
         }
     }
 
@@ -180,7 +188,7 @@
         button {
             border: none;
             padding: 0;
-            color: $color-blue;
+            color: #7034e9;
             background-color: transparent;
             font-size: 22px;
             margin-left: 8px;
@@ -218,7 +226,7 @@
         position: relative;
 
         .register-page-error-field {
-            bottom: 5px;
+            bottom: 2px;
         }
     }
 

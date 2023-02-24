@@ -17,16 +17,15 @@
 .modal {
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
-    width: 60vw;
-    height: 60%;
-    min-height: 400px;
+    width: 35vw;
+    height: 500px;
     min-width: 315px;
     margin: 20px auto;
-    border-radius: 4px;
-    padding-bottom: 20px;
+    border-radius: 3px;
     background-color: $color-white;
+    padding: 25px;
     color: $color-black;
     align-self: center;
     font-size: 22px;
@@ -35,17 +34,11 @@
 
 .modal-close-btn {
     position: absolute;
+    top: 10px;
     right: 10px;
-    top: 5px;
-
-    &:before {
-        content: "X";
-        font-family: Avenir-Roman, serif;
-        font-size: 25px;
-        font-weight: bold;
-        color: $color-black;
-        cursor: pointer;
-    }
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
 }
 
 .modal-input {
@@ -63,4 +56,5 @@
     padding: 15px;
     border: 1px solid $color-black;
     cursor: pointer;
+    background-color: transparent;
 }

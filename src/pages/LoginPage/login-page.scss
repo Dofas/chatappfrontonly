@@ -66,6 +66,11 @@
 
             .login-page-login-button {
                 margin-top: 15px;
+                background-color: #7034e9;
+                border: 1px solid #7034e9;
+                color: white;
+                font-weight: 600;
+                text-transform: none;
             }
 
             .login-page-create-text {
@@ -85,7 +90,7 @@
                 border: none;
                 background-color: transparent;
                 font-size: 20px;
-                color: $color-blue;
+                color: #7034e9;
                 cursor: pointer;
             }
         }

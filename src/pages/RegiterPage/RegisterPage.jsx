@@ -308,12 +308,12 @@ const RegisterPage = ({ socket }) => {
           </div>
         </div>
         <div>
-          <button onClick={onSubmit}>Create account</button>
+          <button onClick={onSubmit} className='register-page-login-button'>Create account</button>
           <div className="register-page-login-redirect">
             <span className="register-page-login-text">
               Already have an account ?
             </span>
-            <button onClick={() => navigate("/chatapp/login")}>Log in</button>
+            <button className='color-purple' onClick={() => navigate("/chatapp/login")}>Log in</button>
             {isUserExist && (
               <div style={{ color: "red" }}>
                 User with this nickname already exist

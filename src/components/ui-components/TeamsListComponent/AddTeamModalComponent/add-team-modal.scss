@@ -1,40 +1,85 @@
 @import "../../../page-components/AppComponent/variables";
 
-.team-modal-content {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    .input-container-border-bottom {
-        margin-bottom: 15px;
-
-        input {
-            bottom: 0;
-        }
-
-        label {
-            transform: translateY(25%);
-        }
-
-        .input-border {
-            bottom: 1px;
-        }
+.create-team-modal {
+    .team-list-modal-header {
+        text-align: center;
+        font-weight: 600;
+        margin: 10px 0;
     }
-}
 
-.team-modal-error-text {
-    color: #E6C35E;
-    margin-bottom: 20px;
-}
+    .modal-cls-button {
 
-.team-modal-users-list {
-    height: 150px;
-    overflow-y: auto;
-    margin-top: 10px;
+    }
 
-    > .team-modal-user-item {
+    .team-modal-content {
         display: flex;
         align-items: center;
+        flex-direction: column;
+        height: 400px;
+
+        .input-container-border-bottom {
+            margin-bottom: 15px;
+            width: 100%;
+
+            input {
+                bottom: 0;
+                width: 100%;
+            }
+
+            label {
+                transform: translateY(25%);
+            }
+
+            .input-border {
+                bottom: 1px;
+            }
+        }
+    }
+
+    .team-modal-error-text {
+        color: red;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    .team-modal-users-list {
+        height: 200px;
+        overflow-y: auto;
         margin-top: 10px;
+        width: 100%;
+
+        > .team-modal-user-item {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    }
+
+    .team-modal-footer {
+        display: flex;
+        justify-content: center;
+
+        .modal-cancel-btn,
+        .modal-save-btn {
+            border-radius: 3px;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .modal-cancel-btn {
+            background-color: #ffffff;
+            border: 1px solid #e9e9e9;
+            margin-right: 16px;
+        }
+
+        .modal-save-btn {
+            background-color: #7034e9;
+            color: white;
+            border: 1px solid #7034e9;
+        }
     }
 }
