@@ -1,4 +1,6 @@
 import customAxios from "../../http";
+import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 export class UserService {
   static async createUser(userInfo) {
@@ -37,14 +39,24 @@ export class UserService {
   }
 
   static async findUser(userNickName, token) {
-    console.log(userNickName, token);
+
+    // const response = await axios.get(
+    //     process.env.REACT_APP_API_URL + "/api/token/refresh"
+    // );
+    // config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+    // localStorage.setItem("auth", response.data.accessToken);
+    // const decoded = jwt_decode(response.data.accessToken);
+    // setExpire(decoded.exp);
+
+    console.log('---------------------------------------');
+    console.log('findUser^ ', userNickName, token);
+    console.log('---------------------------------------');
     const user = await customAxios.get(`/api/user/check/${userNickName}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     const data = user.data;
-    console.log("user", user);
     return data;
   }
 
@@ -184,7 +196,7 @@ export class UserService {
   }
 
   static async getRefreshToken() {
-    const response = await customAxios.post("/api/token");
+    const response = await customAxios.get("/api/token/refresh");
     return response;
   }
 }
