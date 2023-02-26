@@ -16,7 +16,9 @@ const UserListContent = ({ socket }) => {
   const setActiveUserClick = async (e, user) => {
     setChosenUser(user);
     const users = { from: activeUser.id, to: user.id };
-    if (!localStorage.getItem("auth")) return;
+    if (!localStorage.getItem("auth")) {
+      window.location.replace("/chatapp/login");
+    }
     const decoded = jwt_decode(localStorage.getItem("auth"));
     const currentDate = new Date();
     if (decoded.exp * 1000 < currentDate.getTime()) {

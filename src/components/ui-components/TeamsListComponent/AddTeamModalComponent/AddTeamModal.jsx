@@ -45,7 +45,9 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
       name: teamName,
       users: [activeUser.id, ...checkedUsers],
     };
-    if (!localStorage.getItem("auth")) return;
+    if (!localStorage.getItem("auth")) {
+      window.location.replace("/chatapp/login");
+    }
     const decoded = jwt_decode(localStorage.getItem("auth"));
     const currentDate = new Date();
     if (decoded.exp * 1000 < currentDate.getTime()) {
@@ -68,14 +70,14 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
   };
 
   return (
-    <Modal show={isModal} onClose={closeModal} className='create-team-modal'>
+    <Modal show={isModal} onClose={closeModal} className="create-team-modal">
       <div>
-        <div className='team-list-modal-header'>Create team</div>
+        <div className="team-list-modal-header">Create team</div>
         <img
-            src={CloseIcon}
-            // data-testid="close-add-team-modal-btn"
-            onClick={closeModal}
-            className="modal-close-btn"
+          src={CloseIcon}
+          // data-testid="close-add-team-modal-btn"
+          onClick={closeModal}
+          className="modal-close-btn"
         />
       </div>
 
@@ -108,17 +110,13 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
             )}
         </div>
         {isError && (
-            <div className="team-modal-error-text">
-              You can not create empty team name
-              or use space or spec symbols
-            </div>
+          <div className="team-modal-error-text">
+            You can not create empty team name or use space or spec symbols
+          </div>
         )}
       </div>
       <div className="team-modal-footer">
-        <button
-            className="modal-cancel-btn"
-            onClick={closeModal}
-        >
+        <button className="modal-cancel-btn" onClick={closeModal}>
           Cancel
         </button>
         <button

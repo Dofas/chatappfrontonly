@@ -38,7 +38,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
     const newUsers = channel.users.filter(
       (user) => user !== userToDelete.nickName
     );
-    if (!localStorage.getItem("auth")) return;
+    if (!localStorage.getItem("auth")) {
+      window.location.replace("/chatapp/login");
+    }
     const decoded = jwt_decode(localStorage.getItem("auth"));
     const currentDate = new Date();
     if (decoded.exp * 1000 < currentDate.getTime()) {
@@ -72,7 +74,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   useEffect(() => {
     if (!user?.id || !activeUser?.id) return;
     (async () => {
-      if (!localStorage.getItem("auth")) return;
+      if (!localStorage.getItem("auth")) {
+        window.location.replace("/chatapp/login");
+      }
       const decoded = jwt_decode(localStorage.getItem("auth"));
       const currentDate = new Date();
       if (decoded.exp * 1000 < currentDate.getTime()) {
@@ -111,7 +115,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   useEffect(() => {
     if (!user?.id) return;
     (async () => {
-      if (!localStorage.getItem("auth")) return;
+      if (!localStorage.getItem("auth")) {
+        window.location.replace("/chatapp/login");
+      }
       const decoded = jwt_decode(localStorage.getItem("auth"));
       const currentDate = new Date();
       if (decoded.exp * 1000 < currentDate.getTime()) {
@@ -161,7 +167,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
           }
           if (newMessage.from === chosenUser?.id) {
             const users = { from: newMessage.from, to: chosenUser.id };
-            if (!localStorage.getItem("auth")) return;
+            if (!localStorage.getItem("auth")) {
+              window.location.replace("/chatapp/login");
+            }
             const decoded = jwt_decode(localStorage.getItem("auth"));
             const currentDate = new Date();
             if (decoded.exp * 1000 < currentDate.getTime()) {

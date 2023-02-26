@@ -26,7 +26,9 @@ const UserPage = ({ activeLink, socket }) => {
 
   useEffect(() => {
     (async () => {
-      if (!localStorage.getItem("auth")) return;
+      if (!localStorage.getItem("auth")) {
+        window.location.replace("/chatapp/login");
+      }
       const decoded = jwt_decode(localStorage.getItem("auth"));
       const currentDate = new Date();
       if (decoded.exp * 1000 < currentDate.getTime()) {
@@ -62,7 +64,9 @@ const UserPage = ({ activeLink, socket }) => {
   useEffect(() => {
     if (!setAllUsers) return;
     (async () => {
-      if (!localStorage.getItem("auth")) return;
+      if (!localStorage.getItem("auth")) {
+        window.location.replace("/chatapp/login");
+      }
       const decoded = jwt_decode(localStorage.getItem("auth"));
       const currentDate = new Date();
       if (decoded.exp * 1000 < currentDate.getTime()) {
