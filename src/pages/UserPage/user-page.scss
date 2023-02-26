@@ -12,17 +12,27 @@
     display: grid;
     grid-template-columns: 240px 350px 220px 1fr;
     min-height: calc(100vh - 67px);
-}
 
-@media (max-width: 1250px) {
-    .user-page-content {
+    &.user-page-without-info {
         grid-template-columns: 240px 350px 1fr;
     }
 }
 
-@media (max-width: 1030px) {
+@media (max-width: 1330px) {
     .user-page-content {
-        grid-template-columns: 350px 1fr;
+
+        &.user-page-without-info {
+            grid-template-columns: 240px 350px 1fr;
+        }
+    }
+}
+
+@media (max-width: 1110px) {
+    .user-page-content {
+
+        &.user-page-without-info {
+            grid-template-columns: 350px 1fr;
+        }
 
         .channel-list-container {
             width: 240px;
@@ -33,6 +43,9 @@
 
 @media (max-width: 790px) {
     .user-page-content {
-        grid-template-columns: 1fr;
+
+        &.user-page-without-info {
+            grid-template-columns: 1fr;
+        }
     }
 }

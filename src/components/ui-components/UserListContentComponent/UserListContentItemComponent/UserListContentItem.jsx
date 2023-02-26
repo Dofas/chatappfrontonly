@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useClickOutside } from "../../../../utils/hooks/useClickOutside";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   activeChannel,
   allTeams,
@@ -13,6 +13,8 @@ import {
 } from "../../../../state/messagesState/atomMessages";
 import classNames from "classnames";
 import jwt_decode from "jwt-decode";
+import { isSelectedUserInfoState } from "../../../../state/selectedUserState/atomSelectedUserState";
+import { useCalculateWindowSize } from "../../../../utils/hooks/useCalculateWindowSize";
 
 const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   const [isSettings, setIsSettings] = useState(false);
@@ -26,6 +28,8 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   const allTeamsList = useRecoilValue(allTeams);
   const [allUnreadMessages, setAllUnreadMessages] =
     useRecoilState(unreadMessages);
+  const setIsSelectedUserInfoState = useSetRecoilState(isSelectedUserInfoState);
+  const { innerWidth } = useCalculateWindowSize();
 
   const ref = useClickOutside(closeSettingsModal);
   const onSettingClick = (e) => {
@@ -212,6 +216,13 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
     }
   }, [messages]);
 
+  function setUserInfo() {
+    if (innerWidth <= 1330) {
+      return;
+    }
+    return setIsSelectedUserInfoState((prev) => !prev);
+  }
+
   return (
     <div
       className={classNames("user-list-team-user", {
@@ -234,6 +245,7 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         <div className="user-list-full-info-avatar">
           <img
             className="user-list-team-user-avatar"
+            onClick={setUserInfo}
             src={process.env.REACT_APP_API_URL + "/" + user.avatar}
             alt="avatar"
           />

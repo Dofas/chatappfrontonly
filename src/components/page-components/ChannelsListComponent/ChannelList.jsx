@@ -88,7 +88,7 @@ const ChannelList = ({ socket }) => {
     <div
       ref={ref}
       className={
-        innerWidth >= 1030
+        innerWidth >= 1110
           ? "channel-list-container"
           : isSidebar
           ? "channel-list-container position-absolute"

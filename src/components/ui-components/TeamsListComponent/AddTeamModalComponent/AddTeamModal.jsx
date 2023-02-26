@@ -11,6 +11,7 @@ import { activeUserInfo } from "../../../../state/activeUserState/selectorActive
 import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
 import jwt_decode from "jwt-decode";
 import CloseIcon from "../../../../assets/images/modal-close.svg";
+import CheckBox from "../../CheckBoxComponent/CheckBox";
 
 export const validateSpecSymbols = (stringToCheck) => {
   return (
@@ -21,7 +22,7 @@ export const validateSpecSymbols = (stringToCheck) => {
 };
 
 const AddTeamModal = ({ isModal, closeModal, socket }) => {
-  const [teamName, setTeamName] = useState();
+  const [teamName, setTeamName] = useState("");
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useRecoilState(allUsers);
   const activeUser = useRecoilValue(activeUserInfo);
@@ -75,12 +76,11 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
         <div className="team-list-modal-header">Create team</div>
         <img
           src={CloseIcon}
-          // data-testid="close-add-team-modal-btn"
+          data-testid="close-add-team-modal-btn"
           onClick={closeModal}
           className="modal-close-btn"
         />
       </div>
-
       <div className="team-modal-content">
         <InputWithBorderBottom
           id="add-team-modal-team-name"
@@ -96,15 +96,12 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
               (user) =>
                 user.id !== activeUser.id && (
                   <div key={user.nickName} className="team-modal-user-item">
-                    <input
-                      data-testid="team-name-user-checkbox"
-                      type="checkbox"
+                    <CheckBox
                       checked={user.checked}
                       onChange={() => updateUser(user.nickName)}
+                      testId="team-name-user-checkbox"
+                      labelText={`${user.firstName} ${user.lastName}`}
                     />
-                    <div style={{ marginLeft: 5 }}>
-                      {user.firstName} {user.lastName}
-                    </div>
                   </div>
                 )
             )}

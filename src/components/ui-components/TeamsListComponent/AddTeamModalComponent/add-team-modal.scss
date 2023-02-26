@@ -27,7 +27,8 @@
             }
 
             label {
-                transform: translateY(25%);
+                transform: translateY(34%);
+                font-size: 14px;
             }
 
             .input-border {
@@ -53,6 +54,11 @@
             align-items: center;
             margin-top: 10px;
             font-size: 18px;
+
+            .checkbox-label {
+                height: 16px;
+                width: 16px;
+            }
         }
     }
 
@@ -74,6 +80,7 @@
             background-color: #ffffff;
             border: 1px solid #e9e9e9;
             margin-right: 16px;
+            cursor: pointer;
         }
 
         .modal-save-btn {

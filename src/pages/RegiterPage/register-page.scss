@@ -95,7 +95,7 @@
 
         label {
             font-size: 13px;
-            transform: translateY(20%);
+            transform: translateY(30%);
         }
 
         input:not(:placeholder-shown) + label,
@@ -114,7 +114,7 @@
         }
 
         label {
-            transform: translateY(20%);
+            transform: translateY(30%);
             font-size: 13px;
         }
 
@@ -131,6 +131,7 @@
     .register-page-gender-container {
         display: flex;
         margin-bottom: 20px;
+        padding-top: 20px;
         position: relative;
 
         .register-page-error-field {
@@ -203,7 +204,7 @@
         }
 
         label {
-            transform: translateY(20%);
+            transform: translateY(30%);
             font-size: 13px;
         }
 

@@ -8,7 +8,7 @@
     appearance: none;
     padding: 12px;
     width: 200px;
-    border: 1px solid black;
+    border: 1px solid #e9e9e9;
     border-radius: 3px;
     color: black;
     height: 30px;
@@ -17,9 +17,9 @@
   label {
     position: absolute;
     left: 12px;
-    transform: translateY(50%);
+    transform: translateY(30%);
     width: calc(100% - 24px);
-    color: $color-black;
+    color: #85878D;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

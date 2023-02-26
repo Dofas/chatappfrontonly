@@ -14,6 +14,9 @@ import { allUsers } from "../../state/activeChannelState/atomActiveChannelState"
 import { activeUserInfo } from "../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../utils/UserService/UserService";
 import jwt_decode from "jwt-decode";
+import classNames from "classnames";
+import { isSelectedUserInfoState } from "../../state/selectedUserState/atomSelectedUserState";
+import { useCalculateWindowSize } from "../../utils/hooks/useCalculateWindowSize";
 
 const UserPage = ({ activeLink, socket }) => {
   const { id } = useParams();
@@ -23,6 +26,8 @@ const UserPage = ({ activeLink, socket }) => {
   const { user, isLoading, isError } = useAuth(id);
   const activeUserInfoState = useRecoilValue(activeUserInfo);
   const isFirstRender = useRef(null);
+  const isSelectedUserInfoStateValue = useRecoilValue(isSelectedUserInfoState);
+  const { innerWidth } = useCalculateWindowSize();
 
   useEffect(() => {
     (async () => {
@@ -106,7 +111,10 @@ const UserPage = ({ activeLink, socket }) => {
     <>
       <Header activeLink={activeLink} socket={socket} />
       <div
-        className="user-page-content"
+        className={classNames("user-page-content", {
+          "user-page-without-info":
+            !isSelectedUserInfoStateValue || innerWidth <= 1330,
+        })}
         data-testid="user-page-content-data-id"
       >
         <ChannelList socket={socket} />

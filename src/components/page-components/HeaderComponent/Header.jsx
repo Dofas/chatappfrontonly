@@ -9,16 +9,12 @@ const Header = ({ activeLink, socket }) => {
   const activeUser = useRecoilValue(activeUserInfo);
   const allUnread = useRecoilValue(unreadMessages);
 
-  const unique = allUnread
-    .map((elem) => elem.count)
-    .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-
   return (
     <header className="header">
       <NavBar activeLink={activeLink} id={activeUser.id} />
       <ActiveUser
         notificationsCount={undefined}
-        messagesCount={unique}
+        messagesCount={allUnread.length}
         userName={activeUser.name}
         userAvatar={activeUser.avatar}
         socket={socket}

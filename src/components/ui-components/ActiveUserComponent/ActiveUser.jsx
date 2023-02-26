@@ -82,10 +82,12 @@ const ActiveUser = ({
         ref={menuRef}
       >
         <div title={userName}>{userName}</div>
-        <img
-          src={userAvatar && process.env.REACT_APP_API_URL + "/" + userAvatar}
-          alt="active-avatar"
-        />
+        {userAvatar && (
+          <img
+            src={process.env.REACT_APP_API_URL + "/" + userAvatar}
+            alt="active-avatar"
+          />
+        )}
         {isMenu && (
           <div className="header-menu-exit" onClick={exitHandler}>
             Exit
