@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { UserService } from "../../utils/UserService/UserService";
 import LoginPageImageBackground from "../../assets/images/login-page-image-background.svg";
 import InputWithoutBorder from "../../components/ui-components/InputComponents/InputWithoutBorder/InputWithoutBorder";
+import {useSetRecoilState} from 'recoil';
+import {expireState} from '../../state/tokenState/tokenAtom';
+import jwt_decode from 'jwt-decode';
 
 const LoginPage = ({ socket }) => {
   const [nickName, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const setExpire = useSetRecoilState(expireState);
 
   const handleSubmit = () => {
     if (!nickName || !password) {
@@ -18,13 +22,15 @@ const LoginPage = ({ socket }) => {
     }
     const data = { nickName, password };
     UserService.loginUser(data)
-      .then((data) => {
+      .then(async (data) => {
         if (data.status) {
           socket.current.emit("change-status", {
             nickName,
             status: "online",
           });
-          localStorage.setItem(nickName.toString(), "auth");
+          localStorage.setItem("auth", data.data.accessToken);
+          const decoded = jwt_decode(data.data.accessToken);
+          setExpire(decoded.exp);
           navigate(`/chatapp/messages/${nickName}`);
         }
       })

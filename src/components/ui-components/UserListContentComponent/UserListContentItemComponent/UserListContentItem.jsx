@@ -12,6 +12,7 @@ import {
   unreadMessages,
 } from "../../../../state/messagesState/atomMessages";
 import classNames from "classnames";
+import jwt_decode from "jwt-decode";
 
 const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   const [isSettings, setIsSettings] = useState(false);
@@ -37,6 +38,12 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
     const newUsers = channel.users.filter(
       (user) => user !== userToDelete.nickName
     );
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
     await UserService.updateTeam(channel.name, { users: newUsers });
 
     let newTeams = [];
@@ -64,94 +71,118 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
 
   useEffect(() => {
     if (!user?.id || !activeUser?.id) return;
-    UserService.getLastMessage({ from: activeUser.id, to: user.id })
-      .then((messageResp) => {
-        setMessage({
-          text: messageResp?.message?.text,
-          time: messageResp?.message?.sendTime,
-        });
-      })
-      .catch((error) =>
-        console.log(`Error while loading last messages ${error.message}`)
-      );
+    (async () => {
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      UserService.getLastMessage({ from: activeUser.id, to: user.id })
+        .then((messageResp) => {
+          setMessage({
+            text: messageResp?.message?.text,
+            time: messageResp?.message?.sendTime,
+          });
+        })
+        .catch((error) =>
+          console.log(`Error while loading last messages ${error.message}`)
+        );
 
-    UserService.getUnreadMessages({ from: activeUser.id, to: user.id })
-      .then((messageResp) => {
-        if (messageResp?.messagesCount) {
-          if (!allUnreadMessages.some((element) => element.id === user.id)) {
-            setAllUnreadMessages((prev) =>
-              [
-                ...prev,
-                { count: messageResp?.messagesCount, id: messageResp?.id },
-              ].filter((v, i, a) => a.findIndex((v2) => v2.id === v.id) === i)
-            );
+      UserService.getUnreadMessages({ from: activeUser.id, to: user.id })
+        .then((messageResp) => {
+          if (messageResp?.messagesCount) {
+            if (!allUnreadMessages.some((element) => element.id === user.id)) {
+              setAllUnreadMessages((prev) =>
+                [
+                  ...prev,
+                  { count: messageResp?.messagesCount, id: messageResp?.id },
+                ].filter((v, i, a) => a.findIndex((v2) => v2.id === v.id) === i)
+              );
+            }
           }
-        }
-      })
-      .catch((error) =>
-        console.log(`Error while loading last messages ${error.message}`)
-      );
+        })
+        .catch((error) =>
+          console.log(`Error while loading last messages ${error.message}`)
+        );
+    })();
   }, []);
 
   useEffect(() => {
     if (!user?.id) return;
-    UserService.getStatus(user.id)
-      .then((statusResp) => {
-        setStatus(statusResp.status);
-      })
-      .catch((error) =>
-        console.log(`Error while loading user status ${error.message}`)
-      );
+    (async () => {
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      UserService.getStatus(user.id)
+        .then((statusResp) => {
+          setStatus(statusResp.status);
+        })
+        .catch((error) =>
+          console.log(`Error while loading user status ${error.message}`)
+        );
+    })();
   }, [user]);
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-receive", (newMessage) => {
-        if (newMessage.from === user.nickName) {
-          setMessage({
-            text: newMessage.message.text,
-            time: newMessage.message.sendTime,
-          });
-        }
-        if (newMessage.from !== chosenUser.id) {
-          const restUsersInUnreadMessages = allUnreadMessages.filter(
-            (elem) => elem.id !== newMessage.from
-          );
-          const userInUnreadMessages = allUnreadMessages.find(
-            (elem) => elem.id === newMessage.from
-          );
-          if (!userInUnreadMessages) {
-            setAllUnreadMessages([
-              ...allUnreadMessages,
-              { count: 1, id: newMessage.from },
-            ]);
-          } else {
-            setAllUnreadMessages([
-              ...restUsersInUnreadMessages,
-              {
-                id: userInUnreadMessages.id,
-                count: userInUnreadMessages.count + 1,
-              },
-            ]);
+    (async () => {
+      if (socket.current) {
+        socket.current.on("msg-receive", async (newMessage) => {
+          if (newMessage.from === user.nickName) {
+            setMessage({
+              text: newMessage.message.text,
+              time: newMessage.message.sendTime,
+            });
           }
-        }
-        if (newMessage.from === chosenUser?.id) {
-          const users = { from: newMessage.from, to: chosenUser.id };
-          UserService.updateReadStatus(users).catch((error) => {
-            console.log(`Error while loading messages ${error.message}`);
-          });
-          const restUsersInUnreadMessages = allUnreadMessages.filter(
-            (elem) => elem.id !== newMessage.from
-          );
-          setAllUnreadMessages(restUsersInUnreadMessages);
-        }
-      });
-      socket.current.on("upd-status", (newStatus) => {
-        if (newStatus.nickName === user.nickName) {
-          setStatus(newStatus.status);
-        }
-      });
-    }
+          if (newMessage.from !== chosenUser.id) {
+            const restUsersInUnreadMessages = allUnreadMessages.filter(
+              (elem) => elem.id !== newMessage.from
+            );
+            const userInUnreadMessages = allUnreadMessages.find(
+              (elem) => elem.id === newMessage.from
+            );
+            if (!userInUnreadMessages) {
+              setAllUnreadMessages([
+                ...allUnreadMessages,
+                { count: 1, id: newMessage.from },
+              ]);
+            } else {
+              setAllUnreadMessages([
+                ...restUsersInUnreadMessages,
+                {
+                  id: userInUnreadMessages.id,
+                  count: userInUnreadMessages.count + 1,
+                },
+              ]);
+            }
+          }
+          if (newMessage.from === chosenUser?.id) {
+            const users = { from: newMessage.from, to: chosenUser.id };
+            if (!localStorage.getItem("auth")) return;
+            const decoded = jwt_decode(localStorage.getItem("auth"));
+            const currentDate = new Date();
+            if (decoded.exp * 1000 < currentDate.getTime()) {
+              await UserService.getRefreshToken();
+            }
+            UserService.updateReadStatus(users).catch((error) => {
+              console.log(`Error while loading messages ${error.message}`);
+            });
+            const restUsersInUnreadMessages = allUnreadMessages.filter(
+              (elem) => elem.id !== newMessage.from
+            );
+            setAllUnreadMessages(restUsersInUnreadMessages);
+          }
+        });
+        socket.current.on("upd-status", (newStatus) => {
+          if (newStatus.nickName === user.nickName) {
+            setStatus(newStatus.status);
+          }
+        });
+      }
+    })();
   }, [
     socket.current,
     activeUser,

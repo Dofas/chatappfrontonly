@@ -13,6 +13,7 @@ import { sidebarState } from "../../../state/responsiveState/atomSideBarState";
 import { useClickOutside } from "../../../utils/hooks/useClickOutside";
 import { UserService } from "../../../utils/UserService/UserService";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
+import jwt_decode from "jwt-decode";
 
 const ChannelList = ({ socket }) => {
   const [activeTeam, setActiveTeam] = useRecoilState(activeChannel);
@@ -50,26 +51,34 @@ const ChannelList = ({ socket }) => {
 
   useEffect(() => {
     if (!activeUser?.id) return;
-    setIsLoading(true);
-    UserService.getTeams(activeUser?.id)
-      .then((respTeams) => {
-        setIsError(false);
-        setTeams(respTeams);
-      })
-      .catch(() => {
-        console.log(`Error while loading teams`);
-        setIsError(true);
-      });
-    UserService.getGroups(activeUser?.id)
-      .then((respGrp) => {
-        setIsError(false);
-        setGroups(respGrp);
-      })
-      .catch(() => {
-        console.log(`Error while loading teams`);
-        setIsError(true);
-      });
-    setIsLoading(false);
+    (async () => {
+      setIsLoading(true);
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      UserService.getTeams(activeUser?.id)
+        .then((respTeams) => {
+          setIsError(false);
+          setTeams(respTeams);
+        })
+        .catch(() => {
+          console.log(`Error while loading teams`);
+          setIsError(true);
+        });
+      UserService.getGroups(activeUser?.id)
+        .then((respGrp) => {
+          setIsError(false);
+          setGroups(respGrp);
+        })
+        .catch(() => {
+          console.log(`Error while loading teams`);
+          setIsError(true);
+        });
+      setIsLoading(false);
+    })();
   }, [setTeams, setGroups, activeUser]);
 
   //todo: to activate groups uncomment GroupList component

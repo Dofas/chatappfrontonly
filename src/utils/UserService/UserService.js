@@ -1,4 +1,4 @@
-import axios from "axios";
+import customAxios from "../../http";
 
 export class UserService {
   static async createUser(userInfo) {
@@ -14,8 +14,8 @@ export class UserService {
     formData.append("gender", userInfo.gender);
     formData.append("languages", userInfo.languages);
     formData.append("avatar", userInfo.file);
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/user/registration",
+    const response = await customAxios.post(
+      "/api/user/registration",
       formData,
       {
         headers: {
@@ -27,82 +27,148 @@ export class UserService {
   }
 
   static async getAllUsers() {
-    const users = await fetch(process.env.REACT_APP_API_URL + `/api/user/all`);
-    const data = users.json();
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const users = await customAxios.get(`/api/user/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = users.data;
     return data;
   }
 
   static async findUser(userNickName) {
-    const user = await fetch(
-      process.env.REACT_APP_API_URL + `/api/user/check/${userNickName}`
-    );
-    const data = user.json();
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const user = await customAxios.get(`/api/user/check/${userNickName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = user.data;
     return data;
   }
 
   static async getStatus(userNickName) {
-    const user = await fetch(
-      process.env.REACT_APP_API_URL + `/api/user/status/${userNickName}`
-    );
-    const data = user.json();
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const user = await customAxios.get(`/api/user/status/${userNickName}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = user.data;
     return data;
   }
 
   static async updateStatus(userNickName, data) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + `/api/user/status/update/${userNickName}`,
-      data
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post(
+      `/api/user/status/update/${userNickName}`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response;
   }
 
   static async loginUser(data) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/user/login",
-      data
-    );
+    const response = await customAxios.post("/api/user/login", data);
+    return response;
+  }
+
+  static async logOutUser() {
+    const response = await customAxios.post("/api/user/logout");
     return response;
   }
 
   static async createTeam(data) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/team/create",
-      data
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post("/api/team/create", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response;
   }
 
   static async updateTeam(teamName, users) {
-    const response = await axios.put(
-      process.env.REACT_APP_API_URL + `/api/team/update/${teamName}`,
-      users
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.put(
+      `/api/team/update/${teamName}`,
+      users,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response;
   }
 
   static async getTeams(user) {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL + `/api/team/all/${user}`
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.get(`/api/team/all/${user}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   }
 
   static async createGroup(data) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/group/create",
-      data
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post("/api/group/create", data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response;
   }
 
   static async getGroups(user) {
-    const response = await axios.get(
-      process.env.REACT_APP_API_URL + `/api/group/all/${user}`
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.get(`/api/group/all/${user}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   }
 
   static async createMessage(messageData) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const formData = new FormData();
     formData.append("from", messageData.from);
     formData.append("to", messageData.to);
@@ -111,47 +177,80 @@ export class UserService {
     formData.append("sendTime", messageData.message.sendTime);
     formData.append("avatar", messageData.file);
     formData.append("isRead", messageData.isRead);
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/message/create",
-      formData,
+    const response = await customAxios.post("/api/message/create", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
+
+  static async updateReadStatus(users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post(
+      "/api/message/update/status",
+      users,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     return response.data;
   }
 
-  static async updateReadStatus(users) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/message/update/status",
-      users
-    );
-    return response.data;
-  }
-
   static async getUnreadMessages(users) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/message/unread",
-      users
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post("/api/message/unread", users, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   }
 
   static async getAllMessages(users) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/message/all",
-      users
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post("/api/message/all", users, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   }
 
   static async getLastMessage(users) {
-    const response = await axios.post(
-      process.env.REACT_APP_API_URL + "/api/message/last",
-      users
-    );
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
+    const response = await customAxios.post("/api/message/last", users, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
+  }
+
+  static async getRefreshToken() {
+    const response = await customAxios.get("/api/token/refresh");
+    if (!response.data.accessToken) {
+      window.location.replace("/chatapp/login");
+    }
+    customAxios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${response.data.accessToken}`;
+    localStorage.setItem("auth", response.data.accessToken);
+    return response;
   }
 }

@@ -13,6 +13,7 @@ import { useCalculateWindowSize } from "../../../utils/hooks/useCalculateWindowS
 import { selectedUserState } from "../../../state/selectedUserState/atomSelectedUserState";
 import { sidebarState } from "../../../state/responsiveState/atomSideBarState";
 import { UserService } from "../../../utils/UserService/UserService";
+import jwt_decode from "jwt-decode";
 
 const UserList = ({ socket }) => {
   const [activeTeam, setActiveTeam] = useRecoilState(activeChannel);
@@ -31,6 +32,12 @@ const UserList = ({ socket }) => {
   useEffect(() => {
     (async () => {
       if (activeTeam?.users) {
+        if (!localStorage.getItem("auth")) return;
+        const decoded = jwt_decode(localStorage.getItem("auth"));
+        const currentDate = new Date();
+        if (decoded.exp * 1000 < currentDate.getTime()) {
+          await UserService.getRefreshToken();
+        }
         Promise.all(
           activeTeam.users.map(async (user) => {
             const userInfo = await UserService.findUser(user);

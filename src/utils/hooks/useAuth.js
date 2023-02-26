@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { UserService } from "../UserService/UserService";
+import jwt_decode from "jwt-decode";
 
 export function useAuth(userNickName) {
   const [user, setUser] = useState(null);
@@ -15,6 +16,12 @@ export function useAuth(userNickName) {
     (async () => {
       try {
         setIsLoading(true);
+        if (!localStorage.getItem("auth")) return;
+        const decoded = jwt_decode(localStorage.getItem("auth"));
+        const currentDate = new Date();
+        if (decoded.exp * 1000 < currentDate.getTime()) {
+          await UserService.getRefreshToken();
+        }
         const fetchedUser = await UserService.findUser(userNickName);
         if (cancelRequest.current) return;
         if (!fetchedUser?.status) {

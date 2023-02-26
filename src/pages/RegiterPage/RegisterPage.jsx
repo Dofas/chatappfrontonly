@@ -13,6 +13,9 @@ import CheckBox from "../../components/ui-components/CheckBoxComponent/CheckBox"
 import FileInput from "../../components/ui-components/FileInputComponent/FileInput";
 import PopupDatePicker from "../../components/ui-components/DatePickerComponent/PopupDatePicker";
 import { format } from "date-fns";
+import jwt_decode from 'jwt-decode';
+import {useSetRecoilState} from 'recoil';
+import {expireState} from '../../state/tokenState/tokenAtom';
 
 const noErrorState = {
   firstNameError: false,
@@ -44,6 +47,7 @@ const RegisterPage = ({ socket }) => {
   const [isError, setIsError] = useState(noErrorState);
   const [isUserExist, setIsUserExist] = useState(false);
   const navigate = useNavigate();
+  const setExpire = useSetRecoilState(expireState);
 
   function validateNumber(number) {
     return (
@@ -119,7 +123,7 @@ const RegisterPage = ({ socket }) => {
     };
 
     UserService.createUser(userInfo)
-      .then(() => {
+      .then((data) => {
         setIsUserExist(false);
         socket.current.emit("register-user", {
           ...userInfo,
@@ -127,7 +131,9 @@ const RegisterPage = ({ socket }) => {
           avatar: "",
           file: "",
         });
-        localStorage.setItem(nickName.toString(), "auth");
+        localStorage.setItem("auth", data.data.accessToken);
+        const decoded = jwt_decode(data.data.accessToken);
+        setExpire(decoded.exp);
         navigate(`/chatapp/messages/${nickName}`);
       })
       .catch(() => setIsUserExist(true));

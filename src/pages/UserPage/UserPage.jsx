@@ -13,35 +13,41 @@ import Chat from "../../components/page-components/ChatComponent/Chat";
 import { allUsers } from "../../state/activeChannelState/atomActiveChannelState";
 import { activeUserInfo } from "../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../utils/UserService/UserService";
+import jwt_decode from "jwt-decode";
 
 const UserPage = ({ activeLink, socket }) => {
   const { id } = useParams();
 
   const setActiveUser = useSetRecoilState(activeUser);
   const [users, setAllUsers] = useRecoilState(allUsers);
-
   const { user, isLoading, isError } = useAuth(id);
-
   const activeUserInfoState = useRecoilValue(activeUserInfo);
-
   const isFirstRender = useRef(null);
 
   useEffect(() => {
-    if (socket.current) {
-      if (activeUserInfoState?.id) {
-        if (!isFirstRender.current) {
-          socket.current.emit("add-user", activeUserInfoState.id);
-          UserService.updateStatus(activeUserInfoState.id, {
-            status: "online",
-          });
-          socket.current.emit("change-status", {
-            nickName: activeUserInfoState.id,
-            status: "online",
-          });
-          isFirstRender.current = true;
+    (async () => {
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      if (socket.current) {
+        if (activeUserInfoState?.id) {
+          if (!isFirstRender.current) {
+            socket.current.emit("add-user", activeUserInfoState.id);
+            UserService.updateStatus(activeUserInfoState.id, {
+              status: "online",
+            });
+            socket.current.emit("change-status", {
+              nickName: activeUserInfoState.id,
+              status: "online",
+            });
+            isFirstRender.current = true;
+          }
         }
       }
-    }
+    })();
   }, [socket.current, activeUserInfoState]);
 
   useEffect(() => {
@@ -55,18 +61,26 @@ const UserPage = ({ activeLink, socket }) => {
 
   useEffect(() => {
     if (!setAllUsers) return;
-    UserService.getAllUsers()
-      .then((data) => {
-        const usersWIthChecked = data?.map((user) => ({
-          ...user,
-          checked: false,
-        }));
-        setAllUsers(usersWIthChecked);
-      })
-      .catch((e) => {
-        console.log(`Error while loading all users ${e.message}`);
-        setAllUsers("");
-      });
+    (async () => {
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      UserService.getAllUsers()
+        .then((data) => {
+          const usersWIthChecked = data?.map((user) => ({
+            ...user,
+            checked: false,
+          }));
+          setAllUsers(usersWIthChecked);
+        })
+        .catch((e) => {
+          console.log(`Error while loading all users ${e.message}`);
+          setAllUsers("");
+        });
+    })();
   }, [setAllUsers]);
 
   useEffect(() => {
@@ -97,7 +111,7 @@ const UserPage = ({ activeLink, socket }) => {
     <div className="user-page-load-error">User doesnt exist</div>
   );
 
-  return localStorage.getItem(user?.id) !== "auth" ? (
+  return !localStorage.getItem("auth") ? (
     <div>You need to sign in</div>
   ) : isLoading ? (
     <Spinner />
