@@ -10,6 +10,7 @@ import { UserService } from "../../../../utils/UserService/UserService";
 import { validateSpecSymbols } from "../../TeamsListComponent/AddTeamModalComponent/AddTeamModal";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
 import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
+import jwt_decode from "jwt-decode";
 
 const AddGroupModal = ({ isModal, closeModal, socket }) => {
   const [isError, setIsError] = useState(false);
@@ -34,7 +35,13 @@ const AddGroupModal = ({ isModal, closeModal, socket }) => {
       name: groupName,
       users: [activeUser.id, ...checkedUsers],
     };
-    await UserService.createGroup(group, localStorage.getItem("auth"));
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
+    await UserService.createGroup(group);
     const newGroups = [group];
     socket.current.emit("add-group", newGroups);
     const fullGroups = [...groups, ...newGroups];

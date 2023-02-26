@@ -7,6 +7,7 @@ import { selectedUserState } from "../../../../state/selectedUserState/atomSelec
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../../../utils/UserService/UserService";
 import { allMessages } from "../../../../state/messagesState/atomMessages";
+import jwt_decode from "jwt-decode";
 
 function getCurrentTime() {
   const now = new Date();
@@ -44,10 +45,13 @@ const TypeMessageContainer = ({ socket }) => {
       }),
       isRead: false,
     };
-    await UserService.createMessage(
-      messageData,
-      localStorage.getItem("auth")
-    ).then(() => {
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
+    await UserService.createMessage(messageData).then(() => {
       socket.current.emit("send-msg", { ...messageData, file: undefined });
       const newMessages = [...messages, messageData];
       setMessages(newMessages);
@@ -64,10 +68,13 @@ const TypeMessageContainer = ({ socket }) => {
       file: event.target.files[0],
       isRead: false,
     };
-    await UserService.createMessage(
-      messageData,
-      localStorage.getItem("auth")
-    ).then((messageResp) => {
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
+    await UserService.createMessage(messageData).then((messageResp) => {
       socket.current.emit("send-msg", {
         ...messageData,
         file: messageResp.fileName,

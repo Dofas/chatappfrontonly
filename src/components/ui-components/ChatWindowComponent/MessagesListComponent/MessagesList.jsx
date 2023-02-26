@@ -8,6 +8,7 @@ import { UserService } from "../../../../utils/UserService/UserService";
 import Spinner from "../../SpinnerComponent/Spinner";
 import uuid from "react-uuid";
 import { allMessages } from "../../../../state/messagesState/atomMessages";
+import jwt_decode from "jwt-decode";
 
 const MessagesList = ({ setIsError, socket }) => {
   const selectedUser = useRecoilValue(selectedUserState);
@@ -19,18 +20,26 @@ const MessagesList = ({ setIsError, socket }) => {
 
   useEffect(() => {
     if (!activeUser?.id || !selectedUser?.id) return;
-    const users = { from: activeUser.id, to: selectedUser.id };
-    setIsLoading(true);
-    UserService.getAllMessages(users, localStorage.getItem("auth"))
-      .then((resp) => {
-        setIsError(false);
-        setMessages(resp);
-      })
-      .catch((error) => {
-        setIsError(true);
-        console.log(`Error while loading messages ${error.message}`);
-      })
-      .finally(() => setIsLoading(false));
+    (async () => {
+      if (!localStorage.getItem("auth")) return;
+      const decoded = jwt_decode(localStorage.getItem("auth"));
+      const currentDate = new Date();
+      if (decoded.exp * 1000 < currentDate.getTime()) {
+        await UserService.getRefreshToken();
+      }
+      const users = { from: activeUser.id, to: selectedUser.id };
+      setIsLoading(true);
+      UserService.getAllMessages(users)
+        .then((resp) => {
+          setIsError(false);
+          setMessages(resp);
+        })
+        .catch((error) => {
+          setIsError(true);
+          console.log(`Error while loading messages ${error.message}`);
+        })
+        .finally(() => setIsLoading(false));
+    })();
   }, [activeUser, selectedUser, setMessages, setIsLoading, setIsError]);
 
   useEffect(() => {

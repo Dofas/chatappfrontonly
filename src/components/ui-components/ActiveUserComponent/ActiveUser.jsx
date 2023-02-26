@@ -8,6 +8,7 @@ import { useClickOutside } from "../../../utils/hooks/useClickOutside";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
+import { UserService } from "../../../utils/UserService/UserService";
 
 const ActiveUser = ({
   notificationsCount,
@@ -30,6 +31,7 @@ const ActiveUser = ({
 
   const exitHandler = async (e) => {
     e.stopPropagation();
+    await UserService.logOutUser();
     socket.current.emit("change-status", {
       nickName: activeUser.id,
       status: "offline",

@@ -9,6 +9,7 @@ import {
 import { UserService } from "../../../../utils/UserService/UserService";
 import { activeUserInfo } from "../../../../state/activeUserState/selectorActiveUser";
 import InputWithBorderBottom from "../../InputComponents/InputWithBorderBottom/InputWithBorderBottom";
+import jwt_decode from "jwt-decode";
 import CloseIcon from "../../../../assets/images/modal-close.svg";
 
 export const validateSpecSymbols = (stringToCheck) => {
@@ -24,6 +25,7 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
   const [isError, setIsError] = useState(false);
   const [users, setUsers] = useRecoilState(allUsers);
   const activeUser = useRecoilValue(activeUserInfo);
+
   const [teams, setTeams] = useRecoilState(allTeams);
 
   const saveTeam = async () => {
@@ -43,7 +45,13 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
       name: teamName,
       users: [activeUser.id, ...checkedUsers],
     };
-    await UserService.createTeam(team, localStorage.getItem("auth"));
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
+    await UserService.createTeam(team);
     const newTeams = [team];
     socket.current.emit("add-team", newTeams);
     const fullTeams = [...teams, ...newTeams];

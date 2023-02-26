@@ -6,6 +6,7 @@ import "./user-list-content.scss";
 import UserListContentItem from "./UserListContentItemComponent/UserListContentItem";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../../utils/UserService/UserService";
+import jwt_decode from "jwt-decode";
 
 const UserListContent = ({ socket }) => {
   const users = useRecoilValue(filteredUserList);
@@ -15,11 +16,15 @@ const UserListContent = ({ socket }) => {
   const setActiveUserClick = async (e, user) => {
     setChosenUser(user);
     const users = { from: activeUser.id, to: user.id };
-    UserService.updateReadStatus(users, localStorage.getItem("auth")).catch(
-      (error) => {
-        console.log(`Error while loading messages ${error.message}`);
-      }
-    );
+    if (!localStorage.getItem("auth")) return;
+    const decoded = jwt_decode(localStorage.getItem("auth"));
+    const currentDate = new Date();
+    if (decoded.exp * 1000 < currentDate.getTime()) {
+      await UserService.getRefreshToken();
+    }
+    UserService.updateReadStatus(users).catch((error) => {
+      console.log(`Error while loading messages ${error.message}`);
+    });
   };
 
   return (

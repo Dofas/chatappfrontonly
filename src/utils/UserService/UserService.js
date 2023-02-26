@@ -1,6 +1,4 @@
 import customAxios from "../../http";
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 
 export class UserService {
   static async createUser(userInfo) {
@@ -28,7 +26,11 @@ export class UserService {
     return response;
   }
 
-  static async getAllUsers(token) {
+  static async getAllUsers() {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const users = await customAxios.get(`/api/user/all`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,19 +40,11 @@ export class UserService {
     return data;
   }
 
-  static async findUser(userNickName, token) {
-
-    // const response = await axios.get(
-    //     process.env.REACT_APP_API_URL + "/api/token/refresh"
-    // );
-    // config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-    // localStorage.setItem("auth", response.data.accessToken);
-    // const decoded = jwt_decode(response.data.accessToken);
-    // setExpire(decoded.exp);
-
-    console.log('---------------------------------------');
-    console.log('findUser^ ', userNickName, token);
-    console.log('---------------------------------------');
+  static async findUser(userNickName) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const user = await customAxios.get(`/api/user/check/${userNickName}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -60,7 +54,11 @@ export class UserService {
     return data;
   }
 
-  static async getStatus(userNickName, token) {
+  static async getStatus(userNickName) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const user = await customAxios.get(`/api/user/status/${userNickName}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -70,7 +68,11 @@ export class UserService {
     return data;
   }
 
-  static async updateStatus(userNickName, data, token) {
+  static async updateStatus(userNickName, data) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post(
       `/api/user/status/update/${userNickName}`,
       data,
@@ -88,7 +90,16 @@ export class UserService {
     return response;
   }
 
-  static async createTeam(data, token) {
+  static async logOutUser() {
+    const response = await customAxios.post("/api/user/logout");
+    return response;
+  }
+
+  static async createTeam(data) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post("/api/team/create", data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -97,7 +108,11 @@ export class UserService {
     return response;
   }
 
-  static async updateTeam(teamName, users, token) {
+  static async updateTeam(teamName, users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.put(
       `/api/team/update/${teamName}`,
       users,
@@ -110,7 +125,11 @@ export class UserService {
     return response;
   }
 
-  static async getTeams(user, token) {
+  static async getTeams(user) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.get(`/api/team/all/${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -119,7 +138,11 @@ export class UserService {
     return response.data;
   }
 
-  static async createGroup(data, token) {
+  static async createGroup(data) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post("/api/group/create", data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -128,7 +151,11 @@ export class UserService {
     return response;
   }
 
-  static async getGroups(user, token) {
+  static async getGroups(user) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.get(`/api/group/all/${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -137,7 +164,11 @@ export class UserService {
     return response.data;
   }
 
-  static async createMessage(messageData, token) {
+  static async createMessage(messageData) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const formData = new FormData();
     formData.append("from", messageData.from);
     formData.append("to", messageData.to);
@@ -155,7 +186,11 @@ export class UserService {
     return response.data;
   }
 
-  static async updateReadStatus(users, token) {
+  static async updateReadStatus(users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post(
       "/api/message/update/status",
       users,
@@ -168,7 +203,11 @@ export class UserService {
     return response.data;
   }
 
-  static async getUnreadMessages(users, token) {
+  static async getUnreadMessages(users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post("/api/message/unread", users, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -177,7 +216,11 @@ export class UserService {
     return response.data;
   }
 
-  static async getAllMessages(users, token) {
+  static async getAllMessages(users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post("/api/message/all", users, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -186,7 +229,11 @@ export class UserService {
     return response.data;
   }
 
-  static async getLastMessage(users, token) {
+  static async getLastMessage(users) {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+    }
     const response = await customAxios.post("/api/message/last", users, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -197,6 +244,13 @@ export class UserService {
 
   static async getRefreshToken() {
     const response = await customAxios.get("/api/token/refresh");
+    if (!response.data.accessToken) {
+      window.location.replace("/chatapp/login");
+    }
+    customAxios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${response.data.accessToken}`;
+    localStorage.setItem("auth", response.data.accessToken);
     return response;
   }
 }
