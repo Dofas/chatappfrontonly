@@ -12,6 +12,7 @@ describe("User Page tests", () => {
     const mockedUserService = jest.mocked(UserService);
     mockedUserService.getAllUsers.mockResolvedValue(null);
     let socketMock = new MockedSocket();
+
     await waitFor(() =>
       render(
         <MemoryRouter>

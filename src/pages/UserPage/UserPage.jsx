@@ -50,6 +50,10 @@ const UserPage = ({ activeLink, socket }) => {
         }
       }
     })();
+
+    return async () => {
+      await UserService.logOutUser();
+    };
   }, [socket.current, activeUserInfoState]);
 
   useEffect(() => {
