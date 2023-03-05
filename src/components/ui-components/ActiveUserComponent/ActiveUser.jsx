@@ -5,7 +5,6 @@ import Question from "../../../assets/images/question.svg";
 import Globe from "../../../assets/images/globe.svg";
 import { useState } from "react";
 import { useClickOutside } from "../../../utils/hooks/useClickOutside";
-import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { activeUserInfo } from "../../../state/activeUserState/selectorActiveUser";
 import { UserService } from "../../../utils/UserService/UserService";
@@ -22,7 +21,6 @@ const ActiveUser = ({
   const triggerMenu = () => setIsMenu(!isMenu);
   const activeUser = useRecoilValue(activeUserInfo);
   const menuRef = useClickOutside(closeMenu);
-  const navigate = useNavigate();
 
   const onMenuClick = (e) => {
     e.stopPropagation();
@@ -36,13 +34,11 @@ const ActiveUser = ({
       nickName: activeUser.id,
       status: "offline",
     });
-    localStorage.removeItem("auth");
-    navigate("/chatapp/login");
   };
 
   return (
     <div className="active-user-info-container">
-      <ul>
+      <ul className="active-user-pictures-list">
         <li>
           {!!notificationsCount && (
             <span
@@ -89,9 +85,9 @@ const ActiveUser = ({
           />
         )}
         {isMenu && (
-          <div className="header-menu-exit" onClick={exitHandler}>
-            Exit
-          </div>
+          <ul className="header-menu-dropdown">
+            <li onClick={exitHandler}>Exit</li>
+          </ul>
         )}
       </div>
     </div>

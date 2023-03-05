@@ -92,6 +92,8 @@ export class UserService {
 
   static async logOutUser() {
     const response = await customAxios.post("/api/user/logout");
+    window.location.replace("/chatapp/login");
+    localStorage.removeItem("auth");
     return response;
   }
 
@@ -243,14 +245,20 @@ export class UserService {
   }
 
   static async getRefreshToken() {
-    const response = await customAxios.get("/api/token/refresh");
-    if (!response.data.accessToken) {
+    try {
+      const response = await customAxios.get("/api/token/refresh");
+      if (!response.data.accessToken) {
+        window.location.replace("/chatapp/login");
+      }
+      customAxios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.accessToken}`;
+      localStorage.setItem("auth", response.data.accessToken);
+      return response;
+    } catch (e) {
+      console.log("error", e.message);
       window.location.replace("/chatapp/login");
+      localStorage.removeItem("auth");
     }
-    customAxios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${response.data.accessToken}`;
-    localStorage.setItem("auth", response.data.accessToken);
-    return response;
   }
 }

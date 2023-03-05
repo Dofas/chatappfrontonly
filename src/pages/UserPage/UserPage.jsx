@@ -30,6 +30,18 @@ const UserPage = ({ activeLink, socket }) => {
   const { innerWidth } = useCalculateWindowSize();
 
   useEffect(() => {
+    const beforeUserLeaveHandler = async () => {
+      await UserService.logOutUser();
+    };
+
+    window.addEventListener("beforeunload", beforeUserLeaveHandler);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUserLeaveHandler);
+    };
+  }, []);
+
+  useEffect(() => {
     (async () => {
       if (!localStorage.getItem("auth")) {
         window.location.replace("/chatapp/login");
@@ -43,7 +55,7 @@ const UserPage = ({ activeLink, socket }) => {
         if (activeUserInfoState?.id) {
           if (!isFirstRender.current) {
             socket.current.emit("add-user", activeUserInfoState.id);
-            UserService.updateStatus(activeUserInfoState.id, {
+            await UserService.updateStatus(activeUserInfoState.id, {
               status: "online",
             });
             socket.current.emit("change-status", {
@@ -55,10 +67,6 @@ const UserPage = ({ activeLink, socket }) => {
         }
       }
     })();
-
-    return async () => {
-      await UserService.logOutUser();
-    };
   }, [socket.current, activeUserInfoState]);
 
   useEffect(() => {

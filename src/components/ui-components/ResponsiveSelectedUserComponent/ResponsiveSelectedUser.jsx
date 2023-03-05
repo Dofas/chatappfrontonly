@@ -32,8 +32,13 @@ const ResponsiveSelectedUser = ({ socket }) => {
           onClick={changeCollapse}
           data-testid="collapse-user-info"
         >
-          <div onClick={(event) => disSelectUser(event)}>
-            <span className="arrow responsive-900">&#8592;</span>
+          <div>
+            <span
+              onClick={(event) => disSelectUser(event)}
+              className="arrow responsive-900"
+            >
+              &#8592;
+            </span>
             <SelectedUserHeader
               avatar={selectedUser?.avatar}
               name={selectedUser?.firstName + " " + selectedUser?.lastName}

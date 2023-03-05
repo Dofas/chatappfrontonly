@@ -39,6 +39,8 @@
     height: 24px;
     width: 24px;
     cursor: pointer;
+
+    filter: invert(0%) sepia(100%) saturate(7460%) hue-rotate(342deg) brightness(89%) contrast(111%);;
 }
 
 .user-list-menu {

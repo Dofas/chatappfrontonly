@@ -8,6 +8,7 @@ import { activeUserInfo } from "../../../../state/activeUserState/selectorActive
 import { UserService } from "../../../../utils/UserService/UserService";
 import { allMessages } from "../../../../state/messagesState/atomMessages";
 import jwt_decode from "jwt-decode";
+import SendButtonIcon from "../../../../assets/images/sendIcon.svg";
 
 function getCurrentTime() {
   const now = new Date();
@@ -142,13 +143,12 @@ const TypeMessageContainer = ({ socket }) => {
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={(event) => onKeyDownTypeMessageInput(event)}
       />
-      <button
+      <img
         className="send-message-button"
         onClick={onSendBtnClick}
         data-testid="send-message-button"
-      >
-        Send
-      </button>
+        src={SendButtonIcon}
+      />
     </div>
   );
 };

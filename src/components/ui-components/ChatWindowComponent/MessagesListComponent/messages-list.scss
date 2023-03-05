@@ -121,23 +121,7 @@
     max-width: 400px;
     font-family: 'Avenir-Roman', serif;
     font-size: 14px;
-}
-
-.triangle {
-    border-color: transparent transparent transparent $color-grey;
-    border-style: solid;
-    border-width: 4px 4px 4px 8px;
-    height: 0;
-    width: 0;
-}
-
-.backup-triangle {
-    border-color: transparent $white-purple transparent transparent;
-    border-style: solid;
-    border-width: 4px 8px 4px 4px;
-    height: 0;
-    width: 0;
-    order: -1;
+    font-weight: 600;
 }
 
 .messages-list-message-time {

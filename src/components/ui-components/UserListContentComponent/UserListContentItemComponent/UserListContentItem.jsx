@@ -289,12 +289,9 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
             <div className="dot delete-action" />
             <div className="dot delete-action" />
             {isSettings && (
-              <div
-                className="user-list-item-setting"
-                onClick={(e) => onDeleteUserClick(e, user)}
-              >
-                delete user
-              </div>
+              <ul className="user-list-item-setting">
+                <li onClick={(e) => onDeleteUserClick(e, user)}>delete user</li>
+              </ul>
             )}
           </div>
         </div>

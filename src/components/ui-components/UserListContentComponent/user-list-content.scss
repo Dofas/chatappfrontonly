@@ -92,13 +92,13 @@
 }
 
 .user-list-unread-messages-count {
-    position: relative;
+    position: absolute;
     color: black;
     background-color: #1b76ed;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    bottom: 50%;
+    bottom: 30%;
     left: -22px;
     display: flex;
     align-items: center;
@@ -122,15 +122,27 @@
 
 .user-list-item-setting {
     position: absolute;
-    padding: 2px 5px;
-    width: 83px;
-    top: -14px;
     left: -90px;
-    text-align: center;
-    transition: all .4s;
-    background-color: $color-red;
-    color: $color-white;
-    border-color: $color-red;
+    z-index: 10;
+    background: white;
+    border-radius: 6px;
+    bottom: 23px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
+    li {
+        display: inline-block;
+        padding: 10px 0.8rem;
+        width: 100%;
+        color: black;
+        text-decoration: none;
+        transition: all .3s ease-in-out;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: #5e05b2;
+            color: white;
+        }
+    }
 }
 
 
