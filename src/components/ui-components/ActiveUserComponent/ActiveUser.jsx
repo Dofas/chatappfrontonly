@@ -34,6 +34,8 @@ const ActiveUser = ({
       nickName: activeUser.id,
       status: "offline",
     });
+    localStorage.removeItem("auth");
+    window.location.replace("/chatapp/login");
   };
 
   return (

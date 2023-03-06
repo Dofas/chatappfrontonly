@@ -15,6 +15,7 @@ import classNames from "classnames";
 import jwt_decode from "jwt-decode";
 import { isSelectedUserInfoState } from "../../../../state/selectedUserState/atomSelectedUserState";
 import { useCalculateWindowSize } from "../../../../utils/hooks/useCalculateWindowSize";
+import useRole from "../../../../utils/hooks/useRole";
 
 const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
   const [isSettings, setIsSettings] = useState(false);
@@ -30,6 +31,7 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
     useRecoilState(unreadMessages);
   const setIsSelectedUserInfoState = useSetRecoilState(isSelectedUserInfoState);
   const { innerWidth } = useCalculateWindowSize();
+  const { isManager } = useRole();
 
   const ref = useClickOutside(closeSettingsModal);
   const onSettingClick = (e) => {
@@ -278,23 +280,27 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
         </div>
       </div>
       <div className="user-list-team-user-info">
-        <div className="user-list-team-user-name">
-          <div
-            onClick={onSettingClick}
-            className="position-relative"
-            ref={ref}
-            data-testid="delete-user-from-team"
-          >
-            <div className="dot delete-action" />
-            <div className="dot delete-action" />
-            <div className="dot delete-action" />
-            {isSettings && (
-              <ul className="user-list-item-setting">
-                <li onClick={(e) => onDeleteUserClick(e, user)}>delete user</li>
-              </ul>
-            )}
+        {isManager && (
+          <div className="user-list-team-user-name">
+            <div
+              onClick={onSettingClick}
+              className="position-relative"
+              ref={ref}
+              data-testid="delete-user-from-team"
+            >
+              <div className="dot delete-action" />
+              <div className="dot delete-action" />
+              <div className="dot delete-action" />
+              {isSettings && (
+                <ul className="user-list-item-setting">
+                  <li onClick={(e) => onDeleteUserClick(e, user)}>
+                    delete user
+                  </li>
+                </ul>
+              )}
+            </div>
           </div>
-        </div>
+        )}
         <div className="user-list-team-user-messages">
           <div>{message?.text}</div>
         </div>

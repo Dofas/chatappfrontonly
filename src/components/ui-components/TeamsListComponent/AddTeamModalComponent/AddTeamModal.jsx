@@ -24,6 +24,7 @@ export const validateSpecSymbols = (stringToCheck) => {
 const AddTeamModal = ({ isModal, closeModal, socket }) => {
   const [teamName, setTeamName] = useState("");
   const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const [users, setUsers] = useRecoilState(allUsers);
   const activeUser = useRecoilValue(activeUserInfo);
 
@@ -36,6 +37,9 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
       users.filter((user) => user.checked === true).length === 0 ||
       !activeUser?.id
     ) {
+      setErrorText(
+        "You can not create empty team name or use space or spec symbols"
+      );
       setIsError(true);
       return;
     }
@@ -54,13 +58,24 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
     if (decoded.exp * 1000 < currentDate.getTime()) {
       await UserService.getRefreshToken();
     }
-    await UserService.createTeam(team);
-    const newTeams = [team];
-    socket.current.emit("add-team", newTeams);
-    const fullTeams = [...teams, ...newTeams];
-    setTeams(fullTeams);
-    setIsError(false);
-    closeModal();
+    UserService.createTeam(team)
+      .then(() => {
+        const newTeams = [team];
+        socket.current.emit("add-team", newTeams);
+        const fullTeams = [...teams, ...newTeams];
+        setTeams(fullTeams);
+        setIsError(false);
+        closeModal();
+      })
+      .catch((error) => {
+        if (
+          error.response.data.message ===
+          "User does not have required permissions"
+        ) {
+          setErrorText("Only Managers can create a team");
+          setIsError(true);
+        }
+      });
   };
 
   const updateUser = (nick) => {
@@ -79,6 +94,7 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
           data-testid="close-add-team-modal-btn"
           onClick={closeModal}
           className="modal-close-btn"
+          alt="x"
         />
       </div>
       <div className="team-modal-content">
@@ -106,11 +122,7 @@ const AddTeamModal = ({ isModal, closeModal, socket }) => {
                 )
             )}
         </div>
-        {isError && (
-          <div className="team-modal-error-text">
-            You can not create empty team name or use space or spec symbols
-          </div>
-        )}
+        {isError && <div className="team-modal-error-text">{errorText}</div>}
       </div>
       <div className="team-modal-footer">
         <button className="modal-cancel-btn" onClick={closeModal}>

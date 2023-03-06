@@ -1,6 +1,15 @@
 import customAxios from "../../http";
 
 export class UserService {
+  static getTokenOrRedirect() {
+    const token = localStorage.getItem("auth");
+    if (!token) {
+      window.location.replace("/chatapp/login");
+      return;
+    }
+    return token;
+  }
+
   static async createUser(userInfo) {
     const formData = new FormData();
     formData.append("firstName", userInfo.firstName);
@@ -14,6 +23,7 @@ export class UserService {
     formData.append("gender", userInfo.gender);
     formData.append("languages", userInfo.languages);
     formData.append("avatar", userInfo.file);
+    formData.append("role", userInfo.role);
     const response = await customAxios.post(
       "/api/user/registration",
       formData,
@@ -27,10 +37,7 @@ export class UserService {
   }
 
   static async getAllUsers() {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const users = await customAxios.get(`/api/user/all`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -41,10 +48,7 @@ export class UserService {
   }
 
   static async findUser(userNickName) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const user = await customAxios.get(`/api/user/check/${userNickName}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,10 +59,7 @@ export class UserService {
   }
 
   static async getStatus(userNickName) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const user = await customAxios.get(`/api/user/status/${userNickName}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -69,10 +70,7 @@ export class UserService {
   }
 
   static async updateStatus(userNickName, data) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post(
       `/api/user/status/update/${userNickName}`,
       data,
@@ -92,16 +90,11 @@ export class UserService {
 
   static async logOutUser() {
     const response = await customAxios.post("/api/user/logout");
-    window.location.replace("/chatapp/login");
-    localStorage.removeItem("auth");
     return response;
   }
 
   static async createTeam(data) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post("/api/team/create", data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -111,10 +104,7 @@ export class UserService {
   }
 
   static async updateTeam(teamName, users) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.put(
       `/api/team/update/${teamName}`,
       users,
@@ -128,10 +118,7 @@ export class UserService {
   }
 
   static async getTeams(user) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.get(`/api/team/all/${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -141,10 +128,7 @@ export class UserService {
   }
 
   static async createGroup(data) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post("/api/group/create", data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -154,10 +138,7 @@ export class UserService {
   }
 
   static async getGroups(user) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.get(`/api/group/all/${user}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -167,10 +148,7 @@ export class UserService {
   }
 
   static async createMessage(messageData) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const formData = new FormData();
     formData.append("from", messageData.from);
     formData.append("to", messageData.to);
@@ -189,10 +167,7 @@ export class UserService {
   }
 
   static async updateReadStatus(users) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post(
       "/api/message/update/status",
       users,
@@ -206,10 +181,7 @@ export class UserService {
   }
 
   static async getUnreadMessages(users) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post("/api/message/unread", users, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -219,10 +191,7 @@ export class UserService {
   }
 
   static async getAllMessages(users) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post("/api/message/all", users, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -232,10 +201,7 @@ export class UserService {
   }
 
   static async getLastMessage(users) {
-    const token = localStorage.getItem("auth");
-    if (!token) {
-      window.location.replace("/chatapp/login");
-    }
+    const token = this.getTokenOrRedirect();
     const response = await customAxios.post("/api/message/last", users, {
       headers: {
         Authorization: `Bearer ${token}`,

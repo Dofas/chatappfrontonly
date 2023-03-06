@@ -30,8 +30,9 @@ const UserPage = ({ activeLink, socket }) => {
   const { innerWidth } = useCalculateWindowSize();
 
   useEffect(() => {
-    const beforeUserLeaveHandler = async () => {
-      await UserService.logOutUser();
+    const beforeUserLeaveHandler = () => {
+      localStorage.removeItem("auth");
+      UserService.logOutUser();
     };
 
     window.addEventListener("beforeunload", beforeUserLeaveHandler);

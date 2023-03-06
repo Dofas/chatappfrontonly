@@ -13,9 +13,9 @@ import CheckBox from "../../components/ui-components/CheckBoxComponent/CheckBox"
 import FileInput from "../../components/ui-components/FileInputComponent/FileInput";
 import PopupDatePicker from "../../components/ui-components/DatePickerComponent/PopupDatePicker";
 import { format } from "date-fns";
-import jwt_decode from 'jwt-decode';
-import {useSetRecoilState} from 'recoil';
-import {expireState} from '../../state/tokenState/tokenAtom';
+import jwt_decode from "jwt-decode";
+import { useSetRecoilState } from "recoil";
+import { expireState } from "../../state/tokenState/tokenAtom";
 
 const noErrorState = {
   firstNameError: false,
@@ -42,6 +42,7 @@ const RegisterPage = ({ socket }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
+  const [role, setRole] = useState("Employee");
   const [file, setFile] = useState(null);
   const [languages, setLanguages] = useState([]);
   const [isError, setIsError] = useState(noErrorState);
@@ -120,6 +121,7 @@ const RegisterPage = ({ socket }) => {
       gender,
       languages,
       file,
+      role,
     };
 
     UserService.createUser(userInfo)
@@ -154,6 +156,23 @@ const RegisterPage = ({ socket }) => {
   return (
     <div className="register-page-container">
       <div>
+        <span className="register-page-role-container">
+          <div>Choose role:</div>
+          <div>
+            <RadioButton
+              value="Employee"
+              checked={role === "Employee"}
+              onChange={setRole}
+              labelText="Employee"
+            />
+            <RadioButton
+              value="Manager"
+              checked={role === "Manager"}
+              onChange={setRole}
+              labelText="Manager"
+            />
+          </div>
+        </span>
         <div className="register-page-inner-container">
           <div>
             <div className="position-relative">
@@ -314,12 +333,19 @@ const RegisterPage = ({ socket }) => {
           </div>
         </div>
         <div>
-          <button onClick={onSubmit} className='register-page-login-button'>Create account</button>
+          <button onClick={onSubmit} className="register-page-login-button">
+            Create account
+          </button>
           <div className="register-page-login-redirect">
             <span className="register-page-login-text">
               Already have an account ?
             </span>
-            <button className='color-purple' onClick={() => navigate("/chatapp/login")}>Log in</button>
+            <button
+              className="color-purple"
+              onClick={() => navigate("/chatapp/login")}
+            >
+              Log in
+            </button>
             {isUserExist && (
               <div style={{ color: "red" }}>
                 User with this nickname already exist
