@@ -126,6 +126,7 @@ const UserListContentItem = ({ user, chosenUser, setChosenUser, socket }) => {
       }
       const decoded = jwt_decode(localStorage.getItem("auth"));
       const currentDate = new Date();
+
       if (decoded.exp * 1000 < currentDate.getTime()) {
         await UserService.getRefreshToken();
       }

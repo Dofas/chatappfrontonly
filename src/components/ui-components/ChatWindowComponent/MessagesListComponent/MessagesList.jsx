@@ -47,15 +47,18 @@ const MessagesList = ({ setIsError, socket }) => {
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msg-receive", (newMessage) => {
-        setArrivalMessages({
-          message: { ...newMessage.message, file: newMessage.file },
-          sender: newMessage.from,
-        });
+        if (newMessage.from === selectedUser?.id) {
+          setArrivalMessages({
+            message: { ...newMessage.message, file: newMessage.file },
+            sender: newMessage.from,
+          });
+        }
       });
     }
-  }, [socket.current, setArrivalMessages]);
+  }, [socket.current, setArrivalMessages, selectedUser]);
 
   useEffect(() => {
+    console.log("here");
     arrivalMessages && setMessages((prev) => [...prev, arrivalMessages]);
   }, [arrivalMessages, setMessages]);
 
